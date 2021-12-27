@@ -1,0 +1,17 @@
+{
+    "APP_SETTINGS":"config.DevelopmentConfig",
+    "DATABASE_URL":"",        
+    "DATABASE_URL2":"",    
+    "SECRET_KEY":"",
+    "STRIPE_API_KEY":"",
+    "MAILGUN_API_KEY":"",
+    "MAILCHIMP_API_KEY":"",
+    "MAILCHIMP_LIST_ID":"",
+    "MAIL_SERVER": "",
+    "MAIL_PORT": 465,
+    "MAIL_USE_TLS": false,
+    "MAIL_USE_SSL": true,
+    "MAIL_USERNAME": "",
+    "MAIL_PASSWORD": "",
+    "MAIL_MAX_EMAILS":20
+}

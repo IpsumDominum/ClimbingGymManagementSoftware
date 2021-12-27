@@ -1,0 +1,110 @@
+
+<modal id="membership-holiday-modal" >
+    <button  style="float:right;background:red;color:white" (click)="closeModal('membership-holiday-modal');">X Cancel</button>
+    
+    <h1>Membership 
+        <br>{{getActionModeString()}}</h1>
+             
+<ng-container *ngIf="membership_ref">
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                        <th class="label">Membership Type</th>
+                        <th class="label">Billing Type</th>
+                        <th class="label">Member FirstName</th>
+                        <th class="label">Member MiddleName</th>
+                        <th class="label">Member LastName</th>
+                        <th class="label">Membership Start</th>
+                        <th class="label">Membership End</th>
+                        <th class="label">Membership Frozen</th>
+                        <th class="label">Frozen Until</th>
+                        <th class="label">Membership Holiday</th>
+                        <th class="label">Holiday Until</th>
+                        <th class="label">Membership Active</th>
+                    </tr>
+                    <tr>
+                    <th>{{membership_ref.description}}</th>
+                    <th>{{membership_ref.billingType}}</th>
+                    <th>{{membership_ref.member.firstName}}</th>
+                    <th>{{membership_ref.member.middleName}}</th>
+                    <th>{{membership_ref.member.lastName}}</th>
+                    <th>{{dateFromISO(membership_ref.start_date)}}</th>
+                    <th>{{dateFromISO(membership_ref.end_date)}}</th>
+                    <th [ngStyle]="{'color': membership_ref.frozen ? 'blue':'black'}">{{membership_ref.frozen ? 'Frozen' : 'No'}}</th>
+                    <th >{{dateFromISO(membership_ref.frozen_until)}}</th>
+                    <th  [ngStyle]="{'color': membership_ref.on_holiday ? '#fc5000':'black'}">{{membership_ref.on_holiday ? 'Holiday' : 'No'}}</th>
+                    <th >{{dateFromISO(membership_ref.holiday_until)}}</th>
+                    <th  [ngStyle]="{'color': membership_ref.active ? 'green':'red'}">{{membership_ref.active ? "Active" : "In-Active"}}</th>
+                </tr>
+                </table>
+        </div>       
+</ng-container>
+<br><br>
+<ng-container *ngIf="showDurationSelect;else showOnlyMessage">
+    <label (click)="mode='specifyTime'" class="tab" [ngClass]="{'active': mode=='specifyTime'}">Specify Time</label>
+    <label (click)="mode='selectEndDate'" class="tab" [ngClass]="{'active': mode=='selectEndDate'}">Select End Date</label>
+    <label (click)="mode='indefinately'" class="tab" [ngClass]="{'active': mode=='indefinately'}">Indefinately</label>
+    <hr>
+    <br>
+    <div style="display:flex">
+
+    <!--TIME SELECTION BOX-->
+    <div style="height:100px;width:100px;">
+    <ng-container *ngIf="mode=='specifyTime'">
+    Day(s)
+    <br><input type="number" min="0" max="365" [(ngModel)]="days"><br>
+    <ng-container *ngIf="days>365 || days<0">
+            <label style="color:red">Days must be between 0-365</label>
+        </ng-container>
+    <br>
+    </ng-container>
+<ng-container *ngIf="mode=='selectEndDate'">
+        Until:
+        <br><input type="date" [(ngModel)]="endDate"><br>
+    </ng-container>
+    <ng-container *ngIf="mode=='indefinately'">
+        Indefinately...
+    </ng-container>
+    </div>
+
+    <!--INFO BOX-->
+<ng-container *ngIf="infoMessage!=''">
+        <div class="infoBox ">
+        <label class="infoMessage smooth-borders">
+             {{infoMessage}}</label>
+            </div>
+        </ng-container>
+    </div>
+    <!--MAIN CONTAINER-->
+</ng-container>
+
+<ng-template #showOnlyMessage>
+        <ng-container *ngIf="infoMessage!=''">
+                <div class="infoBox ">
+                <label class="infoMessage smooth-borders">
+                     {{infoMessage}}</label>
+                    </div>
+                </ng-container>
+</ng-template>
+<ng-container *ngIf="!nothing_to_do">
+
+Master Password: <input type="password" [(ngModel)]="password">
+<button [disabled]="loading" (click)="confirm()">Confirm</button>
+</ng-container>
+<ng-container *ngIf="loading">
+        <div class="lds-ring" >                          
+                <img src="assets/img/logo2.png" >                                          
+                <!--
+                <p style="position:absolute;z-index:4;font-size:10px;
+                left:25px;top:38px;width:100px;
+                    font-family: 'grifter'
+                ">Fetching and storing waivers... <br>This might take a while...</p>
+                -->
+            <div></div>                    
+    </div>
+</ng-container>
+</modal>
+    
+    
+    
+    

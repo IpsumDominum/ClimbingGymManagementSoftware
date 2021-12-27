@@ -1,0 +1,45 @@
+<button class="button5" style="display:inline-block" (click)="openModal('view-sales-history-modal')">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+    Rental History
+</button>
+
+<modal id="view-sales-history-modal" >
+<button style="float:right;background:red;color:white;" (click)="closeModal('view-sales-history-modal');">X Cancel</button>
+<ng-container *ngIf="sub_product_ref">
+    <h2 class="disabled">Outstanding Rentals</h2>
+    <button class="button1" (click)="markAsReturned()"
+    >Return</button>
+    <button class="button1" (click)="markAsLost()"
+    >Lost</button>
+    <button class="button1" (click)="markAsDamaged()"
+    >Damaged</button>
+    <div class="table-wrapper2" style="overflow-x:scroll;height:280px;margin-bottom:200px;">
+        <table id="customers" style="height:280px;">
+            <tr>
+                <th class="label">Member</th>
+                <th class="label">Status</th>
+                <th class="label">Rental Date</th>
+                <th class="label">Due Date</th>                               
+            </tr>
+        <tr [ngClass]="{'tr-active': rentalSelect ? rental ? rental.id ==rentalSelect.id : false : false }" *ngFor="let rental of subProductRental;" (click)="rental ? rentalSelect=rental : '';">
+            <ng-container *ngIf="rental==undefined,else showData">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </ng-container>
+            <ng-template #showData >
+            <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{rental.member.firstName}} {{rental.member.lastName}}</th>
+            <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}" [ngStyle]="{'color':getStatusColor(rental)}">{{rental.status}}</th>
+            <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{dateFromISODetailed(rental.rental_date)}}</th>
+            <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{dateFromISODetailed(rental.due_date)}}</th>                               
+        </ng-template>
+        </tr>
+        </table>
+</div>
+
+</ng-container>
+</modal>
+
+
+

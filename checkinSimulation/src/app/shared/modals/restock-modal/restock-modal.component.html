@@ -1,0 +1,15 @@
+<button class="button2" (click)="openModal('restock-modal')">Restock</button>
+
+<modal id="restock-modal" >
+
+<div style="width:200px;height:200px">
+    Restock Amount <input type="number" [(ngModel)]="restock_amount"><br>
+    Note <input type="text" [(ngModel)]="note">
+</div>
+<button (click)="restock()">Restock</button>
+<button (click)="closeModal('restock-modal')">Cancel</button>
+
+</modal>
+
+
+

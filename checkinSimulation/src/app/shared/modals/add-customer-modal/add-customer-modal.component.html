@@ -1,0 +1,162 @@
+<ng-container *ngIf="size=='small'">
+<button class="button5" (click)="openModal('add-customer-modal')">Add Customer</button>
+</ng-container>
+<ng-container *ngIf="size=='large'">
+        <button class="button2" (click)="openModal('add-customer-modal')">Add Customer</button>
+</ng-container>
+
+<modal id="add-customer-modal" >
+    <ng-container *ngIf="page==1">
+        <button (click)="next();">Next</button>
+        <button style="float:right" (click)="closeModal('add-customer-modal');">X Cancel</button>
+    <div style="text-align: center;display:flex;flex-direction: column;align-items: center;">
+    <h1>Add New Customer</h1>
+    <div style="display:flex;flex-direction: row;margin:auto;">
+        *First Name  <input (focus)="waitForUnique=false;middleName='';" style="margin-left:20px"type="text" [(ngModel)]="firstName"/>
+
+        *Last Name <input (focus)="waitForUnique=false;middleName='';" style="margin-left:20px" type="text" [(ngModel)]="lastName"/>
+        </div>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                        <th class="label">First Name</th>
+                        <th class="label">Mildde Name</th>
+                        <th class="label">Last Name</th>
+                        <th class="label">Birthday</th>
+                        <th class="label">Status</th>
+                        <th class="label">Responsible Party</th>
+                        <th class="label">Last Visit</th>
+                        <th class="label">First Contact</th>
+                        <th class="label">Warning</th>
+                        <th class="label">Last Edit</th>
+                    </tr>
+                <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                        <th>{{user.firstName}}</th>
+                        <th [ngStyle]="{'background': (user.middleName==middleName && user.middleName!='')? 'red': '',
+                                        'color': user.middleName==middleName ? 'white': 'black'}">{{user.middleName}}</th>
+                        <th>{{user.lastName}}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+        <ng-container *ngIf="waitForUnique">
+        Middle Name  <input style="margin-left:20px"type="text" [(ngModel)]="middleName"/>
+    </ng-container>
+</div>
+
+</ng-container>
+
+
+<ng-container *ngIf="page==2">
+        <button (click)="prev()">Back</button>
+    <button (click)="createMember()">Confirm Add New Customer</button>
+            <button style="float:right" (click)="closeModal('add-customer-modal');">X Cancel</button>
+            <h1 style="margin-top:50px;">Add New Customer</h1>
+        <div class="infobox" style="border:black solid 1px;display:flex;padding-bottom:10px;">
+            <div>
+                <h2>Basic Info</h2>
+                <label><strong style="color:red">*</strong>Title</label> <select  [ngStyle]="{'border': invalid[0]==true ? 'red solid 1px' : ''}" style="width:100px;" [(ngModel)]="title">
+                        <option [value]="'Mr.'">Mr.</option>
+                        <option [value]="'Mrs.'">Mrs.</option>
+                        <option [value]="'Ms.'">Ms.</option>
+                        <option [value]="'Mx.'">Mx.</option>
+                        <option [value]="'Prof.'">Prof.</option>
+                        <option [value]="'Dr.'">Dr.</option>
+                        <option [value]="'Master.'">Master.</option>
+                    </select><br>
+                <label><strong style="color:red">*</strong>Last Name</label> <input type="text" [(ngModel)]="lastName" disabled/> <br>
+                <label><strong style="color:red">*</strong>First</label>  <input type="text" [(ngModel)]="firstName" disabled/> <br>
+                <label>Middle</label>  <input type="text" [(ngModel)]="middleName" disabled/><br>
+                
+                <label><strong style="color:red">*</strong>Birthday</label> <input type="date" [ngStyle]="{'border': invalid[1]==true ? 'red solid 1px' : ''}" [(ngModel)]="birthday"/><br>                
+            </div>
+            <div>
+                <h2>Address Info</h2>
+                <label>Address 1</label> <input type="text" [(ngModel)]="address1"/><br>
+                <label>Address 2</label><input type="text" [(ngModel)]="address2"/><br>
+                <label>Postal Code</label><input type="text" [(ngModel)]="postalCode"/><br>
+                <label>City</label><input type="text" [(ngModel)]="city"/><br>
+                <label>Country</label><input type="text" [(ngModel)]="country"/><br>
+            </div>      
+            <div>
+                <h2>Contact Info</h2>
+                <label>Cell Phone</label><input type="text" [(ngModel)]="cellphone"/><br>
+                <label>Home Phone</label><input type="text" [(ngModel)]="homephone"/><br>
+                <label>Work Phone</label><input type="text" [(ngModel)]="workphone"/><br>
+                <label><strong style="color:red">*</strong>Email</label> <input type="email" [ngStyle]="{'border': invalid[2]==true ? 'red solid 1px' : ''}"[(ngModel)]="email"/><br>
+            </div>
+            <div>
+                <h2>Emergency Contact</h2>
+                <label><strong style="color:red">*</strong>Emergency Contact Name</label><input type="text" [ngStyle]="{'border': invalid[3]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContact"/><br>
+                <label><strong style="color:red">*</strong>Emergency Contact Relation</label><input type="text" [ngStyle]="{'border': invalid[4]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactRelation"/><br>
+                <label><strong style="color:red">*</strong>Emergency Contact Phone</label><input type="text" [ngStyle]="{'border': invalid[5]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactPhone"/><br>
+            </div>  
+        </div>
+
+    <div  class="infobox" style="margin-top:10px;border:black solid 1px;height:250px;display:flex">
+        <div >
+            <h2>Other Information</h2>
+            <label style="display:inline">Can Access After Hours</label><input style="width:10px" type="checkbox" [(ngModel)]="accessAfterHours"/><br><br>
+        </div>
+        <!--PAYMENT METHODS-->
+        <ng-container *ngIf="customer;else empty">    
+        <div style="display:flex;">
+            <div>
+                <h2>Payment Methods</h2>
+            <!--------------------->
+            <select style="width:150px;" [(ngModel)]="cardSelection"  >
+            <ng-container *ngIf="customer.paymentMethods.length==0;else showCards">
+                <option [ngValue]="'nocard'">No Cards Found</option>
+            </ng-container>
+            <option [ngValue]="'card.payment_method_stripe_id'" *ngFor="let card of customer.paymentMethods">
+                Card Ending With {{card.last_four}}
+            </option>                                
+            </select>    <br>
+            <button style="width:150px;height:100px;" (click)="addNewPaymentMethod()">Add new payment method</button>
+            <!------------------->
+            </div>
+        
+            <div style="margin-top:10px;">
+            <label>Card Number</label> <input type="text" [(ngModel)]="card_number"/>
+            <label>Card Expiry Month</label><input type="number" [(ngModel)]="card_expiry_month"/><br>
+            <label>Card Expiry Year</label><input type="number" [(ngModel)]="card_expiry_year"/>
+            <label>CVC</label><input type="text" [(ngModel)]="card_cvc"/><br>        
+            </div>
+    
+        </div>
+        </ng-container>
+        <!--------------------->
+        <ng-template #empty>
+            <div>
+            <h2>Payment Methods</h2>
+            Only Available after the customer is created.
+        </div>
+        </ng-template>
+        <!--------------------->
+    
+    </div>
+</ng-container>
+
+</modal>
+
+
+

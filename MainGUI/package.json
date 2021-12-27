@@ -1,0 +1,20 @@
+{
+  "name": "rockgymApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "electron": "^11.0.3"
+  },
+  "dependencies": {
+    "electron-tabs": "^0.15.0"
+  }
+}

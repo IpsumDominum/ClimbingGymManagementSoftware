@@ -1,0 +1,100 @@
+/* MODAL STYLES
+-------------------------------*/
+modal {
+    /* modals are hidden by default */
+    display: none;    
+}
+
+.modal-wrapper{
+position:fixed;
+height:100%;
+width:100%;
+display:flex;
+justify-content: center;
+align-items: center;
+left:0px;
+z-index: 10000;
+}
+    .jw-modal {
+        /* modal container fixed across whole screen */        
+        /* z-index must be higher than .jw-modal-background */
+        z-index: 10000;
+        
+        /* enables scrolling for tall modals */
+    }
+        .jw-modal-body {
+            overflow-y: hidden;            
+
+            box-shadow:
+          0 1px 5px rgba(0,0,0,0.75),
+    0 0 2px rgba(0, 0, 0, 0.5),
+          0 1px 1px rgba(0,0,0,0.5),
+          0 1px 0 #373737,
+          0 1px 0 rgba(0,0,0,0.5),
+          0 1px 0 #373737,
+          0 1px 0 rgba(0,0,0,0.5),
+          0 -1px 1px 1px rgba(0, 0, 0, 0.3) inset,
+          0 1px 1px 1px rgba(255, 255, 255, 0.1) inset;
+            padding: 20px;
+            background-image: url('../../../../assets/img/t.png') ;
+            background-color: rgba(240, 248, 255, 0.671);
+            background-blend-mode: screen;
+            -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+            width:1000px;
+            height:700px;
+            /* margin exposes part of the modal background */
+        }
+        .jw-modal-body-small {
+            overflow-y: hidden;
+
+            box-shadow:
+          0 1px 5px rgba(0,0,0,0.75),
+    0 0 2px rgba(0, 0, 0, 0.5),
+          0 1px 1px rgba(0,0,0,0.5),
+          0 1px 0 #373737,
+          0 1px 0 rgba(0,0,0,0.5),
+          0 1px 0 #373737,
+          0 1px 0 rgba(0,0,0,0.5),
+          0 -1px 1px 1px rgba(0, 0, 0, 0.3) inset,
+          0 1px 1px 1px #ffffff1a inset;
+            padding: 20px;
+            background-image: url('../../../../assets/img/t.png') ;
+            background-color: rgba(240, 248, 255, 0.671);
+            background-blend-mode: screen;
+            -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+            width:300px;
+            height:300px;
+            /* margin exposes part of the modal background */
+            margin-top:-300px;
+        }
+    
+
+    .jw-modal-background {
+        /* modal background fixed across whole screen */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        /* semi-transparent black  */
+        background-color: #000;
+        opacity: 0.1;
+        
+        /* z-index must be below .jw-modal and above everything else  */
+        z-index: 9000;
+    }
+
+body.jw-modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+    overflow: hidden;
+}
+ 

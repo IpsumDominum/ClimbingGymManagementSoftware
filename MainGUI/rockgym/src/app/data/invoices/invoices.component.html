@@ -1,0 +1,57 @@
+
+    <!---BODY START--->
+    <body style="background:white;padding:10px 20px 20px 20px;">    
+    <pre >
+            <h1>Invoices Data & Visualization</h1>
+        
+    <strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"> <button id="search" (click)="search()">Search</button> <advanced-search-modal></advanced-search-modal> {{filteredData.length}} Customers Match   <button (click)="previousDay()">Previous Day</button> <input type="date" (change)="selectDate($event)" [(value)]="stringDate"> <button (click)="nextDay()">Next Day >></button>
+        Product Name | Customer Name | Id                                                                                                
+            </pre>
+    <!--FLEX CONTAINER -->
+    <div style="display: flex">
+    <!--LEFT BOX-->
+    <div style="width:50%;height:50%;background:white;">
+    <div style="width:500px;height:300px;" [chart]="chart"></div>
+    Data Type <select>
+        <option>Invoice Amount</option>
+    </select><br>
+    <br>
+    <strong>Show Invoices For</strong><br>
+        Total <input type="checkbox">
+        Succeeded <input type="checkbox">
+        Failed <input type="checkbox">
+    </div>
+    <!--RIGHT BOX-->
+    <div class="table-wrapper2" style="overflow-x:scroll;">
+            <table id="customers">
+                    <tr>                            
+                        <th class="label">Invoice Date</th>
+                        <th class="label">Paid Amount</th>
+                        <th class="label">Expected Amount</th>
+                        <th class="label">Invoice Label</th>
+                        <th class="label">Status</th>
+                        <th class="label">Member</th>
+                    </tr>
+                <tr *ngFor="let invoice of invoiceDisplayData" >
+                    <ng-container *ngIf="invoice==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >                    
+                    <th>{{invoice.invoice_date}}</th>
+                    <th>${{invoice.paid_amount}}</th>
+                    <th>${{invoice.expected_amount}}</th>
+                    <th>{{invoice.description}}</th>
+                    <th>{{invoice.status}}</th>
+                    <th></th>
+                </ng-template>
+                </tr>
+            </table>
+    </div>
+    <!--FLEX CONTAINER END-->
+</div>
+</body>

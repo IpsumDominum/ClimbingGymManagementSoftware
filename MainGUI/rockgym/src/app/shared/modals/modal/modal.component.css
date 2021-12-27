@@ -1,0 +1,94 @@
+/* MODAL STYLES
+-------------------------------*/
+modal {
+    /* modals are hidden by default */
+    display: none;    
+}
+
+.modal-wrapper{
+position:fixed;
+height:100%;
+width:100%;
+display:flex;
+justify-content: center;
+align-items: center;
+left:0px;
+z-index: 10000;
+}
+    .jw-modal {
+        /* modal container fixed across whole screen */        
+        /* z-index must be higher than .jw-modal-background */
+        z-index: 10000;
+        
+        /* enables scrolling for tall modals */
+    }
+    .jw-modal-main{
+        overflow-y: hidden;            
+
+        background:white;
+        padding:15px 15px 15px 15px;
+        border-radius: 10px;
+        box-shadow:
+        0 1px 5px rgba(0,0,0,0.75),
+        0 10px 10px 15px rgba(255, 255, 255, 0.1) inset;
+        padding: 20px;
+        /*background-image: url('../../../../assets/img/tiny-squares.png') ;*/
+        background-blend-mode: screen;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .jw-modal-body-large{
+        width:1250px;
+        height:700px;
+        margin-top:-50px;
+        /* margin exposes part of the modal background */
+    }
+        .jw-modal-body {    
+            width:1000px;
+            height:700px;
+            margin-top:-50px;
+            /* margin exposes part of the modal background */
+        }
+        .jw-modal-body-small {
+            width:300px;
+            height:300px;
+            /* margin exposes part of the modal background */
+            margin-top:-300px;
+        }
+    
+        .jw-modal-body-extra-small{
+            width:300px;
+            height:150px;
+            /* margin exposes part of the modal background */
+            margin-top:-100px;
+        }
+        .jw-modal-body-medium{
+            width:800px;
+            height:600px;
+            /* margin exposes part of the modal background */
+            margin-top:-50px;
+        }
+    
+    .jw-modal-background {
+        /* modal background fixed across whole screen */
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        /* semi-transparent black  */
+        background-color: #000;
+        opacity: 0.1;
+        
+        /* z-index must be below .jw-modal and above everything else  */
+        z-index: 9000;
+    }
+
+body.jw-modal-open {
+    /* body overflow is hidden to hide main scrollbar when modal window is open */
+}
+ 

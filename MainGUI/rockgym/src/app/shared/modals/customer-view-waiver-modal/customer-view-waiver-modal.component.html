@@ -1,0 +1,147 @@
+
+<modal id="customer-view-waiver-modal" >
+
+<ng-container *ngIf="member_ref">
+
+<button style="float:right" (click)="closeModal('customer-view-waiver-modal');">X Cancel</button>
+<h1>Waiver</h1>
+
+<div style="display:flex">
+<div class="terms-box">
+        <div class="relative">
+                <h1>By signing, I, <strong style="color:#CB5727">{{getCurrentName()}}</strong>, agree to terms and conditions stated in this document.    
+                </h1>
+                <br>
+                <li>To use the facilities at your own risk, and take responsibility for any personal injury, property loss or damage caused to you or any
+                under-18 you are signing on behalf of.</li>
+                <li>To indemnify Resistance Climbing Gym and its directors, staff and contractors from liability for any personal injury, property loss or
+                damage caused to you, your next of kin or any under-18 you are signing on behalf of.
+                </li>
+                <li>To accept and follow the Resistance Climbing Gym Conditions of Use</li>
+                <li>To accept the Resistance Climbing Gym Privacy Policy</li>
+                <li>To disclose any pre-existing medical or other conditions that may affect the risk that either yourself or any other person could suffer
+                injury, loss or damage and will seek medical advice before participating. This information will only be viewable by Uprising staff.</li>
+                <li>To authorise staff to instigate any necessary medical assistance and treatment required in an emergency.</li>
+                <li>That these terms may be updated from time to time without notification, please refer to our website for the most recent terms and
+                conditions.</li>
+            </div>
+    <h1>Policy | Terms and conditions</h1>
+    <p class="sections-box">
+    “Resistance Climbing Gym” is the trading name of Resistance Climbing, a New Zealand-owned and operated company.
+    Activity Risks
+    At Resistance Climbing Gym, we are committed to your safety. Before using the facility, it is important that each person is aware that there
+    are risks associated with bouldering and associated activities.
+    The risks include but are not limited to:
+    </p>
+<li> Falling to the ground or onto other users</li>
+<li> Being fallen on by other users</li>
+<li> Sports injury and over-exertion</li>
+<li> Abrasions from the holds, walls, or the floor</li>
+<li> Equipment failure</li>
+<li> Injury through improper use of training and fitness equipment</li>
+<li> Other users not following the Conditions of Use</li>
+<p class="sections-box">
+The risks of participating in bouldering and related activities may result in serious neck and spinal injuries (which may result in paralysis),
+serious injury or impairment to other aspects of the body or even death.
+</p>
+        <br>
+        <h1>Conditions of Use:</h1>
+        <br>
+        <h1>General</h1>
+        <li>All customers and visitors must check in at reception on arrival.
+        </li>
+        <li><span></span>If you are injured or witness an injury or unsafe or inappropriate behaviour please inform staff immediately.
+        </li>
+        <li><span></span>    
+            Customers and visitors must not participate in or supervise any climbing or related activities whilst under the influence of alcohol,
+                drugs, or other substances.
+        </li>
+        
+        <li><span></span>Staff will ask anyone acting inappropriately or unsafely to leave the premises
+        </li>
+        <br>
+        <h1>Bouldering:</h1>
+        <p class="sections-box">
+        All first time or inexperienced climbers will be required to complete a safety induction with a staff member prior to climbing.
+        </p>
+        <li>All experienced climbers will be asked a short series of questions to demonstrate competence. </li>
+        <li>All under 18s must have their safety agreement signed by a parent or guardian.</li>
+        <li>Users under the age of 13 must be directly supervised by an experienced adult. This means child and adult being on the matted
+        area together within clear sight of one another.</li>
+        <li>Adults may supervise up to 3 under 13s providing the adult is an experienced, registered climber or has completed an induction
+        with a staff member.</li>
+        <li>Under 5s must be under constant close adult supervision. This means to be in arms reach of the child at all times. During peak
+        times we may request this does not exceed a 1:1 ratio.</li>
+        <li>Soft mats do not guarantee safety, the safety descent method is down climbing.</li>
+        <li>Any fall may cause injury to yourself or others, please exercise caution at all times.</li>
+        <li>Holds may spin or break, if this happens please inform a staff member.</li>
+        <li>Please keep personal belongings off the mats, cubbies and lockers are provided.</li>
+        <li>Keep the fall zone clear. Be aware of other climbers, and do not go underneath or over another climber. </li>
+        <br>
+        <h1>Training and Fitness:</h1>
+        <li> Please observe the safety signage located alongside the training and fitness equipment.</li>
+        <li>The equipment may not be used by under 18s unless supervised or authorised by an approved coach. </li>
+        <li>Only use training and fitness equipment within your capabilities.</li>
+        
+        <br>
+        <h1>Privacy Policy</h1>
+        <p class="sections-box">
+        Resistance Climbing Gym is committed to personal privacy and compliance with current privacy legislation. Any personal information
+        collected and held will only be used or disclosed as follows:
+        </p>
+        <li>To third parties we have engaged to assist us to provide the products or services you have requested, for example personal</li>
+        trainers.
+        <li>For marketing of products or services.</li>
+        <li>To prevent and resolve unauthorised access to, or attacks on our systems; or where otherwise legally permitted.</li>
+        <li>CCTV surveillance is in use at this facility for safety and security.</li>
+        <li>Photos and video of users may be collected for security and marketing purposes. We will endeavour to collect consent whenever
+        possible if using images for marketing purposes and will remove any published images online by reasonable request.</li>
+        <h1>
+        <p class="sections-box">
+        By providing us with your email address you consent to receive emails from us advising of updates, products and services
+        available. You may unsubscribe from our email database at any time.
+        </p>
+        </h1>        
+        </div>
+
+    <div class="sign-box">
+    <ng-container *ngIf="member_ref.signatureImage;else notSigned">
+    <h1>Signature</h1><img src="{{member_ref.signatureImage}}" style="width:200px;height:200px">
+    <ng-container *ngIf="!signing">
+    <button class="button5" (click)="signing=true;member_ref.signatureImage=''">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pen-tool"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+    Sign-Again</button>
+    </ng-container>
+    </ng-container>
+
+    <ng-template #notSigned>
+        
+        <ng-container *ngIf="signing;else awaiting">
+                <h1>Awaiting Signature
+                        <button (click)="clearPad()" class="button2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                            Reset Signature</button>
+                        <button (click)="saveSignature()" class="button2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>                            
+                            Save</button>
+                </h1>
+        </ng-container>
+        <ng-template #awaiting>
+                <h1>Please Read Waiver / T&C Carefully</h1>
+        </ng-template>
+        <ng-container *ngIf="!signing">
+        <button class="button5" (click)="signing=true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pen-tool"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+            Sign</button>
+        </ng-container>
+        <ng-container *ngIf="signing">
+                <signature-pad class="signature-pad" [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>                
+        </ng-container>
+    </ng-template>
+    </div>
+</div>
+</ng-container>
+</modal>
+
+
+

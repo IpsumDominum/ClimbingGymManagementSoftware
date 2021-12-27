@@ -1,0 +1,129 @@
+
+    
+    <!---BODY START--->
+    <body>
+        <h1>Waiver Station</h1>
+        <div style="display:flex">                    
+        <div class="table-wrapper2">
+            <table id="customers" >
+                    <thead>
+            <tr >                                
+                <th class="label">First Name</th>
+                <th class="label">Middle Name </th>
+                <th class="label">Last Name</th>
+                <th class="label">Email</th>
+                <th class="label">Age</th>
+                <th class="label">Other information</th>
+                <th class="label">Waiver Signature</th>
+                
+                <th class="label">Actions</th>
+            </tr>
+            </thead>            
+            <tbody>
+            <tr *ngFor="let waiverTemp of waiverTempDisplayData; let idx= index;" [ngStyle]="{'opacity':loading ? '0.3':''}">
+                    <ng-container *ngIf="waiverTemp==undefined,else showData">
+                            <th style="opacity: 0">Trujiillo</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th style="opacity: 0"><button>View Detail</button></th>
+                            <th></th>
+                            <th style="opacity: 0">
+                                <button style="margin-top:3px;width:120px;">Convert to customer</button>
+                                <button style="margin-top:3px;margin-bottom:3px;width:120px;">Mark as solved</button>
+                            </th>
+                            
+                        </ng-container>
+                        <ng-template #showData >
+                            <th>{{waiverTemp.firstName}}</th>
+                            <th>{{waiverTemp.middleName}}</th>        
+                            <th>{{waiverTemp.lastName}}</th>        
+                            <th>{{waiverTemp.email}}</th>        
+                            <th>{{calcAge(waiverTemp.birthday)}}</th>
+                            <th>
+                                <button class="button5" (click)="openTempWaiverDetails.emit(waiverTemp)">View Details</button>
+                                <waiver-temp-view-details-modal [openModalEvent]="openTempWaiverDetails" [waiverTemp]="waiverTemp"></waiver-temp-view-details-modal>
+                            </th>
+                            <th><img style="width:100px;"src="{{waiverTemp.signatureImage}}"></th>
+                            <th>
+                            <button class="button5" (click)="openConvertToCustomerModal(waiverTemp,idx)">Convert To Climber</button>
+                            <convert-to-customer-modal (alert_relay)="alert_check($event)" (submitted)="handleConverted($event)" 
+                            [openModalEvent]="openConvertToCustomer" [waiverTemp]="waiverTemp" [index]="idx"></convert-to-customer-modal>
+                            <button (click)="markAsSolved(waiverTemp.id)" style="margin-top:3px;margin-bottom:3px;width:120px;">Mark as solved</button>
+                            </th>
+                    </ng-template>
+            </tr>
+        </tbody>
+        </table>
+        <ng-container *ngIf="loading">
+                <div class="lds-ring" >                          
+                        <img src="assets/img/logo2.png" >                                          
+                        <!--
+                        <p style="position:absolute;z-index:4;font-size:10px;
+                        left:25px;top:38px;width:100px;
+                            font-family: 'grifter'
+                        ">Fetching and storing waivers... <br>This might take a while...</p>
+                        -->
+                    <div></div>
+                </div>
+        </ng-container>
+
+
+     
+</div> 
+
+<!-------RIGHT BOX------->
+<div style="margin-left:20px;">
+    <h1>Actions</h1>
+    <button (click)="fetchNewWaivers(true)" class="button-large">Fetch new waivers</button>
+    <!--<button (click)="markAllAsSolved()" class="button-large">Mark all as checked</button>-->
+    <br><br>
+    <h1>Log </h1>
+    <div class="table-wrapper">
+            <table id="customers" >
+                    <thead>
+            <tr >                
+                <th class="label">Log Date</th>
+                <th class="label">Fetched Amount</th>
+                <th class="label">Fetch Time</th>
+                <th class="label">Server Response</th>
+            </tr>
+            </thead>            
+            <tbody>
+            <tr *ngFor="let log of waiverFetchLogDisplayData" [ngStyle]="{'opacity':loading ? '0.3':''}">
+                    <ng-container *ngIf="log==undefined,else showData">
+                            <th></th>
+                            <th></th>        
+                            <th></th>        
+                            <th style="color:green"></th>
+                        </ng-container>
+                        <ng-template #showData >
+                            <th>{{dateFromISODetailed(log.log_date)}}</th>
+                            <th [ngStyle]="{'color':log.fetched_amount>0 ? 'green' : ''}">{{log.fetched_amount}}</th>        
+                            <th>{{log.fetched_time}}(s)</th>        
+                            <th [ngStyle]="{'color':log.server_response=='success' ? 'green' : 'red'}">{{log.server_response}}</th>
+                    </ng-template>
+            </tr>
+        </tbody>
+        </table>
+        <ng-container *ngIf="loading">
+                <div class="lds-ring" >                          
+                        <img src="assets/img/logo2.png" >                                          
+                        <!--
+                        <p style="position:absolute;z-index:4;font-size:10px;
+                        left:25px;top:38px;width:100px;
+                            font-family: 'grifter'
+                        ">Fetching and storing waivers... <br>This might take a while...</p>
+                        -->
+                    <div></div>                    
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+</div>
+
+</body>
+    
+    

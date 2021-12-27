@@ -1,0 +1,62 @@
+
+        
+        <!---BODY START--->
+        <body>
+
+                <div class="table-wrapper2">
+                        <table id="customers">
+                                <thead>
+                        <tr >
+                            <th class="label">Alert Date</th>
+                            <th class="label">Alert Type</th>
+                            <th class="label">Alert Level</th>
+                            <th class="label">Alert Message</th>
+                            <th class="label">Member Concerned</th>
+                            <th class="label">Status</th>
+                            <th class="label">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let alert of displayData">
+                                <ng-container *ngIf="alert==undefined,else showData">
+                                    <th></th>        
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    </ng-container>
+                                    <ng-template #showData >
+                                        <th>{{alert.created}}</th>
+                                        <th>{{alert.alert_type}}</th>        
+                                        <th
+                                        [ngStyle]="{'color':getColor(alert.alert_level)}">{{alert.alert_level}}</th>        
+                                        <th>{{alert.alert_message}}</th>
+                                        <th>{{alert.member.firstName}}  {{alert.member.middleName}} {{alert.member.lastName}}</th>
+                                        <th>{{alert.alert_status}}</th>
+                                        <th><button (click)="markAlertAsSolved(alert)">Mark as solved</button>
+                                        <ng-container *ngIf="alert.alert_type=='Invoice Failed'">
+                                                <button (click)="jumpToMembership(alert.member)">Jump to membership</button>
+                                        </ng-container>
+                                        </th>
+                                </ng-template>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div> 
+            <ng-container *ngIf="loading">
+                <div class="lds-ring" style="margin-left:80px">                          
+                        <img src="assets/img/logo2.png" >                                          
+                        <!--
+                        <p style="position:absolute;z-index:4;font-size:10px;
+                        left:25px;top:38px;width:100px;
+                            font-family: 'grifter'
+                        ">Fetching and storing waivers... <br>This might take a while...</p>
+                        -->
+                    <div></div>                    
+            </div>
+        </ng-container>  
+        </body>
+        
+        

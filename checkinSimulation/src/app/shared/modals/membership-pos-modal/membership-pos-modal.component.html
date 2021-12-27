@@ -1,0 +1,256 @@
+
+<button class="button2" (click)="openModal('membership-modal-'+type.toString())">{{type}} Month Membership</button>
+
+<modal id="membership-modal-{{type}}" >
+    <ng-container >
+        <div [ngStyle]="{'opacity': mode=='searchCustomer' ? 0.5: 1} "  >
+<!---------------MAIN INFO------------------->
+    <h1>Membership</h1>
+    <div style="border:black solid 1px;display:flex;flex-direction: row">
+        <div>
+        <!--Price <input type="number" [(ngModel)]="price"/> <br>-->
+        Description <input value="{{type}} Month Membership -Individual" disabled><br>
+        Total Price <input value="${{type*4*weeklyPrice}}" disabled> <button [disabled]="mode=='searchCustomer'"><< Change</button> 
+        Discount <select disabled>
+            <option>None</option></select> <input type="number" value="0" disabled>%<br>
+        Ext. Price <strong>$30</strong><br>
+        </div>
+            <!------------ATTACH MEMBER BOX---------->
+        <div style="margin-left:20px;">
+            <br>            
+        <div class="attach-member-box">            
+            <!---BOX INFO TEXT---->
+            <div style="margin-top:-30px;margin-left:50px;">
+            <h3>Attached Members
+                    <span style="font-size: 10px;" 
+                    [ngStyle]="{'color':selectedMemberAmount==selectMemberAmountNeed ? 'green': 'rgb(201, 60, 60)'}">
+                    Selected {{selectedMemberAmount}} / {{selectMemberAmountNeed}} Member</span>
+                </h3> 
+            <!---------ACTUAL BOX------------>            
+                <pre style="background:#5a5a5a;color:white;font-size: 10px;margin-bottom:-1px;margin-top:-5px;"> Member Name    | Payment Option Selected</pre>
+                <div style="  width: 250px;height:100px;border:black solid 1px;background:white">                
+            <div *ngFor="let member of attachedMembers" 
+            style="display:relative;"
+            (click)="chooseAttachedChoice(member)"
+            [ngStyle]="{background: attachedChoice==member && mode!='searchCustomer'? 'rgb(184, 184, 184)': 'white'}"
+            style="width:250px;height:25px;border-bottom:black solid 1px;">
+            <ng-container *ngIf="member.firstName">
+<span style="position:absolute;width:150px;margin-top:5px;margin-left:5px;">{{(member.firstName +" " + member.lastName).slice(0,20)}}</span> 
+<!--------PAYMENT SELECTED OR NOT ICON-------->
+<ng-container *ngIf="false;else paymentNotSelected">
+<span style="float:right;"> <svg xmlns="http://www.w3.org/2000/svg" color="green" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+</ng-container>
+<ng-template #paymentNotSelected>
+    <span style="float:right;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle"><circle cx="12" cy="12" r="10"></circle></svg></span>
+</ng-template>
+<!------ICONS END-->
+            </ng-container>    
+            </div>
+            </div>
+            </div>
+        <!--------- END ------------>
+        <!---------SOME BUTTONS------------>
+        <div style="margin-left:50px;">
+                <button (click)="mode='searchCustomer';attachedChoice=undefined" 
+                [disabled]="selectedMemberAmount==selectMemberAmountNeed">Attach </button><br>
+                <button (click)="removeAttached()" [disabled]="mode=='searchCustomer'">Remove</button>
+        </div> 
+        <!--------- END ------------>
+        </div>
+    </div>
+    <!-------------END ATTACHMEMBER BOX-------------->
+    </div>
+
+<div style="float:right;">
+        <button (click)="createMemberShip()" 
+        [disabled]="selectedMemberAmount!=selectMemberAmountNeed"
+        >Submit</button>
+            <button (click)="closeModal('membership-modal-'+type.toString());">Cancel</button>
+</div>
+</div>
+</ng-container>
+
+<!---------------SEARCH CUSTOMER------------------->
+<ng-container *ngIf="mode=='searchCustomer'">
+<h3>Search For A Customer To Attach To Membership Transaction</h3>
+<pre >
+    <strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"><button id="search" (click)="search()">Search</button> <button id="search">Advanced Search</button>            
+            LAST, FIRST | CARD# | EMAIL
+
+    Showing {{resultData.length}} Matched Customers                 
+</pre>
+<!------TABLE START------>
+<div class="table-wrapper">
+        <table id="customers">
+            <tr>
+                <th class="label">Name</th>
+                <th class="label">Birthday</th>
+                <th class="label">Waiver</th>
+                <th class="label">Type</th>
+                <th class="label">SubType</th>
+                <th class="label">Status</th>
+                <th class="label">Billing</th>
+                <th class="label">Start</th>
+                <th class="label">End</th>
+                <th class="label">Last Billed</th>
+                <th class="label">Next Bill</th>
+                <th class="label">Responsible Party</th>
+                <th class="label">Dues</th>
+                <th class="label">Last Visit</th>
+                <th class="label">First Contact</th>
+                <th class="label">Warning</th>
+                <th class="label">Last Edit</th>
+            </tr>
+        <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+            <ng-container *ngIf="user==undefined,else showData">
+                <th style="color:transparent">1</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </ng-container>
+            <ng-template #showData >
+                <th>{{user.firstName}},{{ user.middleName? user.middleName: ""}}{{user.lastName}},</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </ng-template>
+        </tr>
+        </table>
+</div>
+
+<!----RECENTLY USED AND BUTTONS---->
+<div class="recently-used-and-buttons">
+    <!-------RECENTLY USED------->
+    
+    <div class="recently-used">
+        <h3 style="background:#5a5a5a;color:white;padding-top:5px;padding-bottom:5px;margin-top:-5px;overflow-y:scroll">Recently Used Customers</h3>
+        <div style="margin-top:-15px;">
+        <div class="recently-used-item" *ngFor="let item of recentItems.reverse()"
+        (click)="chosenCustomer=item"
+        [ngStyle]="{background: chosenCustomer==item ? 'rgb(184, 184, 184)': 'white'}"
+            >
+            {{item.firstName}} {{item.middleName}} {{item.lastName}}
+        </div>
+    </div>
+    </div>
+    <!--------MAIN CURRENT CUSTOMER BOX------>
+    <div style="display:flex;align-items:center;top:20px;width:500px;height:150px;border:black solid 1px;background:white;margin-top:10px;">
+            <div style="margin-left:30px">
+            <ng-container *ngIf="chosenCustomer;else noChosenCustomer">
+                <strong>{{chosenCustomer.firstName}} {{chosenCustomer.lastName}}</strong>
+            </ng-container>
+            <ng-template #noChosenCustomer>
+                <strong>No Customer Chosen</strong>
+            </ng-template>
+            </div>
+    </div>
+    <!-------BUTTONS----------->
+    <div style="float:right;">
+    <button class="button3" [disabled]="!chosenCustomer" (click)="attach()">Attach</button>
+    <button class="button3" (click)="mode='mainInfo'" >Cancel</button>
+    </div>
+</div>
+<!----------->
+</ng-container>
+
+<ng-container *ngIf="attachedChoice">
+<div class="payment-options-box">
+<h3>Payment Options for {{attachedChoice.firstName}}:</h3>
+<div class="payment-options">
+<!------OPTION1 : Pay In Full------->
+<div class="option1"
+[ngStyle]="{'background':paymentOption==1?'orange':'white'}"
+>
+    <h4>Prepay In Full</h4>
+    <div>
+    <input id="prepaidCash" type="radio" name="prepaidRadio" [(ngModel)]="prepaidCashOrCard" [value]="0"  [disabled]="paymentOption!=1">
+        Cash / EFTPOS Machine
+    </div>
+    <!---
+    <div>
+    
+        <input id="prepaidCard" type="radio" name="prepaidRadio" [(ngModel)]="prepaidCashOrCard" [value]="1"  [disabled]="paymentOption!=1">
+        Card <select [(ngModel)]="paymentMethodCardSelect"  [disabled]="paymentOption!=1">
+                <ng-container *ngIf="attachedChoice.paymentMethods.length==0;else showCards">
+                        <option [ngValue]="'nocard'">No Cards Found</option>
+                </ng-container>
+                <option [ngValue]="card.payment_method_stripe_id" *ngFor="let card of attachedChoice.paymentMethods">
+                        Card Ending With ****{{card.last_four}}
+                    </option>                                
+        </select>
+    </div>-->
+    <button (click)="paymentOption=1">Choose This Option</button>
+</div>
+<!------OPTION2 : Card Recurring------->
+<div class="option2"
+[ngStyle]="{'background':paymentOption==2?'orange':'white'}"
+>
+        <h4>Billed Automatically</h4>
+            <div>prepaid
+                Billing Frequency <select [(ngModel)]="billingFrequency" [disabled]="paymentOption!=2">
+                    <option [ngValue]="'weekly'">Weekly</option>
+                    <option [ngValue]="'fortnightly'">Fortnightly</option>
+                </select>
+            </div>
+            <div>
+                Card <select [(ngModel)]="paymentMethodCardSelect" [disabled]="paymentOption!=2">
+                    <ng-container *ngIf="attachedChoice.paymentMethods.length==0;else showCards">
+                            <option [ngValue]="'nocard'">No Cards Found</option>
+                    </ng-container>
+                    <ng-template #showCards>
+                            <option [ngValue]="card.payment_method_stripe_id" *ngFor="let card of attachedChoice.paymentMethods">
+                                    Card Ending With  ****{{card.last_four}}
+                            </option>                                
+                    </ng-template>
+                </select>
+            </div>
+    <button (click)="paymentOption=2">Choose This Option</button>
+</div>
+<!------OPTION3 : Card Recurring------->
+<div class="option3"
+[ngStyle]="{'background':paymentOption==3?'orange':'white'}">
+    <h4>Bank Transfer In Full</h4>
+    Transfer To Account Number : xxxxxxxxxxx...xxx
+    Is this useful?
+    <button (click)="paymentOption=3">Choose This Option</button>
+</div>
+<div>
+<button (click)="confirmPaymentOption()"  [disabled]=" paymentOption<=0 || paymentOption >3 " style="position:relative !important;margin-left:-10px;margin-top:10px;padding:5px 5px 5px 5px;">CONFIRM</button>
+</div>
+<!---------END--------->
+</div>
+
+<!----PAYMENT OPTIONS END-->
+</div>
+<!----PAYMENT OPTIONS BOX END-->
+</ng-container>
+</modal>
+
+
+

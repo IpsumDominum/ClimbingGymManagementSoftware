@@ -1,0 +1,33 @@
+<button class="button2" (click)="openModal('send-email-modal')">Send Email</button>
+
+<modal id="send-email-modal" >
+<button style="float:right" (click)="closeModal('send-email-modal');">X Cancel</button>
+<button style="float:right"(click)="sendMail()" >Send Mail</button>
+<h1>Send Mail On Behalf of Resistance Climbing Gym 
+    <br>
+<label style="color:rgb(90, 90, 90)">(admin@resistanceclimbing.co.nz)</label>
+</h1>
+<h3>Header : <input style="width:500px;" type="text" [(ngModel)]="mailHeader"></h3>
+<h3>Sender : <label style="color:rgb(90, 90, 90)">(admin@resistanceclimbing.co.nz)</label></h3>
+<h3 style="display:inline-block">Recipient(s) </h3>
+<input type="text" style="margin-left:5px;margin-right:5px;border:black solid 1px;width:300px;display:inline-block;height:20px;margin-bottom:-8px;">
+<button style="padding:5px 8px 5px 8px;">Add</button>
+<ng-container *ngIf="detailUser">
+<button>{{detailUser.email}}</button>
+</ng-container>
+<br>
+<h3 style="display: inline-block;margin-right:5px;">Content </h3> 
+Choose from templates:
+<select [(ngModel)]="chosenTemplateSelect">
+    <option [ngValue]="'empty'">Empty</option>
+    <option [ngValue]="template.id" *ngFor="let template of emailTemplates">
+        {{template.template_name}}
+    </option>
+</select>
+<button style="padding:5px 8px 5px 8px;" (click)="loadTemplate()">Load</button>
+<angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent"></angular-editor>
+
+</modal>
+
+
+

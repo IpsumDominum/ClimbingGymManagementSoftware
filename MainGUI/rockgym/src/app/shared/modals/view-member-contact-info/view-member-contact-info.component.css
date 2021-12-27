@@ -1,0 +1,12 @@
+#customer{
+    display:flex;
+    flex-wrap:wrap;
+}
+.table-wrapper{
+    margin-top:10px;
+    margin-bottom:50px;
+    font-size: 30px;
+    transform: scale(1.3);
+    width:600px;
+    margin-left:100px;
+}

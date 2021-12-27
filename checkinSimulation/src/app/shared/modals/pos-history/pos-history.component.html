@@ -1,0 +1,62 @@
+<button class="button-5" (click)="openModal('pos-history-modal')">POS History</button>
+
+<modal id="pos-history-modal" >
+    <h1>POS History Today</h1>
+        Total Today: ${{getTotal()}} NZD<br>
+        <div class="table-wrapper">            
+                <table id="customers" style="z-index: 5 !important;position:absolute;">                                        
+                    <thead>
+                        <tr >
+                                <th class="label">Vendor</th>
+                                <th class="label">Product Type</th>
+                                <th class="label">Product Name</th>
+                                <th class="label">Size</th>
+                                <th class="label">Color</th>
+                                <th class="label">Customer Name</th>
+                                <th class="label">Transaction Time</th>
+                                <th class="label">Staff Issued</th>
+                                <th class="label">Qty</th>
+                                <th class="label">Unit Price</th>
+                                <th class="label">Total Expected / Total Paid</th>
+                                <th class="label">Payment Method</th>
+                            </tr>           
+                        </thead>
+                        <tbody>
+                        <tr (click)="selectSale(sale)" *ngFor="let sale of salesData" [ngStyle]="{'background': saleSelected(sale)}">                        
+                                <ng-container *ngIf="sale==undefined,else showData">
+                                        <th style="color:transparent">1<br></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </ng-container>
+                                    <ng-template  #showData >
+                                    <th>{{sale.product.vendor}}</th>
+                                    <th>{{sale.product.productType}}</th>
+                                    <th>{{sale.product.name}}</th>
+                                    <th>{{sale.sub_product.size}}</th>
+                                    <th>{{sale.sub_product.color}}</th>
+                                    <th>{{sale.memberName ? sale.memberName : 'Anonymous'}}</th>
+                                    <th>{{parseDate(sale.created)}}</th>
+                                    <th>Admin</th>
+                                    <th>{{sale.quantity}}</th>
+                                    <th>${{sale.price}}</th>
+                                    <th [ngStyle]="{'color':sale.expected_amount == sale.paid_amount ? 'green':'orange'}">${{sale.expected_amount}} / ${{sale.paid_amount}}</th>                                    
+                                    <th>{{sale.paid}}</th>
+                                </ng-template>
+                        </tr>
+                    </tbody>
+                    </table>                
+        </div>
+    <button (click)="closeModal('pos-history-modal')">Close</button>
+</modal>
+
+
+

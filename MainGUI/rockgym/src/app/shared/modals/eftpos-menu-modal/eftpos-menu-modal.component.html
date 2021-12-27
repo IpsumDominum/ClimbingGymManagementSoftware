@@ -1,0 +1,59 @@
+
+<modal id="eftpos-menu-modal" >
+<button [ngStyle]="{'background':'red'}" style="float:right;color:white;" (click)="closeModal('eftpos-menu-modal');" >Done</button>
+<h1 style="display:inline-block;">Terminal Status: </h1><h1  style="margin-left:30px;display:inline-block;"[ngStyle]="{'color':terminalOK ? 'green' : 'red'}">{{terminalOK ? 'OK' : 'Not Connected'}}</h1><br>
+
+<div class="main_panel">
+<!----------------->
+<div class="eftpos_panel">
+<div class="eftpos_display smooth-borders" >${{eftpos_input}}</div>
+<div class="grid-container">
+        <div (click)="clicked('1')" class="grid-item smooth-borders">1</div>
+        <div (click)="clicked('2')" class="grid-item  smooth-borders">2</div>
+        <div (click)="clicked('3')" class="grid-item  smooth-borders">3</div>
+        <div (click)="clicked('10.00')" class="grid-item  smooth-borders">$10</div>
+        <div (click)="clicked('4')" class="grid-item  smooth-borders">4</div>
+        <div (click)="clicked('5')" class="grid-item  smooth-borders">5</div>
+        <div (click)="clicked('6')" class="grid-item  smooth-borders">6</div>
+        <div (click)="clicked('20.00')" class="grid-item  smooth-borders">$20</div>
+        <div (click)="clicked('7')" class="grid-item  smooth-borders">7</div>
+        <div (click)="clicked('8')" class="grid-item  smooth-borders">8</div>
+        <div (click)="clicked('9')" class="grid-item smooth-borders">9</div>
+        <div (click)="clicked('50.00')" class="grid-item  smooth-borders">$50</div>
+        <div (click)="clicked('0')" class="grid-item  smooth-borders">0</div>
+        <div (click)="clicked('.')" class="grid-item  smooth-borders">.</div>
+        <div (click)="clicked('00')" class="grid-item smooth-borders">00</div>
+        <div (click)="clicked('100.00')" class="grid-item  smooth-borders">$100</div>
+        <div (click)="clicked('plus')" class="grid-item  smooth-borders">+</div>
+        <div (click)="clicked('minus')" class="grid-item  smooth-borders">-</div>
+        <div (click)="clicked('back')" class="grid-item  smooth-borders">⌫</div>
+        <div (click)="clicked('clear')" class="grid-item  smooth-borders">CLR</div>
+</div>
+</div>
+<!----------------->
+<div class="control_panel">
+<button class="btn" style="background:orangered;color:white;" (click)="open_administration_menu()">Open Administration Menu</button>
+<button class="btn" style="background:purple;color:white;"(click)="purchase()">Purchase</button>
+<button class="btn" style="background:blue;color:white;" (click)="refund()">Refund</button>
+<div class="debug_panel">
+<strong>RESPONSE:</strong><br>
+<div class="smooth-borders debug_message_panel">
+{{debug_message}}
+</div>
+</div>
+</div>
+<!----------------->
+<div class="info_panel">
+
+</div>
+
+</div>
+
+<h1 style="color:orange;font-size:200px;">
+        FEATURE IN DEVELOPMENT
+</h1>
+</modal>
+
+
+
+

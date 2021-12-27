@@ -1,0 +1,113 @@
+<button class="button2" (click)="openModal('add-family-modal')">Add Family Member(s)</button>
+
+<modal id="add-family-modal" >
+    <button style="float:right" (click)="closeModal('add-family-modal');">X Close</button>
+
+    <div style="display:flex">
+<!---Left BLOCK--->
+        <div class="leftBlock">
+<!--ADD FAMILY MEMBER FOR?-->
+<h1>Adding Family Members For...</h1>
+<ng-container *ngIf="detailUser;else SelectOne">
+
+First Name : {{detailUser.firstName}}
+Middle Name : {{detailUser.middleName}}
+Last Name : {{detailUser.lastName}}
+<!--CURRENT MEMBERS BOX-->
+<h2>Current Family Members</h2>
+
+<button (click)="mode='selectMemberAdditional'"
+[ngStyle]="{'color':mode=='selectMemberAdditional'? '#FC5000':''}">Add Member</button>        
+<button (click)="removeFamilyMember()"style="margin-left:-2px;">Delete Member</button>
+<div class="table-wrapper2">
+    <table id="customers">
+        <tr>
+            <th class="label">First Name</th>
+            <th class="label">Last Name</th>
+            <th class="label">Age Group</th>
+        </tr>
+    <tr *ngFor="let user of membersData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chosenFamilyMember=user;">
+        <ng-container *ngIf="user==undefined,else showData">
+            <th style="color:transparent">1</th>
+            <th></th>
+            <th></th>
+        </ng-container>
+        <ng-template #showData >
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.firstName}}</th>
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.lastName}}</th>
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.age}}</th>
+    </ng-template>
+    </tr>
+    </table>
+</div>
+
+</ng-container>
+<ng-template #SelectOne>
+
+<button (click)="mode='selectMemberInitial'"
+[ngStyle]="{'color':mode=='selectMemberInitial'? '#FC5000':''}">Select Member To Add Family Member</button>        
+
+</ng-template>
+</div>
+
+        <!---RIGHT BLOCK--->
+<div class="rightBlock">
+    <ng-container *ngIf="mode=='selectMemberInitial' || mode=='selectMemberAdditional'">
+    <h1>Search For A Customer</h1>
+    <pre >
+<strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"> <button id="search" (click)="search()">Search</button> <button id="search">Advanced Search</button>            
+    LAST, FIRST | CARD# | EMAIL
+
+Showing {{resultData.length}} Matched Customers                 
+        </pre>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                        <th class="label">First Name</th>
+                        <th class="label">Middle Name</th>
+                        <th class="label">Last Name</th>
+                        <th class="label">Birthday</th>
+                        <th class="label">Age Group</th>
+                        <th class="label">Family</th>
+                        <th class="label">Can Access After Hours</th>
+                    </tr>
+                <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                   
+                    </ng-container>
+                    <ng-template #showData >
+                        <th>{{user.firstName}}</th>
+                        <th>{{user.middleName}}</th>
+                        <th>{{user.lastName}}</th>
+                        <th>{{user.birthday}}</th>
+                        <th>{{user.age}}</th>
+                        <th>{{getShortened(user.family)}}</th>
+                        <th>{{user.access_after_hours}}</th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+        <div style="float:right;margin-right:-60px;margin-top:10px;">
+                <ng-container *ngIf="chosenCustomer">
+                    {{chosenCustomer.firstName}} {{chosenCustomer.middleName}} {{chosenCustomer.lastName}}
+                </ng-container>
+                <button (click)="confirm()">Confirm</button>
+                <button (click)="mode='waitingCommand'">Cancel</button>
+        </div>
+        <!---Search Table End--->
+    </ng-container>
+    </div>        
+    <!----->
+</div>
+
+</modal>
+
+
+

@@ -1,0 +1,12 @@
+<div class="modal-wrapper">
+<div class="jw-modal" >
+    <div class="jw-modal-main" [ngClass]="{'jw-modal-body':!['discount-amount-modal','advanced-search-modal','set-rental-due-date-modal','restock-modal','redeem-coupon-modal','create-coupon-modal','edit-coupon-modal','pos-history-modal'].includes(id),
+    'jw-modal-body-medium':['advanced-search-modal','membership-holiday-modal','tender-modal'].includes(id),
+    'jw-modal-body-small':['set-rental-due-date-modal','restock-modal','create-coupon-modal','edit-coupon-modal'].includes(id),
+    'jw-modal-body-extra-small':['edit-qty-modal','redeem-coupon-modal','discount-amount-modal'].includes(id),
+    'jw-modal-body-large':['pos-history-modal'].includes(id)}">
+    <ng-content></ng-content>
+    </div>
+</div>
+</div>
+<div class="jw-modal-background"></div>

@@ -1,0 +1,98 @@
+<ng-container *ngIf="mode=='edit' && product_ref==undefined;else showNormal">
+<button class="button2" (click)="alert('please first select a product')">{{mode=='add' ? 'Add New' : 'Edit'}} Product</button>
+</ng-container>
+<ng-template #showNormal>    
+    <button class="button2" (click)="openModal(mode+'-product-modal')">{{mode=='add' ? 'Add New' : 'Edit'}} Product</button>
+</ng-template>
+<modal id="{{mode}}-product-modal" >
+    <h1>{{mode=='add'? 'Add a new' : 'Edit'}} product</h1>
+    <div style="border:black solid 1px;">
+        <!-----UPPER BOX----->
+            <div style="display: flex;">
+                    <!---left BOX--->
+                    <div style="margin-left:20px; margin-right:20px;width:300px;">
+                    <h1>Primary</h1>    
+
+                    <ng-container *ngIf="check_product_is_default(product_ref)==true || check_product_has_sub_items(product_ref)==true;else notDefault">
+                            Vendor <br><input type="text" [(ngModel)]="vendor" disabled/> <br>
+                            <br> 
+                            Product Name <br><input type="text" [value]="productName" disabled/> <br>                            
+                            <br> 
+                    </ng-container>
+                    <ng-template #notDefault>
+                            Vendor <br><input type="text" [(ngModel)]="vendor"/> <br>
+                            <br> 
+                            Product Name<br> <input type="text" [(ngModel)]="productName"/> <br>        
+                            <br> 
+                    </ng-template>
+                    
+                    Product Type <br>
+                <ng-container *ngIf="mode=='add'">
+                <select [(ngModel)]="productType" >
+                        <option [value]="'Retail'">Retail</option>
+                        <option [value]="'Rental'">Rental</option>
+                </select>
+            </ng-container>
+            <ng-container *ngIf="mode!='add'">
+                <select [(ngModel)]="productType" disabled>
+                        <option [value]="'Retail'">Retail</option>
+                        <option [value]="'Rental'">Rental</option>
+                </select>
+            </ng-container>
+
+            <ng-container *ngIf="check_product_has_sub_items(product_ref)==true;else notDisabledPrice">
+                    <h1>Inventory Related</h1>
+                    Price <br> <input type="number" [(ngModel)]="price" disabled/> <br> <br>  <label><strong style="color:rgb(216, 102, 36)">Note:</strong> The selected product has <strong style="color">sub products</strong>, <br><br>This means that it cannot be edited anymore.<br><br>Please edit the subproducts instead!</label>
+            </ng-container>
+            <ng-template #notDisabledPrice>
+                <h1>Inventory Related</h1>
+                    Price <br> <input type="number" [(ngModel)]="price"/> <br><br>   <label><strong style="color:rgb(216, 102, 36)">Note:</strong> Price alteration only effect future sales. Please edit with caution.</label>
+            </ng-template>
+                </div>
+                <!----RIGHT BOX---->
+                <div style="margin-left:0px;">
+                    <h1>POS Options</h1>
+                    <ng-container *ngIf="check_product_is_default(product_ref)==true || check_product_has_sub_items(product_ref)==true;else notDisabled">
+                            Allow Anonymous Sales <input class="checkbox" type="checkbox" [(ngModel)]="allow_anonymous_sale" disabled><br><br>
+                            Waiver Required<br><select style="margin-bottom:10px;" [(ngModel)]="waiver_required" disabled>
+                                    <option [value]="0">Not Required</option>
+                                    <option [value]="1">Child Only</option>
+                                    <option [value]="2">Child & Young Adult</option>
+                                    <option [value]="3">All including Adult</option>
+                                            </select><br>
+                            Notes<br><input type="text" [(ngModel)]="notes" disabled/> <br>                            
+                        </ng-container>
+                    <!------DISABLE THE FIELDS TO DISALLOW EDITING OF DEFAULT PRODUCTS------>
+                    <ng-template #notDisabled>
+                        <ng-container *ngIf="productType=='Rental';else notRental">
+                            Allow Anonymous Sales <input class="checkbox" type="checkbox" value="false" disabled><br><br>
+                        </ng-container>
+                        <ng-template #notRental>
+                            Allow Anonymous Sales <input class="checkbox" type="checkbox" [(ngModel)]="allow_anonymous_sale" ><br><br>
+                        </ng-template>
+                        
+                            Waiver Required<br><select style="margin-bottom:10px;" [(ngModel)]="waiver_required">
+                                <option [value]="0">Not Required</option>
+                                <option [value]="1">Child Only</option>
+                                <option [value]="2">Child & Young Adult</option>
+                                <option [value]="3">All including Adult</option>
+                                            </select><br>
+                            Notes<br><input type="text" [(ngModel)]="notes"/> <br>                            
+                    </ng-template>
+                </div>
+                <div style="margin-left:110px;margin-top:30px;">
+                        <img src="assets/img/logo2.png" style="width:300px;">
+                    </div>
+            </div>
+    <!-----LOWER BOX----->
+    <div>    
+         
+    </div><br>
+</div>
+
+<div style="float:right;">
+        <button (click)="submit()">Submit</button>
+            <button (click)="closeModal(mode+'-product-modal');">Cancel</button>
+        </div>
+
+</modal>

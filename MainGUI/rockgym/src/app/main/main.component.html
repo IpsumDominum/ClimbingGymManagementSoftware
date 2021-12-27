@@ -1,0 +1,96 @@
+
+<ng-container *ngIf="menuOpen;else notOpen">
+<div class="menu">
+<a (click)="closeMenu()" class="cancel">X</a>
+<br><br>
+<a [routerLink]="['/admin']">Admin </a> 
+<br><br>
+<a [routerLink]="['/management']"> Management </a> 
+<br>
+<br>
+<a  style="color:#CC5500;" [routerLink]="['/main']"> Main Functions </a>
+<br>
+<br>
+<a  [routerLink]="['/auth/signin']"> Log off</a>
+</div>
+</ng-container>
+<ng-template #notOpen>
+<div (click)="openMenu()" class="menuClosed">
+    <button><img src="assets/logo.png"> </button>
+</div>
+
+</ng-template>
+
+
+    <!---HEADER START-->
+    <div class="header">
+            
+            <h1 class= "logo">
+                    <div style="display:flex;margin-right:370px;">
+                        <div style="display:flex;margin-left:10px;margin-top:10px;margin-right:-80px;">
+                            <a [ngClass]="{'active':currentRoute=='/main/pos'}"
+                            [routerLink]="['/main','pos']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                 POS </a>
+                            <a [ngClass]="{'active':currentRoute=='/main/checkin'}" 
+                            [routerLink]="['/main','checkin']"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                CHECKIN </a>
+                            <!--<a  [routerLink]="['/main','calendar']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                CALENDAR </a>-->
+                            <a 
+                            [ngClass]="{'active':currentRoute=='/main/alerts'}"
+                            [routerLink]="['/main','alerts']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                ALERTS <div style="margin-top:-20px;border-radius:10px;padding:3px 7px 3px 7px;font-size:15px;background:red;color:white;">{{alertAmount}}</div></a>
+                            <a 
+                            [ngClass]="{'active':currentRoute=='/main/waivers'}"
+                            [routerLink]="['/main','waivers']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                WAIVERS</a>
+                            <a 
+                            [ngClass]="{'active':currentRoute=='/main/emailing'}"
+                            [routerLink]="['/main','emailing']">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>                        
+                                EMAILING</a>
+                        </div>    
+                        <div class="time" >
+                            Current Time<br>
+                            {{today.getHours()}} : {{today.getMinutes()}} : {{today.getSeconds()}}
+                        </div>
+                        <div class="time">
+                                Current Date<br>
+                                {{today.getDate()}} / {{today.getMonth()+1}} / {{today.getFullYear()}}
+                            </div>    
+                        </div>
+                        
+                    </h1>
+                        </div>
+<div style="position:absolute;z-index: 500000;top:50px;right:50px;">
+<div  *ngFor="let checkin of checkinData" class="smooth-borders checkin-toast" [ngStyle]="{'display': checkin ? checkin.timed == 0 ? 'none' : 'block' : 'none',
+                                                                                           'opacity': checkin ? checkin.timed / 1000 : '0'}">
+    <ng-container *ngIf="checkin">        
+        <div >
+        <label class="smooth-borders" style="height:10px !important;width:10px;padding:5px 5px 5px 5px;" (click)="checkin.timed = 0">Close X</label>&nbsp;
+        check-in <label [ngStyle]="{'color': checkin.checkin_status=='success' ? 'green' : 'red'}">{{checkin.checkin_status}}</label>
+        <div style="display:flex;margin-top:10px;">
+            <div style="margin-right:10px;">
+                <img (click)="openPOSMember(checkin.member.id)" src="{{checkin.member.profile_photo}}" style="width:150px;height:130px;">
+            </div>
+        <div>
+            <label>{{checkin.checkin_type}}</label> <br>
+            <hr>
+            <label>{{checkin.member.firstName}}</label> &nbsp;
+            <label>{{checkin.member.middleName}}</label>&nbsp;
+            <label>{{checkin.member.lastName}}</label>&nbsp; <br>
+            <hr>
+            <label>{{checkin.checkin_message}}</label>        
+            </div>
+        
+        </div>
+    </div>
+    </ng-container>
+</div>
+</div>
+<router-outlet></router-outlet> 

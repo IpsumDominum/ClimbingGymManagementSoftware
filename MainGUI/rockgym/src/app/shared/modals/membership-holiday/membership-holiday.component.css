@@ -1,0 +1,28 @@
+.tab{
+    margin-right:10px;
+    font-family: 'grifter';
+    padding-bottom:5px;
+}
+.tab:hover{
+    color:#FC5000;
+    border-bottom:#FC5000 solid 2px;
+}
+.active{
+    color:#FC5000;
+    border-bottom:#FC5000 solid 2px;
+}
+
+input{
+    width:150px;
+}
+
+.infoBox{
+    margin-top:-10px;
+    margin-left:100px;
+}
+.infoMessage{
+    padding:5px 5px 5px 5px;
+    width:300px;
+    line-height: 20px;
+    display:block;
+}

@@ -1,0 +1,42 @@
+
+<modal id="set-rental-due-date-modal" >
+<button style="float:right" (click)="closeModal('set-rental-due-date-modal');">X Cancel</button>
+
+<h1>Rental Duration</h1>
+
+<label (click)="mode='specifyTime'" class="tab" [ngClass]="{'active': mode=='specifyTime'}">Specify Time</label>
+<label (click)="mode='selectEndDate'" class="tab" [ngClass]="{'active': mode=='selectEndDate'}">Select End Date</label>
+<hr>
+<br>
+<div style="height:170px;">
+<ng-container *ngIf="mode=='specifyTime'">
+Minute(s) 
+<br><input type="number" min="0" max="60" [(ngModel)]="minutes"><br>
+<ng-container *ngIf="minutes>60 || minutes<0">
+    <label style="color:red">Minutes must be between 0-60</label>
+</ng-container>
+<br>
+Hour(s)
+<br><input type="number" min="0" max="24" [(ngModel)]="hours">
+<br>
+<ng-container *ngIf="hours>24 || hours<0">
+    <label style="color:red">Hours must be between 0-24</label>
+</ng-container>
+<br>
+Day(s)
+<br><input type="number" min="0" max="365" [(ngModel)]="days"><br>
+<ng-container *ngIf="days>365 || days<0">
+        <label style="color:red">Days must be between 0-365</label>
+    </ng-container>
+<br>
+</ng-container>
+<ng-container *ngIf="mode=='selectEndDate'">
+    Rental Due Date:
+    <br><input type="date" [(ngModel)]="endDate"><br>
+</ng-container>
+</div>
+<button (click)="confirm()">Confirm</button>
+</modal>
+
+
+

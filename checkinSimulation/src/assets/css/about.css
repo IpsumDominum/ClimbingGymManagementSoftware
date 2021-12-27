@@ -1,0 +1,21 @@
+.teammembers{
+    border-radius: 10px;
+    display:flex;   
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+.teammembers div{
+ max-width: 390px;
+ margin: 0px 20px 0px 20px;
+ max-height:300px;
+ display:flex;
+}
+.teammembers div span{
+    overflow-y: scroll;
+}
+.teammembers div div{
+    max-width:200px;
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+    text-align: right;
+}

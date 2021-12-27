@@ -1,0 +1,80 @@
+
+<modal id="view-purchase-history-modal" >
+<ng-container *ngIf="member_ref">
+<h1>Customer Purchase History</h1>
+<button style="float:right;background:red;color:white;" (click)="closeModal('view-purchase-history-modal');">X Cancel</button>
+<ng-container *ngIf="member_ref">
+        <strong>For </strong>{{member_ref.title}} {{member_ref.firstName}} {{member_ref.middleName}} {{member_ref.lastName}}
+</ng-container> <br>
+<br>
+<button
+[ngClass]="{'tab-active': queryMode=='sinceDate'}"
+(click)="filterBySinceDate()"
+>Since</button> <input 
+(keypress)="handleKeyboardEvent($event)"
+type="date" [(ngModel)]="sinceDate">  &nbsp; 
+<button [ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==12}"
+ (click)="filterBySinceMonth(12)">Last 12 Months</button>
+<button 
+[ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==3}" 
+(click)="filterBySinceMonth(3)">Last 3 Months</button>
+<hr>
+{{totalAmount}} Records Match<button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+
+<div style="width:800px;height:380px;margin-bottom:20px;">
+        <div class="table-wrapper2" style="overflow-x:scroll;">
+                <table id="customers">
+                    <tr>
+                            <th class="label">Product Type</th>
+                        <th class="label">Vendor</th>
+                        <th class="label">Product Name</th>
+                        <th class="label">Size</th>
+                        <th class="label">Color</th>
+                        <th class="label">Staff Issued</th>
+                        <th class="label">Price</th>
+                        <th class="label">Payment Method</th>
+                        <th class="label">Purchase Date</th>
+                        <th class="label">Staff Issued</th>
+                        
+                    </tr>
+                <tr *ngFor="let purchase of purchasesDisplay">
+                    <ng-container *ngIf="purchase==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                    <th>{{purchase.product.productType}}</th>
+                    <th>{{purchase.product.vendor}}</th>
+                    <th>{{purchase.product.name}}</th>
+                    <ng-container *ngIf="purchase.sub_product;else noSubProduct">
+                        <th>{{purchase.sub_product.size}}</th>
+                        <th>{{purchase.sub_product.color}}</th>
+                    </ng-container>
+                    <ng-template #noSubProduct>
+                        <th>-</th>
+                        <th>-</th>
+                    </ng-template>
+                    <th>Admin</th>
+                    <th>{{purchase.expected_amount}}</th>
+                    <th>{{purchase.paid}}</th>
+                    <th>{{dateFromISODetailed(purchase.created)}}</th>
+                    <th>{{purchase.notes}}</th>
+                    </ng-template>
+                </tr>
+                </table>
+        </div>
+</div>
+
+</ng-container>
+</modal>
+
+
+

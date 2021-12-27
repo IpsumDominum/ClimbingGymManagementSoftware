@@ -1,0 +1,140 @@
+.button2{
+    padding:20px 5px 20px 5px;
+    margin:0px 5px 10px 5px;
+    width:139px;
+    text-align: left;
+}
+.button3{
+    padding:20px 5px 20px 5px;
+    margin:0px 5px 10px 5px;
+    width:139px;
+    font-size: 30px;
+}
+.attach-member-box{
+    display:flex;
+    flex-direction: row;
+}
+
+#duration{
+  margin-left:5px;
+  margin-right:5px;
+  width:50px;
+}
+#autoRenew{
+  margin-left:5px;
+  margin-right:5px;
+  width:100px;
+}
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;   
+    background:white; 
+    overflow-x: scroll;
+    height:200px;
+    width: 100%;
+  }
+  a{
+    height:50px;
+  }
+  #customers .label {
+    text-align: left;
+    padding-left:5px;
+    background-color: #5a5a5a;
+    color: rgb(255, 255, 255);
+    padding-top:10px;
+    padding-bottom:10px;
+}  
+.table-wrapper{
+  height:200px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper .label{
+  position:sticky;
+  top:0;
+}
+.table-wrapper2{
+  width: 200px;height:100px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+.table-wrapper2 .label{
+  position:sticky;
+  top:0;
+  font-size: 8px;
+  padding: 2px 5px 2px 5px !important;
+
+
+}
+
+#customers td, #customers th {
+    text-align: left;
+    padding-left:5px;
+    height:5px;
+    font-size: 10px;
+    border: 1px solid #ddd;
+    width:30px;
+  }
+  
+  #customers tr:nth-child(odd){background-color: white}
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+
+  .recently-used-and-buttons{
+    display:flex;
+    flex-direction: row;
+  }
+  .recently-used{
+    background:white;
+    width:500px;
+    height:200px
+  }
+  .recently-used-item{
+      width:500px;
+  }
+
+  .payment-options-box{
+    margin-top:50px;
+    background:white;
+    height:300px;
+ 
+}
+.payment-options{
+    display:flex;
+    flex-direction: row;
+}
+.payment-options .option3{
+    margin-right:25px;
+    height:200px;
+    padding-top:10px;
+    padding-left:5px;
+    padding-right: 20px;
+    position: relative;
+}
+.payment-options .option1{
+    margin-right:25px;
+    margin-left:20px;
+    height:200px;
+    padding-left:5px;
+    padding-right: 20px;
+    padding-top:10px;
+    position: relative;
+}
+.payment-options .option2{
+    margin-right:25px;
+    height:200px;
+    width:280px;
+    padding-left:5px;
+    padding-right: 20px;
+    padding-top:10px;
+    position: relative;
+}
+.payment-options button{
+    position: absolute;
+    bottom:0;
+    width:100%;
+    left:0;
+}
+
+
+
+

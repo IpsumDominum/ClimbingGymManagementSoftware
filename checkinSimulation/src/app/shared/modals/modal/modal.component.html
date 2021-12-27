@@ -1,0 +1,9 @@
+<div class="modal-wrapper">
+<div class="jw-modal" >
+    <div [ngClass]="{'jw-modal-body':!['advanced-search-modal','set-rental-due-date-modal','restock-modal'].includes(id),
+    'jw-modal-body-small':['advanced-search-modal','set-rental-due-date-modal','restock-modal'].includes(id)}">            
+        <ng-content ></ng-content>
+    </div>
+</div>
+</div>
+<div class="jw-modal-background"></div>

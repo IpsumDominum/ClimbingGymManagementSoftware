@@ -1,0 +1,99 @@
+
+
+<modal id="visit-history-modal" >
+    <button style="float:right" (click)="closeModal('visit-history-modal');">X Cancel</button>
+<h1>Checkin History</h1>
+<ng-container *ngIf="customer">
+<strong>For </strong>{{customer.title}} {{customer.firstName}} {{customer.middleName}} {{customer.lastName}}
+</ng-container>
+<br>
+<br>
+<button
+[ngClass]="{'tab-active': queryMode=='sinceDate'}"
+(click)="filterBySinceDate()"
+>Since</button> <input 
+(keypress)="handleKeyboardEvent($event)"
+type="date" [(ngModel)]="sinceDate">  &nbsp; 
+<button [ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==12}"
+ (click)="filterBySinceMonth(12)">Last 12 Months</button>
+<button 
+[ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==3}" 
+(click)="filterBySinceMonth(3)">Last 3 Months</button>
+<hr>
+{{totalAmount}} Records Match<button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+<div class="table-wrapper2">
+        <table id="customers">
+                <thead>
+        <tr >
+            <th class="label">Checkin Type</th>                
+            <th class="label">First Name</th>
+            <th class="label">Middle Name</th>
+            <th class="label">Last Name</th>
+            <th class="label">Birthday</th>
+            <th class="label">Age Group</th>
+            <th class="label">Waiver Signed</th>
+            <th class="label">Can Access After Hours</th>
+            <th class="label">Membership Active</th>
+            <th class="label">Checkin Time</th>                
+            <th class="label">After hours?</th>
+            <th class="label">Status</th>
+            <th class="label">Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let checkin of checkinHistory">
+                <ng-container *ngIf="checkin==undefined,else showData">
+                        <th style="color:transparent;height:30px;">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>                            
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                        <th style="height:30px;">{{checkin.checkin_type}}</th>
+                        <th>{{checkin.member.firstName}}</th>
+                        <th>{{checkin.member.middleName}}</th>
+                        <th>{{checkin.member.lastName}}</th>
+                        <th>{{dateFromISO(checkin.member.birthday)}}</th>
+                        <th>{{getAgeGroup(checkin.member)}}</th>
+                        <th [ngStyle]="{'color': checkin.member.waiver_signed ? 'blue' : 'red'}">{{checkin.member.waiver_signed ? 'Signed' : 'Not Signed'}}</th>
+                        <th>{{checkin.member.access_after_hours}}</th>
+                        <th>{{checkin.member.membershipActive}}</th>
+                        <th>{{dateFromISODetailed(checkin.checkin_date)}}</th>                            
+                        <th>{{checkin.is_after_hours}}</th>
+                        <th  [ngStyle]="{'color': checkin.checkin_status=='success' ? 'green' : 'red'}">{{checkin.checkin_status}}</th>
+                        <th>{{checkin.checkin_message}}</th>
+                </ng-template>
+        </tr>
+    </tbody>
+    </table>
+    
+</div>
+
+<ng-container *ngIf="loading">
+        <div class="lds-ring" style="margin-left:80px">                          
+                <img src="assets/img/logo2.png" >                                          
+                <!--
+                <p style="position:absolute;z-index:4;font-size:10px;
+                left:25px;top:38px;width:100px;
+                    font-family: 'grifter'
+                ">Fetching and storing waivers... <br>This might take a while...</p>
+                -->
+            <div></div>                    
+    </div>
+    </ng-container>
+<button>Change Check In Date</button>
+<button>OK</button>
+
+</modal>
+
+
+

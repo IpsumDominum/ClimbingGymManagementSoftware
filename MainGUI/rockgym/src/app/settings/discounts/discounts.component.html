@@ -1,0 +1,59 @@
+<ng-container *ngIf="!loading">
+
+
+    <!---BODY START--->
+    <body style="background:white">
+        <pre >
+        <strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"> <button id="search" (click)="search()">Search</button> <advanced-search-modal></advanced-search-modal> {{filteredData.length}} Coupons Match                 
+            Coupon Name | Coupon ID  <input type="checkbox" [(checked)]="showInActive"  (click)="handleShowInactive()"> Show Inactive Coupons
+
+    </pre>
+    <div style="display:flex">            
+   
+<!--RIGHT BLOCK-->
+<div style="width:80%;margin-left:20px;">
+    <create-coupon-modal></create-coupon-modal>
+    <button class="button1">De-Activate Giftcard</button>
+    <br>
+    <br>
+    <div style="overflow-x:scroll;margin-top:-10px;">
+        <div class="table-wrapper">
+            <table id="customers">
+                <tr>
+                    <th class="label">Giftcard ID</th>
+                    <th class="label">Giftcard Name</th>
+                    <th class="label">Credit Amount</th>
+                    <th class="label">Credit Remainig</th>
+                    <th class="label">Administrator</th>
+                    <th class="label">Created</th>
+                    <th class="label">Status</th>
+                </tr>
+            <tr *ngFor="let user of displayData;" (click)="expandUser(user)">
+                <ng-container *ngIf="user==undefined;else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                </ng-container>
+                <ng-template #showData >
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+            </ng-template>
+            </tr>
+            </table>
+    </div>    
+</div>
+
+</div>
+</div>
+    </body>
+
+</ng-container>

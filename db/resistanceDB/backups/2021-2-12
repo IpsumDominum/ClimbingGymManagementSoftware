@@ -1,0 +1,1397 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE ipsum;
+ALTER ROLE ipsum WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN NOREPLICATION NOBYPASSRLS;
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'md5f789cfe5f56e7ce7f3cbf969aac720fe';
+CREATE ROLE robinbin;
+ALTER ROLE robinbin WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN NOREPLICATION NOBYPASSRLS;
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE "tempDB" WITH TEMPLATE = template0 OWNER = ipsum;
+REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+\connect postgres
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO postgres;
+
+--
+-- Name: alerts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.alerts (
+    id character varying NOT NULL,
+    created timestamp without time zone,
+    alert_type character varying(50),
+    alert_level integer,
+    alert_message character varying,
+    alert_status character varying(50),
+    member_associated_id character varying
+);
+
+
+ALTER TABLE public.alerts OWNER TO postgres;
+
+--
+-- Name: checkin; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.checkin (
+    id character varying NOT NULL,
+    checkin_member_id character varying,
+    checkin_type character varying(50) NOT NULL,
+    checkin_date timestamp without time zone,
+    checkin_status character varying,
+    checkin_message character varying
+);
+
+
+ALTER TABLE public.checkin OWNER TO postgres;
+
+--
+-- Name: email_templates; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.email_templates (
+    id character varying NOT NULL,
+    created timestamp without time zone,
+    last_edited timestamp without time zone,
+    template_name character varying,
+    template_header character varying,
+    template_header_default character varying,
+    template_content character varying,
+    template_content_default character varying,
+    template_description character varying,
+    active boolean
+);
+
+
+ALTER TABLE public.email_templates OWNER TO postgres;
+
+--
+-- Name: family; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.family (
+    id character varying NOT NULL,
+    created timestamp without time zone
+);
+
+
+ALTER TABLE public.family OWNER TO postgres;
+
+--
+-- Name: member; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.member (
+    id character varying NOT NULL,
+    "userType" character varying(50) NOT NULL,
+    title character varying(50),
+    "firstName" character varying(50) NOT NULL,
+    "lastName" character varying(50) NOT NULL,
+    "middleName" character varying(50) NOT NULL,
+    address1 character varying(50),
+    address2 character varying(50),
+    "postalCode" character varying(50),
+    city character varying(50),
+    state character varying(50),
+    country character varying(50),
+    cellphone character varying(50),
+    homephone character varying(50),
+    workphone character varying(50),
+    birthday character varying(50),
+    email character varying(50),
+    "emergencyContact" character varying(50),
+    "emergencyContactPhone" character varying(50),
+    "emergencyContactRelation" character varying(50),
+    last_visit timestamp without time zone,
+    last_edit timestamp without time zone,
+    warning character varying,
+    access_after_hours boolean,
+    waiver_signed boolean,
+    waiver_signed_date timestamp without time zone,
+    "signatureImage" character varying,
+    family character varying,
+    status character varying(50) NOT NULL,
+    proficiency_level character varying(50),
+    got_to_know_channel character varying(50),
+    mail_on_internal_events boolean,
+    mail_promotions boolean,
+    do_not_send_mail boolean,
+    concession_passes integer,
+    stripe_id character varying(50),
+    stripe_invoice_prefix character varying(50),
+    created timestamp without time zone
+);
+
+
+ALTER TABLE public.member OWNER TO postgres;
+
+--
+-- Name: membership; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.membership (
+    id character varying NOT NULL,
+    member_id character varying NOT NULL,
+    created timestamp without time zone,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone,
+    paid integer NOT NULL,
+    "membershipActive" boolean,
+    expected_payment_amount integer NOT NULL,
+    description character varying(50),
+    next_billing_date timestamp without time zone,
+    billing_frequency character varying(50),
+    frozen boolean,
+    frozen_until timestamp without time zone,
+    on_holiday boolean,
+    holiday_until timestamp without time zone,
+    state character varying,
+    "billingType" character varying(50)
+);
+
+
+ALTER TABLE public.membership OWNER TO postgres;
+
+--
+-- Name: membership_adjustment; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.membership_adjustment (
+    id character varying NOT NULL,
+    membership_id character varying NOT NULL,
+    action_date timestamp without time zone,
+    action_type character varying(50),
+    new_start_date timestamp without time zone,
+    new_end_date timestamp without time zone,
+    note character varying
+);
+
+
+ALTER TABLE public.membership_adjustment OWNER TO postgres;
+
+--
+-- Name: membership_invoice; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.membership_invoice (
+    id character varying NOT NULL,
+    membership_id character varying NOT NULL,
+    member_id character varying NOT NULL,
+    stripe_invoice_id character varying(50),
+    description character varying(50) NOT NULL,
+    next_invoice_id character varying(50),
+    expected_amount double precision NOT NULL,
+    paid_amount double precision NOT NULL,
+    invoice_date timestamp without time zone,
+    status character varying(50),
+    stripe_price_choice character varying(50)
+);
+
+
+ALTER TABLE public.membership_invoice OWNER TO postgres;
+
+--
+-- Name: payment_method; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.payment_method (
+    id character varying NOT NULL,
+    member_id character varying,
+    last_four character varying(10),
+    payment_method_type character varying NOT NULL,
+    payment_method_stripe_id character varying NOT NULL
+);
+
+
+ALTER TABLE public.payment_method OWNER TO postgres;
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id character varying NOT NULL,
+    "productType" character varying(50) NOT NULL,
+    vendor character varying(50),
+    name character varying,
+    notes character varying,
+    age_restriction integer,
+    waiver_required boolean,
+    name_unchangeable character varying(50),
+    default_item boolean,
+    price double precision,
+    allow_anonymous_sale boolean,
+    active boolean
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- Name: rental; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.rental (
+    id character varying NOT NULL,
+    sub_product_id character varying NOT NULL,
+    member_id character varying NOT NULL,
+    rental_date timestamp without time zone,
+    due_date timestamp without time zone,
+    returned_date timestamp without time zone,
+    returned boolean,
+    status character varying,
+    note character varying
+);
+
+
+ALTER TABLE public.rental OWNER TO postgres;
+
+--
+-- Name: restock; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.restock (
+    id character varying NOT NULL,
+    sub_product_id character varying NOT NULL,
+    restock_date timestamp without time zone,
+    restock_amount integer,
+    note character varying
+);
+
+
+ALTER TABLE public.restock OWNER TO postgres;
+
+--
+-- Name: revoked_tokens; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.revoked_tokens (
+    id integer NOT NULL,
+    jti character varying(120)
+);
+
+
+ALTER TABLE public.revoked_tokens OWNER TO postgres;
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.revoked_tokens_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.revoked_tokens_id_seq OWNER TO postgres;
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.revoked_tokens_id_seq OWNED BY public.revoked_tokens.id;
+
+
+--
+-- Name: sales_entries; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sales_entries (
+    id character varying NOT NULL,
+    product_id character varying,
+    sub_product_id character varying,
+    membership_id character varying,
+    member_id character varying,
+    sale_type character varying(50),
+    quantity integer,
+    price double precision,
+    expected_amount double precision,
+    paid_amount double precision,
+    discount_amount integer,
+    discount_percentage integer,
+    notes character varying(100),
+    created timestamp without time zone,
+    payment_method character varying
+);
+
+
+ALTER TABLE public.sales_entries OWNER TO postgres;
+
+--
+-- Name: sub_products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sub_products (
+    id character varying NOT NULL,
+    product_id character varying NOT NULL,
+    notes character varying(50),
+    size character varying(50),
+    color character varying(50),
+    price double precision,
+    rented integer,
+    sold integer,
+    stock integer,
+    active boolean
+);
+
+
+ALTER TABLE public.sub_products OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id character varying NOT NULL,
+    username character varying(50) NOT NULL,
+    password character varying(200) NOT NULL,
+    "userType" character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Name: waiver; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.waiver (
+    id character varying NOT NULL,
+    created timestamp without time zone,
+    effective_member character varying NOT NULL,
+    signed_member character varying NOT NULL,
+    signature character varying
+);
+
+
+ALTER TABLE public.waiver OWNER TO postgres;
+
+--
+-- Name: waiver_temp; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.waiver_temp (
+    id character varying NOT NULL,
+    created timestamp without time zone,
+    title character varying(50),
+    "firstName" character varying(50) NOT NULL,
+    "lastName" character varying(50) NOT NULL,
+    "middleName" character varying(50) NOT NULL,
+    address1 character varying(50),
+    address2 character varying(50),
+    "postalCode" character varying(50),
+    city character varying(50),
+    state character varying(50),
+    country character varying(50),
+    phone character varying(50),
+    workphone character varying(50),
+    birthday character varying(50),
+    email character varying(50),
+    "emergencyContact" character varying(50),
+    "emergencyContactPhone" character varying(50),
+    "emergencyContactPhoneWork" character varying(50),
+    "emergencyContactRelation" character varying(50),
+    checked boolean,
+    signature_image character varying
+);
+
+
+ALTER TABLE public.waiver_temp OWNER TO postgres;
+
+--
+-- Name: waiver_temp_fetch_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.waiver_temp_fetch_log (
+    id character varying NOT NULL,
+    created timestamp without time zone,
+    fetched_amount integer,
+    fetched_time double precision,
+    server_response character varying
+);
+
+
+ALTER TABLE public.waiver_temp_fetch_log OWNER TO postgres;
+
+--
+-- Name: revoked_tokens id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.revoked_tokens ALTER COLUMN id SET DEFAULT nextval('public.revoked_tokens_id_seq'::regclass);
+
+
+--
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+6e2d6afdee3f
+bfaeec227bc4
+\.
+
+
+--
+-- Data for Name: alerts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.alerts (id, created, alert_type, alert_level, alert_message, alert_status, member_associated_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: checkin; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.checkin (id, checkin_member_id, checkin_type, checkin_date, checkin_status, checkin_message) FROM stdin;
+\.
+
+
+--
+-- Data for Name: email_templates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.email_templates (id, created, last_edited, template_name, template_header, template_header_default, template_content, template_content_default, template_description, active) FROM stdin;
+bb83a704-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:27.525741	2021-02-12 13:03:27.525757	Membership Birthday	Happy birthday from Resistance Climbing Gym!	Happy birthday from Resistance Climbing Gym!	\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Billing e.g. invoices and receipts</title>\n\n<style type="text/css">\nimg {\nmax-width: 100%;\nmargin-left:20px;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="box-sizing: border-box; width: 100%; background-color: rgb(246, 246, 246); margin: 0px; font-size: 14px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 20px;" align="center" valign="top"><br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="box-sizing: border-box; vertical-align: top; margin: 0px; padding: 0px 0px 20px; font-size: 14px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;" valign="top">\n                    <h1 class="aligncenter" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; box-sizing: border-box; font-size: 32px; color: rgb(0, 0, 0); line-height: 1.2em; text-align: center; margin: 40px 0px 0px; font-weight: 500;" align="center"><br></h1><h1 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 32px; color: #000; line-height: 1.2em; font-weight: 500; text-align: center; margin: 40px 0 0;" align="center">$200 Paid</h1>\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 24px; color: #000; line-height: 1.2em; font-weight: 400; text-align: center; margin: 40px 0 0;" align="center">Thanks for supporting&nbsp;</h2><h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 24px; color: #000; line-height: 1.2em; font-weight: 400; text-align: center; margin: 40px 0 0;" align="center">Resistance Rock Climbing!</h2>\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                    <table class="invoice" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; text-align: left; width: 80%; margin: 40px auto;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">{{MemberFullName}}<br style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">Invoice #d23e5<br style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">Feb 6 2021</td>\n                      </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">\n                          <table class="invoice-items" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Membership 3 Months</td>\n                              <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" align="right" valign="top">$ 200</td>\n                            </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"></td><td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" align="right" valign="top"></td></tr><tr class="total" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alignright" width="80%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top">Total</td>\n                              <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top">$ 200</td></tr></tbody></table></td></tr></tbody></table></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                   <img src="https://i.ibb.co/2chqjgh/logo-small.png">\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                    Resistance Climbing 27 Moray Pl, Dunedin</td>\n                </tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">Questions? Email <u><a href="mailto:" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; color: rgb(153, 153, 153); margin: 0px;">support@r</a>esistanceclimbing.co.nz</u></td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Billing e.g. invoices and receipts</title>\n\n<style type="text/css">\nimg {\nmax-width: 100%;\nmargin-left:20px;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="box-sizing: border-box; width: 100%; background-color: rgb(246, 246, 246); margin: 0px; font-size: 14px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 20px;" align="center" valign="top"><br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="box-sizing: border-box; vertical-align: top; margin: 0px; padding: 0px 0px 20px; font-size: 14px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;" valign="top">\n                    <h1 class="aligncenter" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; box-sizing: border-box; font-size: 32px; color: rgb(0, 0, 0); line-height: 1.2em; text-align: center; margin: 40px 0px 0px; font-weight: 500;" align="center"><br></h1><h1 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 32px; color: #000; line-height: 1.2em; font-weight: 500; text-align: center; margin: 40px 0 0;" align="center">$200 Paid</h1>\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 24px; color: #000; line-height: 1.2em; font-weight: 400; text-align: center; margin: 40px 0 0;" align="center">Thanks for supporting&nbsp;</h2><h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; box-sizing: border-box; font-size: 24px; color: #000; line-height: 1.2em; font-weight: 400; text-align: center; margin: 40px 0 0;" align="center">Resistance Rock Climbing!</h2>\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                    <table class="invoice" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; text-align: left; width: 80%; margin: 40px auto;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">{{MemberFullName}}<br style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">Invoice #d23e5<br style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">Feb 6 2021</td>\n                      </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">\n                          <table class="invoice-items" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Membership 3 Months</td>\n                              <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" align="right" valign="top">$ 200</td>\n                            </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"></td><td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" align="right" valign="top"></td></tr><tr class="total" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alignright" width="80%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top">Total</td>\n                              <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top">$ 200</td></tr></tbody></table></td></tr></tbody></table></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                   <img src="https://i.ibb.co/2chqjgh/logo-small.png">\n                  </td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">\n                    Resistance Climbing 27 Moray Pl, Dunedin</td>\n                </tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">Questions? Email <u><a href="mailto:" style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; color: rgb(153, 153, 153); margin: 0px;">support@r</a>esistanceclimbing.co.nz</u></td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	This is sent on the member's birthday. If toggled on for the member.	t
+bb83a705-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:27.533209	2021-02-12 13:03:27.53322	Membership Expired	Your Climbing Membership Has Expired...What to do next?	Your Climbing Membership Has Expired...What to do next?	\n\n\n\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Alerts e.g. approaching your limit</title>\n<style type="text/css">\nimg {\nmax-width: 100%;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alert alert-warning" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #FF9F00; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">\n              Welcome to resistance climbing gym.\n            </td>\n          </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 20px;" valign="top">\n              Your Membership has just began! Welcome!<br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top"><br>&nbsp;This is an example email...&nbsp;<br>\n<img src="https://i.ibb.co/2chqjgh/logo-small.png"><br><br></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <a href="http://resistance-waiver-station.netlify.app" class="btn-primary" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Waiver Station</a></td></tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="http://www.mailgun.com" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;">Unsubscribe</a> from mailing list</td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	\n\n\n\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Alerts e.g. approaching your limit</title>\n<style type="text/css">\nimg {\nmax-width: 100%;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alert alert-warning" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #FF9F00; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">\n              Welcome to resistance climbing gym.\n            </td>\n          </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 20px;" valign="top">\n              Your Membership has just began! Welcome!<br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top"><br>&nbsp;This is an example email...&nbsp;<br>\n<img src="https://i.ibb.co/2chqjgh/logo-small.png"><br><br></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <a href="http://resistance-waiver-station.netlify.app" class="btn-primary" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Waiver Station</a></td></tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="http://www.mailgun.com" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;">Unsubscribe</a> from mailing list</td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	This is sent when the member's membership expires. If toggled on for the member.	t
+bb83a706-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:27.533306	2021-02-12 13:03:27.533314	Membership Created	Your Climbing Membership has began!	Your Climbing Membership has began!	\n\n\n\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Alerts e.g. approaching your limit</title>\n<style type="text/css">\nimg {\nmax-width: 100%;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alert alert-warning" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #FF9F00; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">\n              Welcome to resistance climbing gym.\n            </td>\n          </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 20px;" valign="top">\n              Your Membership has just began! Welcome!<br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top"><br>&nbsp;This is an example email...&nbsp;<br>\n<img src="https://i.ibb.co/2chqjgh/logo-small.png"><br><br></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <a href="http://resistance-waiver-station.netlify.app" class="btn-primary" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Waiver Station</a></td></tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="http://www.mailgun.com" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;">Unsubscribe</a> from mailing list</td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	\n\n\n\n\n<meta name="viewport" content="width=device-width">\n<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n<title>Alerts e.g. approaching your limit</title>\n<style type="text/css">\nimg {\nmax-width: 100%;\n}\nbody {\n-webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em;\n}\nbody {\nbackground-color: #f6f6f6;\n}\n@media only screen and (max-width: 640px) {\n  body {\n    padding: 0 !important;\n  }\n  h1 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h2 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h3 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h4 {\n    font-weight: 800 !important; margin: 20px 0 5px !important;\n  }\n  h1 {\n    font-size: 22px !important;\n  }\n  h2 {\n    font-size: 18px !important;\n  }\n  h3 {\n    font-size: 16px !important;\n  }\n  .container {\n    padding: 0 !important; width: 100% !important;\n  }\n  .content {\n    padding: 0 !important;\n  }\n  .content-wrap {\n    padding: 10px !important;\n  }\n  .invoice {\n    width: 100% !important;\n  }\n}\n</style>\n\n\n\n\n<table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n    <td class="container" width="600" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">\n      <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">\n        <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="alert alert-warning" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #FF9F00; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">\n              Welcome to resistance climbing gym.\n            </td>\n          </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 20px;" valign="top">\n              Your Membership has just began! Welcome!<br><table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top"><br>&nbsp;This is an example email...&nbsp;<br>\n<img src="https://i.ibb.co/2chqjgh/logo-small.png"><br><br></td>\n                </tr><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">\n                    <a href="http://resistance-waiver-station.netlify.app" class="btn-primary" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">Waiver Station</a></td></tr></tbody></table></td>\n          </tr></tbody></table><div class="footer" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">\n          <table width="100%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><tbody><tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;"><td class="aligncenter content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top"><a href="http://www.mailgun.com" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;">Unsubscribe</a> from mailing list</td>\n            </tr></tbody></table></div></div>\n    </td>\n    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>\n  </tr></tbody></table>	This is sent whenever a membership begins for a particular member. If toggled on for the member.	t
+bc149044-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:28.480717	2021-02-12 13:03:28.480739	Membership Birthday	Happy Birthday From Resistance Climbing Gym!	Happy Birthday From Resistance Climbing Gym!	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/member_birthday.html	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/member_birthday.html	Sent on member birthday, can be toggled on or off.	t
+bc149045-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:28.480839	2021-02-12 13:03:28.480851	Membership Created	Your Membership has just began!	Your Membership has just began!	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/membership_created.html	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/membership_created.html	Sent on membership creation, can be toggled on or off.	t
+bc149046-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:28.480926	2021-02-12 13:03:28.480937	Membership Expired	Your Membership has expired!	Your Membership has expired!	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/membership_created.html	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/membership_created.html	Sent on membership expiry, can be toggled on or off.	t
+bc149047-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:28.481011	2021-02-12 13:03:28.481022	Invoice Payment Successful	Invoice Receipt From Resistance Climbing Gym	Invoice Receipt From Resistance Climbing Gym	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/invoice_successful.html	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/invoice_successful.html	Sent on membership invoice payment successful, can be toggled on or off.	t
+bc149048-6cc5-11eb-a30c-34e12d703bc2	2021-02-12 13:03:28.481094	2021-02-12 13:03:28.481105	Invoice Payment Failed	Invoice Failed for Resistance Climbing Gym Membership	Invoice Failed for Resistance Climbing Gym Membership	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/invoice_failed.html	/home/ipsum/Documents/Projects/Resistance/db/resistanceDB/resources/../email_templates/invoice_failed.html	Sent on membership invoice payment failure, can be toggled on or off.	t
+\.
+
+
+--
+-- Data for Name: family; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.family (id, created) FROM stdin;
+\.
+
+
+--
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.member (id, "userType", title, "firstName", "lastName", "middleName", address1, address2, "postalCode", city, state, country, cellphone, homephone, workphone, birthday, email, "emergencyContact", "emergencyContactPhone", "emergencyContactRelation", last_visit, last_edit, warning, access_after_hours, waiver_signed, waiver_signed_date, "signatureImage", family, status, proficiency_level, got_to_know_channel, mail_on_internal_events, mail_promotions, do_not_send_mail, concession_passes, stripe_id, stripe_invoice_prefix, created) FROM stdin;
+\.
+
+
+--
+-- Data for Name: membership; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.membership (id, member_id, created, start_date, end_date, paid, "membershipActive", expected_payment_amount, description, next_billing_date, billing_frequency, frozen, frozen_until, on_holiday, holiday_until, state, "billingType") FROM stdin;
+\.
+
+
+--
+-- Data for Name: membership_adjustment; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.membership_adjustment (id, membership_id, action_date, action_type, new_start_date, new_end_date, note) FROM stdin;
+\.
+
+
+--
+-- Data for Name: membership_invoice; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.membership_invoice (id, membership_id, member_id, stripe_invoice_id, description, next_invoice_id, expected_amount, paid_amount, invoice_date, status, stripe_price_choice) FROM stdin;
+\.
+
+
+--
+-- Data for Name: payment_method; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.payment_method (id, member_id, last_four, payment_method_type, payment_method_stripe_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (id, "productType", vendor, name, notes, age_restriction, waiver_required, name_unchangeable, default_item, price, allow_anonymous_sale, active) FROM stdin;
+bc14903e-6cc5-11eb-a30c-34e12d703bc2	Casual	Resistance Gym	Causal Pass Adult		0	t	casual_pass_adult	t	1	f	t
+bc14903f-6cc5-11eb-a30c-34e12d703bc2	Casual	Resistance Gym	Causal Pass Young Adult		0	t	casual_pass_young_adult	t	1	f	t
+bc149040-6cc5-11eb-a30c-34e12d703bc2	Casual	Resistance Gym	Causal Pass Child		0	t	casual_pass_child	t	1	f	t
+bc149041-6cc5-11eb-a30c-34e12d703bc2	Concession	Resistance Gym	Concession Pass Adult		0	t	concession_pass_adult	t	1	f	t
+bc149042-6cc5-11eb-a30c-34e12d703bc2	Concession	Resistance Gym	Concession Pass Young Adult		0	t	concession_pass_young_adult	t	1	f	t
+bc149043-6cc5-11eb-a30c-34e12d703bc2	Concession	Resistance Gym	Concession Pass Child		0	t	concession_pass_child	t	25	f	t
+\.
+
+
+--
+-- Data for Name: rental; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.rental (id, sub_product_id, member_id, rental_date, due_date, returned_date, returned, status, note) FROM stdin;
+\.
+
+
+--
+-- Data for Name: restock; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.restock (id, sub_product_id, restock_date, restock_amount, note) FROM stdin;
+\.
+
+
+--
+-- Data for Name: revoked_tokens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.revoked_tokens (id, jti) FROM stdin;
+\.
+
+
+--
+-- Data for Name: sales_entries; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sales_entries (id, product_id, sub_product_id, membership_id, member_id, sale_type, quantity, price, expected_amount, paid_amount, discount_amount, discount_percentage, notes, created, payment_method) FROM stdin;
+\.
+
+
+--
+-- Data for Name: sub_products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.sub_products (id, product_id, notes, size, color, price, rented, sold, stock, active) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, username, password, "userType") FROM stdin;
+bc149049-6cc5-11eb-a30c-34e12d703bc2	admin	sha256$zeB3Rtxc$4052c0c52af2d3ed7da83cacb89a34924745c21f58954f79887ce6826b05b937	staff
+\.
+
+
+--
+-- Data for Name: waiver; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.waiver (id, created, effective_member, signed_member, signature) FROM stdin;
+\.
+
+
+--
+-- Data for Name: waiver_temp; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.waiver_temp (id, created, title, "firstName", "lastName", "middleName", address1, address2, "postalCode", city, state, country, phone, workphone, birthday, email, "emergencyContact", "emergencyContactPhone", "emergencyContactPhoneWork", "emergencyContactRelation", checked, signature_image) FROM stdin;
+\.
+
+
+--
+-- Data for Name: waiver_temp_fetch_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.waiver_temp_fetch_log (id, created, fetched_amount, fetched_time, server_response) FROM stdin;
+\.
+
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.revoked_tokens_id_seq', 1, false);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- Name: alerts alerts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.alerts
+    ADD CONSTRAINT alerts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: checkin checkin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.checkin
+    ADD CONSTRAINT checkin_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: email_templates email_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.email_templates
+    ADD CONSTRAINT email_templates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: family family_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.family
+    ADD CONSTRAINT family_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: member member_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.member
+    ADD CONSTRAINT member_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: membership_adjustment membership_adjustment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership_adjustment
+    ADD CONSTRAINT membership_adjustment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: membership_invoice membership_invoice_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership_invoice
+    ADD CONSTRAINT membership_invoice_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: membership membership_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership
+    ADD CONSTRAINT membership_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: payment_method payment_method_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_method
+    ADD CONSTRAINT payment_method_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rental rental_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rental
+    ADD CONSTRAINT rental_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: restock restock_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.restock
+    ADD CONSTRAINT restock_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: revoked_tokens revoked_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.revoked_tokens
+    ADD CONSTRAINT revoked_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sales_entries sales_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_entries
+    ADD CONSTRAINT sales_entries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sub_products sub_products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sub_products
+    ADD CONSTRAINT sub_products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: waiver waiver_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.waiver
+    ADD CONSTRAINT waiver_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: waiver_temp_fetch_log waiver_temp_fetch_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.waiver_temp_fetch_log
+    ADD CONSTRAINT waiver_temp_fetch_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: waiver_temp waiver_temp_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.waiver_temp
+    ADD CONSTRAINT waiver_temp_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: checkin checkin_checkin_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.checkin
+    ADD CONSTRAINT checkin_checkin_member_id_fkey FOREIGN KEY (checkin_member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: member member_family_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.member
+    ADD CONSTRAINT member_family_fkey FOREIGN KEY (family) REFERENCES public.family(id);
+
+
+--
+-- Name: membership_adjustment membership_adjustment_membership_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership_adjustment
+    ADD CONSTRAINT membership_adjustment_membership_id_fkey FOREIGN KEY (membership_id) REFERENCES public.membership(id);
+
+
+--
+-- Name: membership_invoice membership_invoice_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership_invoice
+    ADD CONSTRAINT membership_invoice_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: membership_invoice membership_invoice_membership_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership_invoice
+    ADD CONSTRAINT membership_invoice_membership_id_fkey FOREIGN KEY (membership_id) REFERENCES public.membership(id);
+
+
+--
+-- Name: membership membership_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.membership
+    ADD CONSTRAINT membership_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: payment_method payment_method_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_method
+    ADD CONSTRAINT payment_method_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: rental rental_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rental
+    ADD CONSTRAINT rental_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: rental rental_sub_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rental
+    ADD CONSTRAINT rental_sub_product_id_fkey FOREIGN KEY (sub_product_id) REFERENCES public.sub_products(id);
+
+
+--
+-- Name: restock restock_sub_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.restock
+    ADD CONSTRAINT restock_sub_product_id_fkey FOREIGN KEY (sub_product_id) REFERENCES public.sub_products(id);
+
+
+--
+-- Name: sales_entries sales_entries_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_entries
+    ADD CONSTRAINT sales_entries_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.member(id);
+
+
+--
+-- Name: sales_entries sales_entries_membership_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sales_entries
+    ADD CONSTRAINT sales_entries_membership_id_fkey FOREIGN KEY (membership_id) REFERENCES public.membership(id);
+
+
+--
+-- Name: sub_products sub_products_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sub_products
+    ADD CONSTRAINT sub_products_product_id_fkey FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
+-- Name: waiver waiver_effective_member_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.waiver
+    ADD CONSTRAINT waiver_effective_member_fkey FOREIGN KEY (effective_member) REFERENCES public.member(id);
+
+
+--
+-- Name: waiver waiver_signed_member_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.waiver
+    ADD CONSTRAINT waiver_signed_member_fkey FOREIGN KEY (signed_member) REFERENCES public.member(id);
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: ipsum
+--
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "tempDB"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: ipsum
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO ipsum;
+
+--
+-- Name: category; Type: TABLE; Schema: public; Owner: ipsum
+--
+
+CREATE TABLE public.category (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.category OWNER TO ipsum;
+
+--
+-- Name: category_id_seq; Type: SEQUENCE; Schema: public; Owner: ipsum
+--
+
+CREATE SEQUENCE public.category_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.category_id_seq OWNER TO ipsum;
+
+--
+-- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ipsum
+--
+
+ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
+
+
+--
+-- Name: listings; Type: TABLE; Schema: public; Owner: ipsum
+--
+
+CREATE TABLE public.listings (
+    id integer NOT NULL,
+    name character varying,
+    location character varying,
+    description text NOT NULL,
+    pub_date timestamp without time zone NOT NULL,
+    category_id integer NOT NULL
+);
+
+
+ALTER TABLE public.listings OWNER TO ipsum;
+
+--
+-- Name: listings_id_seq; Type: SEQUENCE; Schema: public; Owner: ipsum
+--
+
+CREATE SEQUENCE public.listings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.listings_id_seq OWNER TO ipsum;
+
+--
+-- Name: listings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ipsum
+--
+
+ALTER SEQUENCE public.listings_id_seq OWNED BY public.listings.id;
+
+
+--
+-- Name: revoked_tokens; Type: TABLE; Schema: public; Owner: ipsum
+--
+
+CREATE TABLE public.revoked_tokens (
+    id integer NOT NULL,
+    jti character varying(120)
+);
+
+
+ALTER TABLE public.revoked_tokens OWNER TO ipsum;
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE; Schema: public; Owner: ipsum
+--
+
+CREATE SEQUENCE public.revoked_tokens_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.revoked_tokens_id_seq OWNER TO ipsum;
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ipsum
+--
+
+ALTER SEQUENCE public.revoked_tokens_id_seq OWNED BY public.revoked_tokens.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: ipsum
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    username character varying(50) NOT NULL,
+    password character varying(200) NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO ipsum;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ipsum
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO ipsum;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ipsum
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: category id; Type: DEFAULT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
+
+
+--
+-- Name: listings id; Type: DEFAULT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.listings ALTER COLUMN id SET DEFAULT nextval('public.listings_id_seq'::regclass);
+
+
+--
+-- Name: revoked_tokens id; Type: DEFAULT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.revoked_tokens ALTER COLUMN id SET DEFAULT nextval('public.revoked_tokens_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: ipsum
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+fdec2c0835db
+\.
+
+
+--
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: ipsum
+--
+
+COPY public.category (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: listings; Type: TABLE DATA; Schema: public; Owner: ipsum
+--
+
+COPY public.listings (id, name, location, description, pub_date, category_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: revoked_tokens; Type: TABLE DATA; Schema: public; Owner: ipsum
+--
+
+COPY public.revoked_tokens (id, jti) FROM stdin;
+1	8f24091d-a03d-4d30-b027-2fbf627b8a14
+2	8f24091d-a03d-4d30-b027-2fbf627b8a14
+3	8f24091d-a03d-4d30-b027-2fbf627b8a14
+4	8f24091d-a03d-4d30-b027-2fbf627b8a14
+5	b187c7c3-1bf1-40e2-baa9-fbaf2be071ba
+6	94e7d1e0-fb27-4aa7-bb12-a7d37b21f0c7
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: ipsum
+--
+
+COPY public.users (id, username, password) FROM stdin;
+1	hi	sha256$BVzDE2c7$896f99321ca09c6552c06a77f0d66d720c66deac6377e208c37fd6dab9bf6da4
+3	hai	sha256$FmFhULyx$03464d72b9b998056238a05f6cc30e8ab176fa2a46c5b19a04594ac98ae67028
+4	haai	sha256$xFMilgFE$fc62795705c7f98c29af2371000109172ac7e59e008ece1a735e161e39554cc3
+5	hiaa	sha256$nSKanwWv$f65b6b2f422773fa0dee686c6a7f89ca5c96580bbcfee957c900a8ba971fb4c4
+\.
+
+
+--
+-- Name: category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ipsum
+--
+
+SELECT pg_catalog.setval('public.category_id_seq', 1, false);
+
+
+--
+-- Name: listings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ipsum
+--
+
+SELECT pg_catalog.setval('public.listings_id_seq', 1, false);
+
+
+--
+-- Name: revoked_tokens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ipsum
+--
+
+SELECT pg_catalog.setval('public.revoked_tokens_id_seq', 6, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ipsum
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 5, true);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: listings listings_pkey; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.listings
+    ADD CONSTRAINT listings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: revoked_tokens revoked_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.revoked_tokens
+    ADD CONSTRAINT revoked_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
+
+
+--
+-- Name: listings listings_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ipsum
+--
+
+ALTER TABLE ONLY public.listings
+    ADD CONSTRAINT listings_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.15 (Ubuntu 10.15-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+

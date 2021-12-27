@@ -1,0 +1,54 @@
+<ng-container *ngIf="product_ref!=undefined;else noProductRef">
+<ng-container *ngIf="mode=='edit' && sub_product_ref==undefined;else showNormal">
+    <button class="button2"(click)="alert('Please Select A Sub Product To Edit First.')">{{mode=='add' ? 'Add New' : 'Edit'}} Sub Product</button>
+    </ng-container>
+    <ng-template #showNormal>
+            <button class="button2" (click)="openModal(mode+'-sub-product-modal')">{{mode=='add' ? 'Add New' : 'Edit'}} Sub Product</button>
+    </ng-template>
+</ng-container>
+<ng-template #noProductRef>
+    <button class="button2" (click)="alert('Please Select A Parent Product First.')">{{mode=='add' ? 'Add New' : 'Edit'}} Sub Product</button>
+</ng-template>
+
+
+<modal id="{{mode}}-sub-product-modal" >
+    <h1>Add a new product</h1>
+    
+    <div style="border:black solid 1px;">
+        <!-----UPPER BOX----->
+            <div style="display: flex;margin-bottom:20px;">
+            <!---left BOX--->
+            <div style="margin-left:20px;">
+            <h1>Primary</h1>    
+            Vendor <br><input type="text" [(ngModel)]="vendor" disabled/> <br>
+            Product Name <br><input type="text" [(ngModel)]="productName" disabled/> <br>                            
+            </div>
+            <!----RIGHT BOX---->
+            <div style="margin-left:20px;">
+            <h1>Inventory Related</h1>
+            Notes <br><input type="text" [(ngModel)]="notes"/> <br>        
+            Size <br><input type="text" [(ngModel)]="size"/> <br>
+            Color <br><input type="text" [(ngModel)]="color"/> <br>
+            Stock <br><input type="number" [(ngModel)]="stock"/> <br>            
+        <ng-container *ngIf="editPrice;else noEditPrice">
+                    Price (NZD)<br> <input type="number" [(ngModel)]="price"/> 
+        </ng-container>
+        <ng-template #noEditPrice>
+                Price (NZD) <br> <input type="number" [(ngModel)]="price" disabled/> 
+        </ng-template>
+        Edit Price <input type="checkbox" [(ngModel)]="editPrice">
+        <div style="position:absolute;right:30px;top:150px;z-index:0">
+                <img src="assets/img/logo2.png" style="width:300px;">
+            </div>
+            </div>
+        </div>
+    </div>
+<div style="float:right;">
+        <button (click)="submit()">Submit</button>
+            <button (click)="closeModal(mode+'-sub-product-modal');">Cancel</button>
+        </div>
+
+</modal>
+
+
+

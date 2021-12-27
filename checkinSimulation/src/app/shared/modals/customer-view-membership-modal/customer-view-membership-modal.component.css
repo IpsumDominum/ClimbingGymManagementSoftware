@@ -1,0 +1,54 @@
+.button-5{
+    margin: 0px 5px 5px 5px;
+      font-size: 10px;
+      width:100px;
+      height:35px;
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;    
+  border: black solid 1px !important;
+  overflow-x: scroll;
+  height:300px;
+  width: 100%;
+}
+a{
+  height:50px;
+}  
+.table-wrapper{
+  height:323px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper .label{
+  position:sticky;
+  top:0;
+}
+.table-wrapper2{
+  width:90%;
+  height:323px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper2 .label{
+  position:sticky;
+  top:0;
+}
+.table-wrapper3{
+  height:200px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper3 .label{
+  position:sticky;
+  top:0;
+}
+#customers .label {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #666666;
+  color: white;
+}  
+#customers td, #customers th {
+  height:10px;
+  font-size: 10px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  width:30px;
+}

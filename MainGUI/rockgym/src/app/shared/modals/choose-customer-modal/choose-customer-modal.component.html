@@ -1,0 +1,127 @@
+<button class="button2" (click)="openModal('custom-modal-3')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>    
+    Climber</button>
+
+<modal id="custom-modal-3" >
+    <h1>Search For A Climber</h1>
+<pre>
+<strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+<option [ngValue]="'Common'">Common</option>
+<option [ngValue]="'Title'">Title</option>
+<option [ngValue]="'FirstName'">First Name</option>
+<option [ngValue]="'MiddleName'">Middle Name</option>
+<option [ngValue]="'LastName'">Last Name</option>
+<option [ngValue]="'Email'">Email</option>
+<option [ngValue]="'Birthday'">Birthday</option>
+<option [ngValue]="'Family'">Family</option>                    
+<option [ngValue]="'CanAccessAfterHours'">Can Access After Hours</option>
+</select> <span id="search"><input type="text" placeholder="Trujillo Strong..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="searchNew()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+{{totalAmount}} Climbers Match <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+</pre>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                            <th class="label">Title</th>
+                            <th class="label">First Name</th>
+                            <th class="label">Middle Name</th>
+                            <th class="label">Last Name</th>
+                            <th class="label">Email</th>
+                            <th class="label">Birthday</th>
+                            <th class="label">Waiver</th>
+                            <th class="label">Concession Passes</th>
+                            <th class="label">Outstanding Rentals</th>
+                            <th class="label">Overdue Rentals</th>
+                            <th class="label">Age Group</th>                    
+                            <th class="label">Family</th>                    
+                            <th class="label">Status</th>
+                            <th class="label">Membership Active</th>
+                            <th class="label">Membership Due</th>
+                            <th class="label">Membership Frozen</th>                    
+                            <th class="label">Can Access After Hours</th>
+                            <th class="label">Last Visit</th>
+                            <th class="label">First Contact</th>
+                            <th class="label">Warning</th>
+                            <th class="label">Last Edit</th>
+                    </tr>
+                <tr  [ngClass]="{'tr-active': chosenCustomer ? user ? chosenCustomer.id ==user.id : false : false}" *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.title}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.firstName}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{ user.middleName ? user.middleName.charAt(0).toUpperCase(): ""}} </th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.lastName}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.email}}</th>
+                            <ng-container *ngIf="isBirthday(user.birthday)==false">
+                                <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{ dateFromISO(user.birthday)}}</th>
+                            </ng-container>
+                            <ng-container *ngIf="isBirthday(user.birthday)==true">
+                                <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">Today!<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 10a4 4 0 0 1 4 4v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5a4 4 0 0 1 4-4V7h2v3h2V7h2v3h2V7h2v3zM7 12a2 2 0 0 0-2 2v1h14v-1a2 2 0 0 0-2-2H7zm-2 5v2h14v-2H5zM7 4a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4z" fill="#626262" fill-rule="nonzero"/></svg></th>    
+                            </ng-container>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}" [ngStyle]="{'color':user.waiver_signed ? 'green' : 'red'}">{{user.waiver_signed ? "Signed" : "Absent"}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{ user.concession_passes }}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{ user.outstanding_rentals }}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{ user.overdue_rentals }}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{getAgeGroup(user)}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{getShortened(user.family)}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.status}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}" [ngStyle]="{'color': user.membershipActive ? 'green':'red'}"> {{user.membershipActive ? "Active" : "Not Active"}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">-</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">No</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{user.access_after_hours ? 'Yes' : 'No'}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{dateFromISODetailed(user.last_visit)}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">{{dateFromISO(user.created)}}</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}">-</th>
+                            <th [ngClass]="{'th-active': chosenCustomer ? chosenCustomer.id ==user.id : false}"> {{dateFromISO(user.last_edit)}}</th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+
+<div style="float:right;">        
+        <button [ngClass]="{'confirmed':chosenCustomer}"(click)="confirm()">Confirm</button>
+        <button style="background:red;color:white;" (click)="closeModal('custom-modal-3');">Cancel</button>
+        </div>
+<ng-container *ngIf="chosenCustomer">
+<div class="smooth-borders" style="width:500px;height:300px; margin-top:10px;padding-top:10px;padding-left:10px;">
+    {{chosenCustomer.firstName}} {{chosenCustomer.middleName}} {{chosenCustomer.lastName}}
+
+    <div class="smooth-borders" style="width:300px;height:250px;">
+    <ng-container *ngIf="chosenCustomer.profile_photo;else noPhoto">
+        <img src="{{chosenCustomer.profile_photo}}" style="width:inherit;height:inherit">
+    </ng-container>
+    <ng-template #noPhoto>
+        <h2>No Photo</h2>
+    </ng-template>
+    </div>
+
+    
+</div>    
+
+</ng-container>
+
+</modal>
+
+
+

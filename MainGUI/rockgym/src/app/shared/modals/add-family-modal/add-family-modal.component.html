@@ -1,0 +1,129 @@
+<button class="button2" (click)="openModal('add-family-modal')">
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>    
+<svg style="margin-left:25px;transform:scale(0.6);" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    Add Family Member(s)</button>
+
+<modal id="add-family-modal" >
+    <button style="float:right;background:red;color:white;" (click)="closeModal('add-family-modal');">X Close</button>
+
+    <div style="display:flex">
+<!---Left BLOCK--->
+        <div class="leftBlock">
+<!--ADD FAMILY MEMBER FOR?-->
+<h1>Adding Family Members For...</h1>
+<ng-container *ngIf="detailUser;else SelectOne">
+
+First Name : {{detailUser.firstName}}
+Middle Name : {{detailUser.middleName}}
+Last Name : {{detailUser.lastName}}
+<!--CURRENT MEMBERS BOX-->
+<h2>Current Family Members</h2>
+
+<button (click)="mode='selectMemberAdditional'"
+[ngStyle]="{'color':mode=='selectMemberAdditional'? '#FC5000':''}">Add Member</button>        
+<button (click)="removeFamilyMember()"style="margin-left:-2px;">Delete Member</button>
+<div class="table-wrapper2">
+    <table id="customers">
+        <tr>
+            <th class="label">First Name</th>
+            <th class="label">Last Name</th>
+            <th class="label">Age Group</th>
+        </tr>
+    <tr *ngFor="let user of membersData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chosenFamilyMember=user;">
+        <ng-container *ngIf="user==undefined,else showData">
+            <th style="color:transparent">1</th>
+            <th></th>
+            <th></th>
+        </ng-container>
+        <ng-template #showData >
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.firstName}}</th>
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.lastName}}</th>
+            <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}" >{{user.age}}</th>
+    </ng-template>
+    </tr>
+    </table>
+</div>
+
+</ng-container>
+<ng-template #SelectOne>
+
+<button (click)="mode='selectMemberInitial'"
+[ngStyle]="{'color':mode=='selectMemberInitial'? '#FC5000':''}">Select Member To Add Family Member</button>        
+
+</ng-template>
+</div>
+
+        <!---RIGHT BLOCK--->
+<div class="rightBlock">
+    <ng-container *ngIf="mode=='selectMemberInitial' || mode=='selectMemberAdditional'">
+<pre>
+<strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+<option [ngValue]="'Common'">Common</option>
+<option [ngValue]="'Title'">Title</option>
+<option [ngValue]="'FirstName'">First Name</option>
+<option [ngValue]="'MiddleName'">Middle Name</option>
+<option [ngValue]="'LastName'">Last Name</option>
+<option [ngValue]="'Email'">Email</option>
+<option [ngValue]="'Birthday'">Birthday</option>
+<option [ngValue]="'Family'">Family</option>                    
+<option [ngValue]="'CanAccessAfterHours'">Can Access After Hours</option>
+</select> <span id="search"><input type="text" placeholder="Trujillo Strong..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="searchNew()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+
+{{totalAmount}} Customers Match <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+</pre>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                        <th class="label">First Name</th>
+                        <th class="label">Middle Name</th>
+                        <th class="label">Last Name</th>
+                        <th class="label">Birthday</th>
+                        <th class="label">Age Group</th>
+                        <th class="label">Family</th>
+                        <th class="label">Can Access After Hours</th>
+                    </tr>
+                <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                   
+                    </ng-container>
+                    <ng-template #showData >
+                        <th>{{user.firstName}}</th>
+                        <th>{{user.middleName}}</th>
+                        <th>{{user.lastName}}</th>
+                        <ng-container *ngIf="isBirthday(user.birthday)==false">
+                                <th>{{ dateFromISO(user.birthday)}}</th>
+                            </ng-container>
+                            <ng-container *ngIf="isBirthday(user.birthday)==true">
+                                <th>Today!<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 10a4 4 0 0 1 4 4v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5a4 4 0 0 1 4-4V7h2v3h2V7h2v3h2V7h2v3zM7 12a2 2 0 0 0-2 2v1h14v-1a2 2 0 0 0-2-2H7zm-2 5v2h14v-2H5zM7 4a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4z" fill="#626262" fill-rule="nonzero"/></svg></th>    
+                            </ng-container>
+                        <th>{{getAgeGroup(user)}}</th>
+                        <th [ngStyle]="{'color': user.family ? '#fc5000':''}">{{getShortened(user.family)}}</th>
+                        <th>{{user.access_after_hours}}</th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+        <div style="float:right;margin-right:-60px;margin-top:10px;">
+                <ng-container *ngIf="chosenCustomer">
+                    {{chosenCustomer.firstName}} {{chosenCustomer.middleName}} {{chosenCustomer.lastName}}
+                </ng-container>
+                <button (click)="confirm()">Confirm</button>
+                <button style="color:white;background:red" (click)="mode='waitingCommand'">Cancel</button>
+        </div>
+        <!---Search Table End--->
+    </ng-container>
+    </div>        
+    <!----->
+</div>
+
+</modal>
+
+
+

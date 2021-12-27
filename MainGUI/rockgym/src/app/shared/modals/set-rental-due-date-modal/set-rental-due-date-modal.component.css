@@ -1,0 +1,21 @@
+.tab{
+    margin-right:10px;
+    font-family: 'grifter';
+    padding-bottom:5px;
+}
+.tab:hover{
+    color:#FC5000;
+    border-bottom:#FC5000 solid 2px;
+}
+.active{
+    color:#FC5000;
+    border-bottom:#FC5000 solid 2px;
+}
+
+input{
+    width:150px;
+}
+.confirm{
+    background:green;
+    color:white;
+}

@@ -1,0 +1,49 @@
+
+<modal id="waiver-temp-view-details-modal" >
+    <button style="float:right" (click)="closeModal('waiver-temp-view-details-modal');">X Cancel</button>
+    <h1 style="margin-top:50px;">Temporary Waiver(Unconverted) Details</h1>
+<div class="infobox" style="border:black solid 1px;display:flex;padding-bottom:10px;">
+    <div>
+        <h2>Basic Info</h2>
+        <label><strong style="color:red">*</strong>Title</label> <select  [ngStyle]="{'border': invalid[0]==true ? 'red solid 1px' : ''}" style="width:100px;" [(ngModel)]="title" disabled>
+                <option [value]="'Mr.'">Mr.</option>
+                <option [value]="'Mrs.'">Mrs.</option>
+                <option [value]="'Ms.'">Ms.</option>
+                <option [value]="'Mx.'">Mx.</option>
+                <option [value]="'Prof.'">Prof.</option>
+                <option [value]="'Dr.'">Dr.</option>
+                <option [value]="'Master.'">Master.</option>
+            </select><br>
+        <label><strong style="color:red">*</strong>Last Name</label> <input type="text" [(ngModel)]="lastName" disabled/> <br>
+        <label><strong style="color:red">*</strong>First</label>  <input type="text" [(ngModel)]="firstName" disabled/> <br>
+        <label>Middle</label>  <input type="text" [(ngModel)]="middleName" disabled/><br>
+        
+        <label><strong style="color:red">*</strong>Birthday</label> <input type="date" [ngStyle]="{'border': invalid[1]==true ? 'red solid 1px' : ''}" [(ngModel)]="birthday" disabled/><br>                
+    </div>
+    <div>
+        <h2>Address Info</h2>
+        <label>Address 1</label> <input type="text" [(ngModel)]="address1" disabled/><br>
+        <label>Address 2</label><input type="text" [(ngModel)]="address2" disabled/><br>
+        <label>Postal Code</label><input type="text" [(ngModel)]="postalCode" disabled/><br>
+        <label>City</label><input type="text" [(ngModel)]="city" disabled/><br>
+        <label>Country</label><input type="text" [(ngModel)]="country" disabled/><br>
+    </div>      
+    <div>
+        <h2>Contact Info</h2>
+        <label>Cell Phone</label><input type="text" [(ngModel)]="cellphone" disabled/><br>
+        <label>Home Phone</label><input type="text" [(ngModel)]="homephone" disabled/><br>
+        <label>Work Phone</label><input type="text" [(ngModel)]="workphone" disabled/><br>
+        <label><strong style="color:red">*</strong>Email</label> <input type="email" [ngStyle]="{'border': invalid[2]==true ? 'red solid 1px' : ''}"[(ngModel)]="email" disabled/><br>
+    </div>
+    <div>
+        <h2>Emergency Contact</h2>
+        <label><strong style="color:red">*</strong>Emergency Contact Name</label><input type="text" [ngStyle]="{'border': invalid[3]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContact" disabled/><br>
+        <label><strong style="color:red">*</strong>Emergency Contact Relation</label><input type="text" [ngStyle]="{'border': invalid[4]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactRelation" disabled/><br>
+        <label><strong style="color:red">*</strong>Emergency Contact Phone</label><input type="text" [ngStyle]="{'border': invalid[5]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactPhone" disabled/><br>
+    </div>  
+</div>
+
+</modal>
+
+
+

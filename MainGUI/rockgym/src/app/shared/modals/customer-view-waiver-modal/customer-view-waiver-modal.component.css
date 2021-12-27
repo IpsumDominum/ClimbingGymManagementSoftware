@@ -1,0 +1,98 @@
+.button-5{
+    margin: 0px 5px 5px 5px;
+      font-size: 10px;
+      width:100px;
+      height:35px;
+}
+.terms-box{
+  overflow-y:scroll;
+  height:600px !important;            
+  box-shadow: 2px 2px 3px #888888;
+}
+
+li {    
+  padding-left: 0px;
+  margin-left:20px;
+  font-family:Arial, Helvetica, sans-serif;  
+}
+.sections-box{
+  font-family:Arial, Helvetica, sans-serif;  
+  border-left: #CB5727 solid 2px;
+  padding-left:15px;
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+
+.line-sep1{
+  width:100%;
+  height:30px;
+  position: absolute;
+  right:15px;
+  top:-30px;
+  background:rgb(228, 111, 27);
+  clip-path: polygon(59% 61%, 100% 0, 70% 71%, 0% 100%);
+}
+.line-sep2{
+  width:90%;
+  height:2px;
+  position: absolute;
+  right:15px;
+  top:-15px;
+  background:#CB5727;
+  clip-path: polygon(0 0, 88% 0, 100% 100%, 0% 100%);
+}
+.line-sep3{
+  width:100%;
+  height:30px;
+  position: absolute;
+  right:15px;
+  top:-30px;
+  background:rgb(255, 157, 0);        
+  clip-path: polygon(100% 0, 85% 43%, 75% 69%, 100% 100%, 70% 71%);
+}
+.agreement-box{
+  height:200px;
+  overflow-y:scroll;
+  box-shadow: 2px 2px 3px #888888;
+}
+.sig-box{    
+  
+  width:300px;
+  margin:auto;
+  margin-top:25px;
+  display:relative;
+  border: #3D3D3D dotted 1px;
+  cursor:context-menu;
+  -moz-user-select: none !important;
+  -webkit-user-select: none !important;
+   -ms-user-select:none !important; 
+   user-select:none !important;
+   -o-user-select:none !important;
+}
+.sign-box{
+  margin-left:15px;
+}
+.button5{
+  font-size:20px;
+  padding-left:39px !important;
+}
+.button5 svg{
+  transform: scale(1);
+  top:7px;
+  left:10px;
+}
+.button2{
+  padding-left:35px !important;
+  display: inline-block;
+}
+.signature-pad{
+  -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 8px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+    display:block;margin-top:10px;background:rgb(236, 236, 236);
+    border: black dotted 2px;
+}

@@ -1,0 +1,138 @@
+.tab-active{
+  color:orange;
+}
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;    
+    border: black solid 1px !important;
+    overflow-x: scroll;
+    height:300px;
+    width: 100%;
+  }
+  a{
+    height:50px;
+  }  
+  .table-wrapper{
+    width:950px;
+    height:323px;overflow-y:scroll;overflow-x:scroll;position:relative;
+  }
+  .table-wrapper .label{
+    position:sticky;
+    top:0;
+  }
+  .table-wrapper2{
+    width:90%;
+    height:323px;overflow-y:scroll;overflow-x:scroll;position:relative;
+  }
+  .table-wrapper2 .label{
+    position:sticky;
+    top:0;
+  }
+  .table-wrapper3{
+    width:950px;
+    height:200px;overflow-y:scroll;overflow-x:scroll;position:relative;
+  }
+  .table-wrapper3 .label{
+    position:sticky;
+    top:0;
+  }
+  #customers .label {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #666666;
+    color: white;
+  }  
+  #customers td, #customers th {
+    height:10px;
+    font-size: 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    width:30px;
+  }
+  
+  .productDetails{
+    height:200px;
+    width:366px;
+  }
+  .productRestockDetails{
+    height:510px;
+    width:366px;
+  }
+
+  #customers tr:nth-child(odd){background-color: white}
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  header{
+      position: relative;
+  }
+  .detailmenu{
+    flex-wrap: wrap;
+  }
+  .detailmenu .button1{
+      margin: 0px 5px 5px 5px;
+      font-size: 10px;
+      width:100px;
+      height:35px;
+  }
+  .detailmenu button{
+    margin: 0px 5px 5px 5px;
+    font-size: 10px;
+    width:80px;
+    height:30px;
+}
+
+.button2{
+    padding: 30px 30px 30px 30px;   
+    font-size: 15px;
+    height:150px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+body{
+    display:flex;
+}
+.leftblock{
+    width:300px;
+}
+.rightblock{
+    width:950px;
+}
+.button5{
+  font-size:13px;
+  margin-right:10px;
+  width:150px;
+  margin-top:10px;
+  border-radius: 20px !important;
+}
+.button5{
+  padding-left:30px;
+}
+.button5 svg{
+  left:15px;
+  top:5px;
+}
+.time{
+  margin-top:0px;
+  margin-right:-80px !important;
+
+  }
+
+  .tr-active{
+  border-left:orange solid 10px;
+  }
+
+.th-active{
+  background:  #cacaca;
+  font: bold 12px Arial,Helvetica,Sans-serif;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 8px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) ;
+}

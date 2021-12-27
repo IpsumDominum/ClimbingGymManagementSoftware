@@ -1,0 +1,67 @@
+<button class="button-5" (click)="openModal('redeem-coupon-modal')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-percent"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+    Discount </button>
+
+<modal id="redeem-coupon-modal" >
+        
+<button style="float:right;background:red;color:white;" (click)="closeModal('redeem-coupon-modal');">X Cancel</button>
+<h1>Apply Percentage Discount</h1>
+Discount Percentage <input type="number" (keypress)="handleKeyboardEvent($event)" [(ngModel)]="discountPercentage"> %
+<br>
+<ng-container *ngIf="error">
+<label style="color:red;">{{error}}</label>
+</ng-container>
+<br>
+<button [ngClass]="{'confirm': discountPercentage>=0 && discountPercentage<=100}" (click)="submit()">Confirm</button>
+
+
+<!--
+<div>
+<h1>Search For A Coupon To Redeem</h1>
+    <pre>
+<strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"><button id="search" (click)="search()">Search</button>        
+    COUPON ID | COUPON NAME
+Showing 0 Matched Coupons               
+</pre>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                            <th class="label">Coupon ID</th>
+                            <th class="label">Coupon Name</th>
+                            <th class="label">Discount Amount</th>
+                            <th class="label">Casual Applicable</th>
+                            <th class="label">Concession Applicable</th>
+                            <th class="label">Retail Applicable</th>
+                            <th class="label">Membership Applicable</th>
+                            <th class="label">Status</th>
+                    </tr>
+                <tr *ngFor="let coupon of displayData;"  >
+                    <ng-container *ngIf="coupon==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                            <th style="color:transparent">1</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+    </div>
+-->
+</modal>
+
+
+

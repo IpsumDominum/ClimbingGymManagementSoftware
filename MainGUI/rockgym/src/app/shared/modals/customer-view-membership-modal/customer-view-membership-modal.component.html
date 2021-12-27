@@ -1,0 +1,62 @@
+
+<modal id="customer-view-membership-modal" >
+    <ng-container *ngIf="detailUser">
+<button style="float:right" (click)="closeModal('customer-view-membership-modal');">X Cancel</button>
+<h1>Customer Membership History</h1>
+<ng-container *ngIf="!loading">
+<button
+[ngClass]="{'tab-active':filterByKey=='all'}"
+(click)="filterBy('all')"
+>All</button>
+<button 
+[ngClass]="{'tab-active':filterByKey=='active'}"
+(click)="filterBy('active')"
+>Active</button>
+<button
+[ngClass]="{'tab-active':filterByKey=='in-active'}"
+(click)="filterBy('in-active')"
+>In-Active</button>
+
+<div class="table-wrapper" style="overflow-x:scroll;margin-top:20px;">
+        <table id="customers">
+            <tr>
+                <th class="label">Membership Type</th>
+                <th class="label">Billing Type</th>
+                <th class="label">Member FirstName</th>
+                <th class="label">Member LastName</th>
+                <th class="label">Membership Start</th>
+                <th class="label">Membership End</th>
+                <th class="label">Membership Frozen</th>
+                <th class="label">Membership Active</th>
+            </tr>
+        <tr *ngFor="let membership of displayData;">
+            <ng-container *ngIf="membership==undefined,else showData">
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </ng-container>
+            <ng-template #showData >
+            <th>{{membership.description}}</th>
+            <th>{{membership.billingType}}</th>
+            <th>{{membership.member.firstName}}</th>
+            <th>{{membership.member.lastName}}</th>
+            <th>{{dateFromISO(membership.start_date)}}</th>
+            <th>{{dateFromISO(membership.end_date)}}</th>
+            <th [ngStyle]="{'color': membership.frozen ? 'blue':'black'}">{{membership.frozen ? 'Frozen' : 'No'}}</th>
+            <th [ngStyle]="{'color': membership.active ? 'green':'red'}">{{membership.active ? "Active" : "In-Active"}}</th>
+        </ng-template>
+        </tr>
+        </table>
+</div>            
+</ng-container>
+
+</ng-container>
+</modal>
+
+
+

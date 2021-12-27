@@ -1,0 +1,128 @@
+
+
+<modal id="customer-view-rentals-modal" >
+
+    <ng-container *ngIf="member_ref">
+    <button style="float:right" (click)="closeModal('customer-view-rentals-modal');">X Cancel</button>
+<h1 class="tabs">
+    <label (click)="mode='outstandingRentals'" class="tab" [ngClass]="{'active':mode=='outstandingRentals'}">Outstanding Rentals</label>
+    <!--<label (click)="mode='rentalHistory'" class="tab" [ngClass]="{'active':mode=='rentalHistory'}">Rental History</label>-->
+</h1>
+
+<ng-container *ngIf="mode=='rentalHistory'">
+        <strong>For</strong> {{member_ref.firstName}} {{member_ref.middleName}} {{member_ref.lastName}}  
+        <br>      
+        0 Rentals  &nbsp;&nbsp;&nbsp;
+        Since <input type="date"> 
+        &nbsp;<button>Last 12 Months</button> <button>Last 3 Months</button>
+        <hr>
+        <div style="width:800px;height:380px;margin-bottom:20px;">
+            <div class="table-wrapper2" style="overflow-x:scroll;">
+                    <table id="customers">
+                        <tr>
+                            <th class="label">Product Type</th>
+                            <th class="label">Vendor</th>
+                            <th class="label">Product Name</th>
+                            <th class="label">Size</th>
+                            <th class="label">Color</th>
+                            <th class="label">Rental Date</th>
+                            <th class="label">Due Date</th>
+                            <th class="label">Returned Date</th>
+                            <th class="label">Status</th>
+                        </tr>
+                    <tr  *ngFor="let rental of rentalsHistory" (click)="selectedRental=rental">
+                        <ng-container *ngIf="rental==undefined,else showData">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-container>
+                        <ng-template #showData >
+                        <th>12/12/2020</th>
+                        <th>Adjust End Date</th>
+                        <th>12/12/2020</th>
+                            <th>1/1/2020</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-template>
+                    </tr>
+                    </table>
+            </div>
+    </div>
+        <button>Mark as returned</button>
+        <button>Mark as lost or damaged</button>    
+</ng-container>
+
+<ng-container *ngIf="mode=='outstandingRentals'">
+        <strong>For</strong> {{member_ref.firstName}} {{member_ref.middleName}} {{member_ref.lastName}}  
+        <br>
+        0 Rentals  &nbsp;&nbsp;&nbsp;
+        &nbsp;
+        <button [ngClass]="{'tab-active':filterByKey=='all'}" (click)="filterBy('all')">All</button>
+        <button [ngClass]="{'tab-active':filterByKey=='returned'}" (click)="filterBy('returned')">Returned</button>
+        <button [ngClass]="{'tab-active':filterByKey=='overdue'}" (click)="filterBy('overdue')">Overdue</button>
+        <button [ngClass]="{'tab-active':filterByKey=='outstanding'}" (click)="filterBy('outstanding')">Outstanding</button>
+        <button [ngClass]="{'tab-active':filterByKey=='lost'}" (click)="filterBy('lost')">Lost</button>
+        <button [ngClass]="{'tab-active':filterByKey=='damaged'}" (click)="filterBy('damaged')">Damaged</button>
+        <hr>
+        <div style="width:800px;height:380px;margin-bottom:20px;">
+            <div class="table-wrapper2" style="overflow-x:scroll;">
+                    <table id="customers">
+                        <tr>
+                                <th class="label">Product Type</th>
+                                <th class="label">Vendor</th>
+                                <th class="label">Product Name</th>
+                                <th class="label">Size</th>
+                                <th class="label">Color</th>
+                                <th class="label">Price</th>
+                                <th class="label">Rental Date</th>
+                                <th class="label">Due Date</th>                                
+                                <th class="label">Returned Date</th>                                
+                                <th class="label">Status</th>
+                        </tr>
+                    <tr  [ngClass]="{'tr-active':selectedRental ? rental ? selectedRental.id==rental.id : false : false}" *ngFor="let rental of rentalsOutstanding;" (click)="selectedRental=rental">
+                        <ng-container *ngIf="rental==undefined,else showData">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-container>
+                        <ng-template #showData >
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.productType}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.vendor}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.name}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.size}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.color}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.price}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.rental_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.due_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.returned_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}" [ngStyle]="{'color':getStatusColor(rental)}">{{getStatus(rental)}}</th>
+
+                        </ng-template>
+                    </tr>
+                    </table>
+            </div>
+    </div>
+        <button (click)="markAsReturned()">Mark as Returned</button>
+        <button (click)="markAsLost()">Mark as Lost</button>            
+        <button (click)="markAsDamaged()">Mark as Damaged</button>            
+    </ng-container>
+
+</ng-container>
+</modal>
+
+
+

@@ -1,0 +1,260 @@
+<ng-container *ngIf="!loading">
+              
+        
+            <!---BODY START--->
+            <body style="background:white">
+                <!-------RIGHT BLOCK--------->
+                <div class="rightblock">
+   <pre>
+<strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+<option [ngValue]="'Common'">Common</option>
+<option [ngValue]="'ProductType'">Product Type</option>
+<option [ngValue]="'Vendor'">Vendor</option>
+<option [ngValue]="'ProductName'">Product Name</option>
+<option [ngValue]="'WaiverRequired'">Waiver Required</option>
+<option [ngValue]="'AgeRestriction'">Age Restriction</option>
+<option [ngValue]="'AllowAnonymousSale'">Allow Anonymous Sale</option>
+<option [ngValue]="'Notes'">Notes</option>                           
+<option [ngValue]="'Price'">Price</option> 
+</select> <span id="search"><input type="text" placeholder="Bouldering Mat..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="search()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>  Show Inactive Products <input type="checkbox" (click)="load();" [(ngModel)]="showInactiveProducts">
+
+{{filteredData.length}} Products Match <button id="next" (click)="previousPage()"><<</button> Showing <input id="currentPage" [(ngModel)]="currentPage"> of {{totalPage>1? totalPage:1}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>    
+
+</pre>
+
+<div class="tableControls">
+           <add-product-modal [mode]="'add'" (submitted)="load();"></add-product-modal>
+        <add-product-modal [mode]="'edit'" [product_ref]="detailProduct" (submitted)="load();"></add-product-modal>
+        <button class="button5" (click)="deleteProduct()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-battery-charging"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"></path><line x1="23" y1="13" x2="23" y2="11"></line><polyline points="11 6 7 12 13 12 9 18"></polyline></svg>
+        Toggle Product Activation
+        </button>                      
+        <button class="button5" (click)="reportAllStock()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        Report All Items In Stock</button>
+        <view-all-overdue-rentals-modal></view-all-overdue-rentals-modal>
+    </div>
+            <div class="table-wrapper" style="overflow-x:scroll;">
+                    <table id="customers">
+                        <tr>
+                            <th class="label">Product Type</th>
+                            <th class="label">Vendor</th>
+                            <th class="label">Product Name</th>
+                            <th class="label">Waiver Required</th>
+                            <th class="label">Age Restriction</th>
+                            <th class="label">Allow Anonymous Sale</th>
+                            <th class="label">Notes</th>                           
+                            <th class="label">Price</th>
+                            <th class="label">Sub Products</th>
+                            <th class="label">Status</th>
+                        </tr>
+                    <tr [ngClass]="{'tr-active': detailProduct ? product ? detailProduct.id == product.id : false : false}" *ngFor="let product of displayData;" (click)="expandProduct(product)">
+                        <ng-container *ngIf="product==undefined,else showData">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-container>
+                        <ng-template #showData >
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.productType}}</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.vendor}}</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.name}}</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.waiver_required ? "Required" : "Not Required"}}</th>                        
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{age_restriction_stringify(product.age_restriction)}}</th>                        
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.allow_anonymous_sale}}</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.notes}}</th>                        
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">${{product.price}} NZD</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}">{{product.sub_products.length}}</th>
+                        <th [ngClass]="{'th-active': detailProduct ? detailProduct.id == product.id : false}"
+                        [ngStyle]="{'color':product.is_active ? 'green' : 'red'}">{{product.is_active ? "Active" : "In-Active"}} </th>
+                    </ng-template>
+                    </tr>
+                    </table>
+            </div>            
+            
+            <div style="display:flex;flex-wrap:nowrap;position:relative;">
+                    <!----START DETAIL MENU--->
+                    <div style="display:block;width:930px;height:250px;">        
+                        <div style="top:20px;width:930px;height:250px;">
+                                <h2>SubItems</h2> 
+                                <div class="tableControls">
+
+                                <add-sub-product-modal [mode]="'add'" [product_ref]="detailProduct" (submitted)="load();"></add-sub-product-modal>
+                                <add-sub-product-modal [mode]="'edit'" [product_ref]="detailProduct" [sub_product_ref]="selectedSubProduct" (submitted)="load();"></add-sub-product-modal>
+                                <button class="button5" (click)="deleteSubProduct()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-battery-charging"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19"></path><line x1="23" y1="13" x2="23" y2="11"></line><polyline points="11 6 7 12 13 12 9 18"></polyline></svg>
+                                    Toggle Sub Product Activation</button> 
+                                <input (click)="load();" type="checkbox" [(ngModel)]="showInactiveSubProducts"> Show Inactive Sub-Products
+                                </div>
+                                <div class="table-wrapper3" style="overflow-x:scroll;">
+                                        <table id="customers">
+                                            <tr>
+                                                <th class="label">Vendor</th>
+                                                <th class="label">Product Name</th>
+                                                <th class="label">Size</th>
+                                                <th class="label">Color</th>
+                                                <th class="label">Rented</th>
+                                                <th class="label">Stock</th>
+                                                <th class="label">Notes</th>
+                                                <th class="label">Price</th>
+                                                <th class="label">Status</th>
+                                            </tr>
+                                        <tr [ngClass]="{'tr-active': selectedSubProduct ? product ? selectedSubProduct.id==product.id : false : false}" *ngFor="let product of subItems;" (click)="expandSubProduct(product)">
+                                            <ng-container *ngIf="product==undefined,else showData">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </ng-container>
+                                            <ng-template #showData >
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{detailProduct.vendor}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{detailProduct.name}}</th>                                            
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.size}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.color}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.rented}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.stock}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.notes}}</th>
+                                            <th [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}">{{product.price}}</th>
+                                            <th 
+                                            [ngClass]="{'th-active': selectedSubProduct ? selectedSubProduct.id==product.id : false}"
+                                            >{{product.is_active ? 'Active' : 'In-Active'}}</th>
+                                            
+                                        </ng-template>
+                                        </tr>
+                                        </table>
+                                </div>
+                        </div>
+                    </div>            
+                </div>
+        </div>
+           
+    <!-------LEFT BLOCK--------->
+    
+    <div class="leftblock">     
+        <ng-container *ngIf="selectedSubProduct">
+        <div class="productDetails">        
+            <ng-container *ngIf="selectedSubProduct.parent_product.productType=='Retail';">
+                    <h2 class="disabled">Outstanding Rentals</h2>
+                    <button>View Member Contact Info</button>
+
+                    <div class="table-wrapper2" style="overflow-x:scroll;height:280px;margin-bottom:200px;">
+                            <table id="customers"  style="height:280px;">
+                                    <tr>
+                                        <th class="label">Member</th>
+                                        <th class="label">Rental Date</th>
+                                        <th class="label">Due Date</th>
+                                        <th class="label">Status</th>
+                                    </tr>
+                                <tr *ngFor="let item of subProductRental;" >
+                                    <th style="border:none;background:white;"></th>
+                                    <th style="border:none;background:white;"></th>
+                                    <th style="border:none;background:white;"></th>
+                                    <th style="border:none;background:white;"></th>
+                                </tr>
+                                </table>
+                        </div>
+            </ng-container>
+            <ng-container *ngIf="selectedSubProduct.parent_product.productType=='Rental';">
+                    <h2 >Outstanding Rentals</h2>
+                     <!-----TABLE START----->
+                    <view-member-contact-info-modal [rental_ref]="rentalSelect"></view-member-contact-info-modal>
+                    <view-sales-history-modal [sub_product_ref]="selectedSubProduct"></view-sales-history-modal><br>
+                    <button class="button1" (click)="markAsReturned()"
+                    >Return</button>
+                    <button class="button1" (click)="markAsLost()"
+                    >Lost</button>
+                    <button class="button1" (click)="markAsDamaged()"
+                    >Damaged</button>
+                   <div class="table-wrapper2" style="overflow-x:scroll;height:280px;margin-bottom:200px;">
+                           <table id="customers" style="height:280px;">
+                               <tr>
+                                   <th class="label">Member</th>
+                                   <th class="label">Status</th>
+                                   <th class="label">Rental Date</th>
+                                   <th class="label">Due Date</th>                               
+                               </tr>
+                           <tr [ngClass]="{'tr-active': rentalSelect ? rental ? rental.id ==rentalSelect.id : false : false }" *ngFor="let rental of subProductRental;" (click)="rental ? rentalSelect=rental : '';">
+                               <ng-container *ngIf="rental==undefined,else showData">
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                                   <th></th>
+                               </ng-container>
+                               <ng-template #showData >
+                               <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{rental.member.firstName}} {{rental.member.lastName}}</th>
+                               <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}" [ngStyle]="{'color':getStatusColor(rental)}">{{rental.status}}</th>
+                               <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{dateFromISODetailed(rental.rental_date)}}</th>
+                               <th [ngClass]="{'th-active': rentalSelect ? rentalSelect.id ==rental.id : false}">{{dateFromISODetailed(rental.due_date)}}</th>                               
+                           </ng-template>
+                           </tr>
+                           </table>
+                   </div>
+                </ng-container>
+        
+        </div>
+        <!---RESTOCK DETAILS--->
+        <div class="productRestockDetails" style="margin-left:10px;margin-top:155px;">
+            <h2>Restock Details</h2><br>
+            <restock-modal (submitted)="load()" [sub_product_ref]="selectedSubProduct"></restock-modal>
+            <ng-container *ngIf="selectedSubProduct;else notSelectedRestock">
+            <!-----TABLE START----->
+            <div class="table-wrapper2" style="overflow-x:scroll;margin-top:20px;margin-left:-10px;">
+                    <table id="customers">
+                        <tr>
+                            <th class="label">Date</th>
+                            <th class="label">Qty</th>
+                            <th class="label">Note</th>
+                        </tr>
+                    <tr *ngFor="let restock of subProductRestock;" >
+                        <ng-container *ngIf="restock==undefined,else showData">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-container>
+                        <ng-template #showData >
+                        <th>{{dateFromISODetailed(restock.restock_date)}}</th>
+                        <th>{{restock.restock_amount}}</th>
+                        <th>{{restock.note}}</th>
+                    </ng-template>
+                    </tr>
+                    </table>
+            </div>
+            </ng-container>
+            <ng-template #notSelectedRestock>
+                <div class="table-wrapper2" style="overflow-x:scroll;margin-top:20px;margin-left:-10px;">
+                    <table id="customers">
+                        <tr>
+                            <th class="label">Date</th>
+                            <th class="label">Qty</th>
+                            <th class="label">Note</th>
+                        </tr>
+                    <tr *ngFor="let item of subProductRestock;" >
+                            <th style="border:none;background:white;"></th>
+                            <th style="border:none;background:white;"></th>
+                            <th style="border:none;background:white;"></th>
+                    </tr>
+                    </table>
+            </div>
+
+            </ng-template>
+            <!-----TABLE END----->
+            </div>
+        <!---RESTOCK DETAILS END--->
+    </ng-container>
+
+    </div>
+            </body>
+
+        
+        </ng-container>

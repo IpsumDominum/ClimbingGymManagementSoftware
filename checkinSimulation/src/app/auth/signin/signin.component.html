@@ -1,0 +1,15 @@
+<h1>Simulate Checkin</h1>
+<label>User Id</label>
+<br>
+<input type="text" [(ngModel)]="userId">
+<br>
+<br>
+<div *ngFor="let member of members">
+        {{member.firstName}} {{member.middleName}}
+        {{member.lastName}}
+        <br>
+        <button (click)="checkin(member.id)">
+                Checkin 
+            </button>
+</div>
+

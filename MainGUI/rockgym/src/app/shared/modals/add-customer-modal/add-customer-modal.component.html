@@ -1,0 +1,241 @@
+<ng-container *ngIf="size=='small'">
+<button class="button5" (click)="openModal('add-customer-modal')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+    Add Climber</button>
+</ng-container>
+<ng-container *ngIf="size=='large'">
+        <button class="button2" (click)="openModal('add-customer-modal')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>            
+            Add Climber</button>
+</ng-container>
+
+<modal id="add-customer-modal" >
+    <ng-container *ngIf="page==1">
+        <button (click)="next();">Next</button>
+        <button style="float:right;background-color:red;color:white;" (click)="closeModal('add-customer-modal');">X Cancel</button>
+    <div style="text-align: center;display:flex;flex-direction: column;align-items: center;">
+    <h1>Add New Climber</h1>
+    <div style="display:flex;flex-direction: row;margin:auto;">
+        *First Name  <input (keypress)="handleKeyboardEvent($event)" (input)="waitForUnique=false;middleName='';" style="margin-left:20px"type="text" [(ngModel)]="firstName" />
+
+        *Last Name <input (keypress)="handleKeyboardEvent($event)" (input)="waitForUnique=false;middleName='';" style="margin-left:20px" type="text" [(ngModel)]="lastName"/>
+        </div>
+        <ng-container *ngIf="waitForUnique">
+            <pre style="margin-bottom:-50px;">
+                {{totalAmount}} Climbers Match <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+            </pre>
+        </ng-container>
+        <div class="table-wrapper">
+            <table id="customers">
+                <tr>
+                    <th class="label">Title</th>
+                    <th class="label">First Name</th>
+                    <th class="label">Middle Name</th>
+                    <th class="label">Last Name</th>
+                    <th class="label">Email</th>
+                    <th class="label">Birthday</th>
+                    <th class="label">Age Group</th>                    
+                    <th class="label">Family</th>                    
+                    <th class="label">Membership Active</th>
+                    <th class="label">Last Visit</th>
+                    <th class="label">First Contact</th>
+                    <th class="label">Last Edit</th>
+                </tr>
+            <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" >
+                <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                            <th>{{user.title}}</th>
+                            <th>{{user.firstName}}</th>
+                            <th>{{ user.middleName ? user.middleName.charAt(0).toUpperCase(): ""}} </th>
+                            <th>{{user.lastName}}</th>
+                            <th>{{user.email}}</th>
+                            <ng-container *ngIf="isBirthday(user.birthday)==false">
+                                <th>{{ dateFromISO(user.birthday)}}</th>
+                            </ng-container>
+                            <ng-container *ngIf="isBirthday(user.birthday)==true">
+                                <th>Today!<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 10a4 4 0 0 1 4 4v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5a4 4 0 0 1 4-4V7h2v3h2V7h2v3h2V7h2v3zM7 12a2 2 0 0 0-2 2v1h14v-1a2 2 0 0 0-2-2H7zm-2 5v2h14v-2H5zM7 4a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4z" fill="#626262" fill-rule="nonzero"/></svg></th>    
+                            </ng-container>
+                            <th>{{getAgeGroup(user)}}</th>
+                            <th>{{getShortened(user.family)}}</th>
+                            <th [ngStyle]="{'color': user.membershipActive ? 'green':'red'}"> {{user.membershipActive ? "Active" : "Not Active"}}</th>
+                             <th>{{dateFromISODetailed(user.last_visit)}}</th>
+                            <th>{{dateFromISO(user.created)}}</th>
+                            <th>{{dateFromISO(user.last_edit)}}</th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+        <ng-container *ngIf="waitForUnique">
+        Middle Name  <input (keypress)="handleKeyboardEvent($event)" style="margin-left:20px"type="text" [(ngModel)]="middleName"/>
+    </ng-container>
+</div>
+
+</ng-container>
+
+
+<ng-container *ngIf="page==2">
+        <button (click)="prev()">Back</button>
+        <button (click)="createMember()">Confirm Add New Climber</button>
+        <button style="float:right;background-color:red;color:white;"  (click)="closeModal('add-customer-modal');">X Cancel</button>
+
+
+
+        <ng-container *ngIf="tab=='add'">
+            <h1 style="margin-top:50px;">
+                <label (click)="tab='add'" [ngClass]="{'tab-active':tab=='add'}" style="display:inline-block">
+                   Basic Info</label>
+                <label (click)="tab='photo'" [ngClass]="{'tab-active':tab=='photo'}" style="display:inline-block;margin-left:30px;">
+                    Photo</label>
+            </h1>
+        <div class="infobox smooth-borders" style="display:flex;padding-bottom:10px;">
+            <div>
+                <h2>Basic Info</h2>
+                <label><strong style="color:red">*</strong>Title</label> <select  [ngStyle]="{'border': invalid[0]==true ? 'red solid 1px' : ''}" style="width:100px;" [(ngModel)]="title">
+                        <option [value]="'Mr.'">Mr.</option>
+                        <option [value]="'Mrs.'">Mrs.</option>                        
+                        <option [value]="'Miss.'">Miss.</option>
+                        <option [value]="'Mx.'">Mx.</option>
+                        <option [value]="'Prof.'">Prof.</option>
+                        <option [value]="'Dr.'">Dr.</option>
+                        <option [value]="'Master.'">Master.</option>
+                    </select><br>
+                <label><strong style="color:red">*</strong>Last Name</label> <input type="text" [(ngModel)]="lastName" disabled/> <br>
+                <label><strong style="color:red">*</strong>First</label>  <input type="text" [(ngModel)]="firstName" disabled/> <br>
+                <label>Middle</label>  <input type="text" [(ngModel)]="middleName" disabled/><br>
+                
+                <label><strong style="color:red">*</strong>Birthday</label> <input type="date" [ngStyle]="{'border': invalid[1]==true ? 'red solid 1px' : ''}" [(ngModel)]="birthday"/><br>                
+            </div>
+            <div>
+                <h2>Address Info</h2>
+                <label>Address 1</label> <input type="text" [(ngModel)]="address1"/><br>
+                <label>Address 2</label><input type="text" [(ngModel)]="address2"/><br>
+                <label>Postal Code</label><input type="text" [(ngModel)]="postalCode"/><br>
+                <label>City</label><input type="text" [(ngModel)]="city"/><br>
+                <label>Country</label><input type="text" [(ngModel)]="country"/><br>
+            </div>      
+            <div>
+                <h2>Contact Info</h2>
+                <label>Cell Phone</label><input type="text" [(ngModel)]="cellphone"/><br>
+                <label>Home Phone</label><input type="text" [(ngModel)]="homephone"/><br>
+                <label>Work Phone</label><input type="text" [(ngModel)]="workphone"/><br>
+                <label><strong style="color:red">*</strong>Email</label> <input type="email" [ngStyle]="{'border': invalid[2]==true ? 'red solid 1px' : ''}"[(ngModel)]="email"/><br>
+            </div>
+            <div>
+                <h2>Emergency Contact</h2>
+                <label><strong style="color:red">*</strong>Emergency Contact Name</label><input type="text" [ngStyle]="{'border': invalid[3]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContact"/><br>
+                <label><strong style="color:red">*</strong>Emergency Contact Relation</label><input type="text" [ngStyle]="{'border': invalid[4]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactRelation"/><br>
+                <label><strong style="color:red">*</strong>Emergency Contact Phone</label><input type="text" [ngStyle]="{'border': invalid[5]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactPhone"/><br>
+                <h2>Short Note</h2>
+                <input type="text" [(ngModel)]="notes"/>
+            </div>  
+        </div>
+
+    <div  class="infobox smooth-borders" style="margin-top:10px;height:250px;display:flex">
+        <div style="flex-shrink: 0;">
+            <h2>Email Preferences</h2>            
+            <label style="display:inline">Mail On CRM Event</label><input style="width:10px" type="checkbox" [(ngModel)]="mail_on_internal_events"/><br><br>
+            <label style="display:inline">Mail Promotions</label><input style="width:10px" type="checkbox" [(ngModel)]="mail_promotions"/><br><br>
+            <label style="display:inline">Do Not Mail</label><input style="width:10px" type="checkbox" [(ngModel)]="do_not_send_mail"/><br><br>
+        </div>
+        <div >
+                <h2>Other Information</h2>
+                <label>Experience</label><select [(ngModel)]="proficiency_level">
+                        <option [ngValue]="'beginner'">Beginner</option>
+                        <option [ngValue]="'intermediate'">Intermediate</option>
+                        <option [ngValue]="'advanced'">Advanced</option>
+                        <option [ngValue]="'veteran'">Veteran</option>
+                </select>
+                <label>How did you get to know us?</label><select [(ngModel)]="got_to_know_channel">
+                        <option [ngValue]="'newspaper'">News Paper</option>
+                        <option [ngValue]="'email'">Email</option>
+                        <option [ngValue]="'wordofmouth'">Word of mouth</option>
+                        <option [ngValue]="'searchengine'">Search Engine</option>
+                        <option [ngValue]="'other'">Other</option>
+                </select>
+            </div>
+        <!--WAIVER SIGNATURE-->
+        <div style="margin-left:65px;">        
+        <h2>Keyfob ID Access</h2>        
+        <label style="display:inline">Can Access After Hours</label><input style="width:10px" type="checkbox" [(ngModel)]="accessAfterHours"/>
+        <br>
+        <br>
+        <label>Leave blank to do it later...</label>
+        <input type="text" [(ngModel)]="paxton_card_id"><br><br>
+        <button (click)="clearKeyFob()" >Clear Key Fob</button>
+        </div>
+        <!--PAYMENT METHODS-->
+        <ng-container *ngIf="customer;else empty">    
+        
+        </ng-container>
+        <!--------------------->
+        <ng-template #empty>
+            <div style="margin-left:50px;">
+            <h2>Payment Methods</h2>
+            Only Available after the customer is created.
+        </div>
+        </ng-template>
+        <!--------------------->
+       
+    </div>
+</ng-container>
+<ng-container *ngIf="tab=='photo'">
+    <h1 style="margin-top:50px;">
+        <label (click)="tab='add'" [ngClass]="{'tab-active':tab=='add'}" style="display:inline-block">
+           Basic Info</label>
+        <label (click)="tab='photo'" [ngClass]="{'tab-active':tab=='photo'}" style="display:inline-block;margin-left:30px;">
+            Photo</label>
+    </h1>
+    <div class="infobox smooth-borders" style="display:flex;" >
+        <webcam
+        *ngIf="shooting"
+        [width]="700"
+        [height]="600"
+        [mirrorImage]="'never'"
+        [trigger]="triggerObservable" (imageCapture)="handleImage($event)" 
+        ></webcam>
+        <img  *ngIf="!shooting" src="{{profile_photo}}" style="width:700px;height:520px;">
+
+        <div>
+            <br>
+        <ng-container *ngIf="shooting">
+            <button (click)="triggerSnapshot()">Take a shot (Say Cheese)</button>
+        </ng-container>
+        <ng-container *ngIf="!shooting">
+            <button (click)="shooting=true">Take another one</button>
+        </ng-container>
+    </div>
+        
+    </div>
+</ng-container>
+
+
+</ng-container>
+<ng-container *ngIf="loading">
+    <div class="lds-ring" style="margin-left:80px">                          
+            <img src="assets/img/logo2.png" >                                          
+            <!--
+            <p style="position:absolute;z-index:4;font-size:10px;
+            left:25px;top:38px;width:100px;
+                font-family: 'grifter'
+            ">Fetching and storing waivers... <br>This might take a while...</p>
+            -->
+        <div></div>                    
+</div>
+</ng-container>
+</modal>
+
+
+

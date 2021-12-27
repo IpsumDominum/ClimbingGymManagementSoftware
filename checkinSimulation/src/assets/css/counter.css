@@ -1,0 +1,50 @@
+.meterbox{
+    border-top:rgb(103, 103, 103) double 2px;    
+    padding-top:10px;
+    position: relative;
+    clip-path: polygon(50% 0%, 100% 6%, 100% 100%, 0 100%, 0 0);
+    margin-top:50px;
+
+}
+.meter{
+    margin-top:10px;
+    background:rgb(255,132,0);
+    width:18%;
+    height:30px;
+    border-radius: 10px;
+}
+
+.meterstick{
+    margin-top:10px;
+    position:absolute;
+    top:29.5px;
+    width:100%;
+    max-width: 500px;
+    height:30px;
+    border-radius: 10px;
+    background-image:url('../img/cartographer.png');
+    clip-path: polygon(3% 0, 100% 0, 100% 100%, 3% 99%);
+    z-index: 1;
+}
+.meterreading{
+    display:flex;
+    margin-left:10px;
+    top:45px;
+    position: absolute;
+    color:white;
+    font-family: 'rust';
+    z-index: 2;
+}
+.meterreading img{
+    margin-top:-2px;
+    margin-left:5px;
+    width:30px;
+    height:30px;    
+}
+.content1{
+    display:flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+
+    

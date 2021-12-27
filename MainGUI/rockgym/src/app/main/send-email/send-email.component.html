@@ -1,0 +1,187 @@
+<ng-container *ngIf="!loading">
+
+        <!---BODY START--->
+    <body style="background:white;display:flex">
+        <div class="topBlock">
+        <!--TOP BLOCK-->
+
+        <div class="leftBlock">
+            <!--LEFT BLOCK-->
+                <button style="float:right"(click)="sendMail()" >Send Mail</button>
+                <h1>Send Mail On Behalf of Resistance Climbing Gym 
+                    <br>
+                <label style="color:rgb(90, 90, 90)">(noreply@resistanceclimbing.co.nz)</label>
+                </h1>
+                <h3>Header : <input class="smooth-borders" style="width:500px;" type="text" [(ngModel)]="mailHeader"></h3>
+                <h3>Sender : <label style="color:rgb(90, 90, 90)">(noreply@resistanceclimbing.co.nz)</label></h3>
+                <h3 style="display:inline-block">Recipient(s) </h3>
+                <div class="smooth-borders" style="background:white;margin-left:5px;margin-right:5px;width:500px;display:inline-block;height:35px;margin-bottom:-8px;
+                overflow-x:scroll;display:inline-flex;">
+                    <label *ngFor="let recp of recipients.reverse()" class="recipient">
+                            {{recp.email}} <a class="cancel" (click)="removeRecipient(recp)">X</a>;         
+                    </label>
+                </div>
+                <ng-container *ngIf="detailUser">
+                <button>{{detailUser.email}}</button>
+                </ng-container>
+                <br>
+                <h3 style="display: inline-block;margin-right:5px;">Content </h3> 
+                Choose from templates:
+                <select [(ngModel)]="chosenTemplateSelect">
+                    <option [ngValue]="'empty'">Empty</option>
+                    <option [ngValue]="template.id" *ngFor="let template of emailTemplates">
+                        {{template.template_name}}
+                    </option>
+                </select>
+                <button style="padding:5px 8px 5px 8px;" (click)="loadTemplate()">Load</button>
+                <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent"></angular-editor>
+        </div>
+        <div class="rightBlock">
+            <!--RIGHT BLOCK-->
+    <h1>Add To Recipients</h1>
+
+    <h2>Search For A Customer</h2>
+<pre>
+<strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+<option [ngValue]="'Common'">Common</option>
+<option [ngValue]="'Title'">Title</option>
+<option [ngValue]="'FirstName'">First Name</option>
+<option [ngValue]="'MiddleName'">Middle Name</option>
+<option [ngValue]="'LastName'">Last Name</option>
+<option [ngValue]="'Email'">Email</option>
+<option [ngValue]="'Birthday'">Birthday</option>
+<option [ngValue]="'Family'">Family</option>                    
+<option [ngValue]="'CanAccessAfterHours'">Can Access After Hours</option>
+</select> <span id="search"><input style="width:200px" type="text" placeholder="Trujillo Strong..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="searchNew()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+
+{{totalAmount}} Customers Match <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+</pre>
+Selected <ng-container *ngIf="chosenCustomer">{{chosenCustomer.title}} {{chosenCustomer.firstName}} {{chosenCustomer.middleName }} {{chosenCustomer.lastName }}</ng-container>  
+<br>
+<div class="tableControls">
+<button class="btn-small" (click)="addToRecipients()">Add to recipients</button>
+<!--<button class="btn-small" (click)="addToRecipients()">Add All (Bulk)</button>-->
+</div>
+    <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                            <th class="label">First Name</th>
+                            <th class="label">Middle Name</th>
+                            <th class="label">Last Name</th>
+                            <th class="label">Email</th>
+                            <th class="label">Birthday</th>
+                            <th class="label">Waiver</th>
+                            <th class="label">Concession Passes</th>
+                            <th class="label">Outstanding Rentals</th>
+                            <th class="label">Overdue Rentals</th>
+                            <th class="label">Age Group</th>                    
+                            <th class="label">Family</th>                    
+                            <th class="label">Status</th>
+                            <th class="label">Membership Active</th>
+                            <th class="label">Membership Due</th>
+                            <th class="label">Membership Frozen</th>                    
+                            <th class="label">Can Access After Hours</th>
+                            <th class="label">Last Visit</th>
+                            <th class="label">First Contact</th>
+                            <th class="label">Warning</th>
+                            <th class="label">Last Edit</th>
+                    </tr>
+                <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{user.firstName}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{ user.middleName ? user.middleName.charAt(0).toUpperCase(): ""}} </th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{user.lastName}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{user.email}}</th>
+                            <ng-container *ngIf="isBirthday(user.birthday)==false">
+                                <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{ dateFromISO(user.birthday)}}</th>
+                            </ng-container>
+                            <ng-container *ngIf="isBirthday(user.birthday)==true">
+                                <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >Today!<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 10a4 4 0 0 1 4 4v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5a4 4 0 0 1 4-4V7h2v3h2V7h2v3h2V7h2v3zM7 12a2 2 0 0 0-2 2v1h14v-1a2 2 0 0 0-2-2H7zm-2 5v2h14v-2H5zM7 4a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4z" fill="#626262" fill-rule="nonzero"/></svg></th>    
+                            </ng-container>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" [ngStyle]="{'color':user.waiver_signed ? 'green' : 'red'}">{{user.waiver_signed ? "Signed" : "Absent"}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{ user.concession_passes }}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{ user.outstanding_rentals }}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{ user.overdue_rentals }}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{getAgeGroup(user)}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{getShortened(user.family)}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{user.status}}</th>
+                            <th [ngStyle]="{'color': user.membershipActive ? 'green':'red'}"> {{user.membershipActive ? "Active" : "Not Active"}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >-</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >No</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{user.access_after_hours ? 'Yes' : 'No'}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{dateFromISODetailed(user.last_visit)}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{dateFromISO(user.created)}}</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >-</th>
+                            <th [ngClass]="{'chosen':chosenCustomer.id==user.id}" >{{dateFromISO(user.last_edit)}}</th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+
+    <!--Mail QUEUE-->    
+    <h1>Current Mail Jobs (Maximum 2)</h1>
+    <div style="margin-left:10px" *ngFor="let job of mailJobs.reverse()">
+        <ng-container *ngIf="job.cancel;else InProgress">
+                <h2 [ngStyle]="{'color': job.status=='success' ? 'green' : 'black'}">{{job.status}}</h2>
+                Total Recipients: -  | 
+                Total Processed: -  <br>
+                Expected Finish Time: - | Status {{job.status}}
+                <div class="wrapper">
+                    <div class="progress-bar">
+                        <span class="progress-bar-fill" style="width:0%;"></span>
+                    </div>
+                </div>
+        </ng-container>
+        <ng-template #InProgress>
+                <h2 style="color:#fc5000">In Progress...</h2>
+                Total Recipients: {{job.total_recipients}} | 
+                Total Processed: {{job.total_processed}} <br>
+                Expected Finish Time: {{dateFromISODetailed(job.expected_finish_time)}} | Status {{job.status}} <br>
+                <button (click)="cancelMailQueueJob(job)">Cancel Job</button>
+                <div class="wrapper">                    
+                    <div class="progress-bar">
+                        <span class="progress-bar-fill" [ngStyle]="{'width': (100*job.total_processed/job.total_recipients).toString()+'%'}"></span>
+                        <label class="progress-indicator" [ngStyle]="{'left': (-5+100*job.total_processed/job.total_recipients).toString()+'%'}">{{(100*job.total_processed/job.total_recipients).toString()}}%</label>
+                    </div>
+                    
+                </div>
+        </ng-template>
+    
+
+</div>
+    <!--MAIL QUEUE END-->
+    <div>
+
+    </div>
+    </div>        
+    </div>
+    
+    <!--BOTTOM BLOCK-->
+    <div class="bottomBlock">
+
+    </div>
+    </body>
+
+</ng-container>

@@ -1,0 +1,51 @@
+
+    <!---BODY START--->
+<body style="background:white;display:flex">
+<!--Selection Box-->
+<div class="selection-box">
+<h1>Email Templates</h1>
+
+Please choose from the following to Edit
+<div class="selections smooth-borders">
+<div class="selection-header smooth-borders">
+    <label class="label1">Template Name</label>
+    <label class="label2">Last Edited</label>    
+    <label class="label3">Active</label>    
+</div>    
+
+<div [ngClass]="{'tr-active': template ? focusedTemplate ? focusedTemplate.id == template.id : false : false,'th-active': template ? focusedTemplate ? focusedTemplate.id == template.id : false : false}" 
+class="selection-item smooth-borders"
+*ngFor="let template of emailTemplates"   (click)="setAsFocusedTemplate(template)">
+    <label  class="label1">{{template.template_name}}</label>
+    <label class="label2">{{dateFromISODetailed(template.last_edited)}}</label>    
+    <label class="label3">{{template.active}}</label>    
+</div>
+
+</div>
+
+</div>
+<!--Editor Box-->
+<div class="editor-box">
+
+<ng-container *ngIf="focusedTemplate">
+
+<button class="button1" style="float:right" (click)="restoreToDefaultTemplate()">Restore To Default</button>
+<button class="button1" style="float:right" (click)="editTemplate()" >Save Changes</button>
+<h2>{{focusedTemplate.template_name}} Template</h2>
+{{focusedTemplate.template_description}}
+<label class="smooth-borders" style="float:right;padding:2px 5px 8px 5px;">
+Automatically Send <input type="checkbox" [(ngModel)]="focusedTemplate.active">
+</label>
+<h3>Header : <input class="smooth-borders" style="width:500px;padding:2px 2px 2px 5px;color:black;" type="text" [(ngModel)]="templateHeader"></h3>
+<h3>Sender : <label style="color:rgb(90, 90, 90)">(noreply@resistanceclimbing.co.nz)</label></h3>
+<ng-container *ngIf="detailUser">
+<button>{{detailUser.email}}</button>
+</ng-container>
+<h3>Content </h3> 
+<angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent"></angular-editor>
+<!--<h1 style="color:#FC5000;margin-top:50px;font-size:100px !important;z-index: 2;">COMING SOON...</h1>-->
+</ng-container>
+
+</div>
+    </body>
+

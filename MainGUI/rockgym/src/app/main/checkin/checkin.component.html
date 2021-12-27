@@ -1,0 +1,111 @@
+
+
+    <!---BODY START--->
+    <body>
+        <div class="checkIn">
+           <input type="text" style="width:700px" (keypress)="handleFobRead($event)" placeholder="place cursor here for fob reading...(Only if normal checkin for some reason stops working...)" [(ngModel)]="checkInId">
+        </div>
+            
+        <div style="margin-left:150px;marign-bottom:10px;">            
+            {{totalAmount}} Records Match <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+            <button 
+            [ngClass]="{'tab-active': queryMode=='onDate'}"
+    (click)="filterByOnDate()"
+            >On</button>
+            <button
+            [ngClass]="{'tab-active': queryMode=='sinceDate'}"
+    (click)="filterBySinceDate()"
+            >Since</button>
+            <button (click)="previousDay()">Previous Day</button>
+             <input type="date" (input)="selectDate($event)" [(value)]="stringDate"> &nbsp;<button (click)="nextDay()">Next Day >></button> 
+            <label class="smooth-borders" style="padding:5px 5px 5px 5px;">
+                Auto Refresh 
+                <input (input)="toggleAutoRefresh($event)" type="checkbox" [(ngModel)]="autoRefresh">
+            </label>
+            
+            
+        </div>
+        <div class="table-wrapper2">
+            <table id="customers">
+                    <thead>
+            <tr>
+                <th class="label">Photo</th>                
+                <th class="label">Checkin Type</th>                
+                <th class="label">First Name</th>
+                <th class="label">Middle Name</th>
+                <th class="label">Last Name</th>
+                <th class="label">Birthday</th>
+                <th class="label">Age Group</th>
+                <th class="label">Waiver Signed</th>
+                <th class="label">Can Access After Hours</th>
+                <th class="label">Membership Active</th>
+                <th class="label">Concession Remaining</th>
+                <th class="label">Checkin Time</th>                
+                <th class="label">After hours?</th>
+                <th class="label">Status</th>
+                <th class="label">Message</th>
+                <th class="label">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let checkin of displayData">
+                    <ng-container *ngIf="checkin==undefined,else showData">
+                            <th></th>
+                            <th style="color:transparent">1</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>                            
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th style="height:100px;"></th>
+                        </ng-container>
+                        <ng-template #showData>
+                            <th><img (click)="openPOSMember(checkin.member.id)" src="{{checkin.member.profile_photo}}" style="width:120px;height:100px;"></th>
+                            <th>{{checkin.checkin_type}}</th>
+                            <th>{{checkin.member.firstName}}</th>
+                            <th>{{checkin.member.middleName}}</th>
+                            <th>{{checkin.member.lastName}}</th>
+                            <th>{{dateFromISO(checkin.member.birthday)}}</th>
+                            <th>{{getAgeGroup(checkin.member)}}</th>
+                            <th [ngStyle]="{'color': checkin.member.waiver_signed ? 'blue' : 'red'}">{{checkin.member.waiver_signed ? 'Signed' : 'Not Signed'}}</th>
+                            <th>{{checkin.member.access_after_hours}}</th>
+                            <th>{{checkin.member.membershipActive}}</th>
+                            <th>{{checkin.member.concession_passes}}</th>
+                            <th>{{dateFromISODetailed(checkin.checkin_date)}}</th>                            
+                            <th>{{checkin.is_after_hours}}</th>
+                            <th  [ngStyle]="{'color': checkin.checkin_status=='success' ? 'green' : 'red'}">{{checkin.checkin_status}}</th>
+                            <th style="height:50px;">{{checkin.checkin_message}}</th>
+                            <th style="height:50px;">
+                                <button (click)="revoke(checkin)" *ngIf="checkin.checkin_type=='Concession' && checkin.checkin_status=='success'" style="background:rgb(255, 0, 0);color:white;z-index:1;">
+                                Revoke
+                            </button></th>
+                    </ng-template>
+            </tr>
+        </tbody>
+        </table>        
+</div>
+<button class="button1" (click)="export_to_csv()">     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg> &nbsp;&nbsp;Export To CSV</button>
+<ng-container *ngIf="loading">
+        <div class="lds-ring" style="margin-left:80px">                          
+                <img src="assets/img/logo2.png" >                                          
+                <!--
+                <p style="position:absolute;z-index:4;font-size:10px;
+                left:25px;top:38px;width:100px;
+                    font-family: 'grifter'
+                ">Fetching and storing waivers... <br>This might take a while...</p>
+                -->
+            <div></div>                    
+    </div>
+    </ng-container>
+    
+    </body>
+    
+    

@@ -1,0 +1,67 @@
+
+    <!---BODY START--->
+    <body style="background:white;padding:10px 20px 20px 20px;">    
+    <h1>Daily Checks Log</h1>
+    <button (click)="triggerDailyCheck()">Trigger Daily Check</button>
+    progress: 
+    <div style="position:relative;display:inline-block;">
+    <div class="smooth-borders" style="position:absolute;top:-12px;width:200px;height:20px;"></div>
+    <div class="smooth-borders" style="background:green;position:absolute;top:-12px;height:20px;"[ngStyle]="{'width': (dailyCheckProgress*2).toString()+'px'}"></div>
+    </div>
+    <!--FLEX CONTAINER -->
+    <div style="display: flex">
+    <!--LEFT BOX-->
+
+    <div style="width:40%;height:100%;background:white;margin-right:20px;margin-top:20px;">
+        <full-calendar id="calendar"  [options]="calendarOptions"></full-calendar>
+        <br>
+        <button [ngClass]="{'active':showChart=='error'}" (click)="showChart='error'">Errors</button>
+        <button [ngClass]="{'active':showChart=='time'}" (click)="showChart='time'">Time Taken</button>
+        <div *ngIf="showChart=='error'" style="width:500px;height:300px;" [chart]="chart"></div>
+        <div *ngIf="showChart=='time'" style="width:500px;height:300px;" [chart]="salesChart"></div>
+    </div>
+
+    <div style="margin-top:-50px;">
+        <strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+            <option [ngValue]="'Common'">Common</option>
+            </select> &nbsp;<span id="search"><input type="text" placeholder="Trujillo Strong..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="search()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+    <br>
+    <br>
+        {{filteredData.length}} Logs Match  &nbsp; <button (click)="previousDay()">Previous Day</button> <input type="date" (change)="selectDate($event)" [(value)]="stringDate"> &nbsp; <button (click)="nextDay()">Next Day >></button>
+    
+    <!--RIGHT BOX-->
+    <div class="table-wrapper2" style="overflow-x:scroll;">
+
+            <table id="customers">
+                    <tr>                            
+                        <th class="label">Log Date</th>
+                        <th class="label">Log Type</th>
+                        <th class="label">Alert Level</th>
+                        <th class="label">Log Message</th>
+                        <th class="label">Status</th>
+                        <th class="label">Note</th>
+                    </tr>
+                <tr *ngFor="let log of logDisplayData" >
+                    <ng-container *ngIf="log==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >                    
+                        <th>{{log.log_date}}</th>
+                        <th>{{log.log_type}}</th>
+                        <th [ngStyle]="{'color':log.log_level==3? 'red' : log.log_level==2 ? 'yellow':'green'}">{{log.log_level}}</th>
+                        <th >{{log.log_message}}</th>
+                        <th [ngStyle]="{'color':log.log_status=='error'? 'red':'green'}">{{log.log_status}}</th>
+                        <th>{{log.log_note}}</th>
+                </ng-template>
+                </tr>
+            </table>
+    </div>
+</div>
+    <!--FLEX CONTAINER END-->
+</div>
+</body>

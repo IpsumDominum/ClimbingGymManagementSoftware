@@ -1,0 +1,20 @@
+<button class="button1" (click)="openModal('edit-coupon-modal')">Edit Coupon</button>
+
+<modal id="edit-coupon-modal" >
+
+    <button style="float:right" (click)="closeModal('edit-coupon-modal');">X Cancel</button>
+    <button>Edit Coupon</button><br>
+    
+    <label>Coupon Code</label><br> <input type="text" disabled><br>
+    <label>Coupon Name</label><br> <input type="text" disabled><br>
+    <label>Discount Amount</label><br><input type="text" disabled><br>
+    <label>Causal Applicable</label><input type="checkbox" ><br>
+    <label>Concession Applicable</label><input type="checkbox"><br>
+    <label>Retail Applicable</label><input type="checkbox"><br>
+    <label>Membership Applicable</label><input type="checkbox">
+    
+    
+</modal>
+
+
+

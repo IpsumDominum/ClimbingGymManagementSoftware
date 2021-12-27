@@ -1,0 +1,103 @@
+<button class="button1" (click)="openModal('edit-customer-modal')">Edit</button>
+
+
+<!--------------------EDIT CUSTOMER------------>
+<modal id="edit-customer-modal" >
+    <ng-container *ngIf="customer">
+            <button (click)="editMember()">Save Edit</button>
+            <button (click)="closeModal('edit-customer-modal');">Cancel</button>
+        <h1 style="margin-top:50px;">Edit Customer</h1>
+    <div class="infobox" style="border:black solid 1px;display:flex;padding-bottom:10px;">
+        <div>
+            <h2>Basic Info</h2>
+            <label><strong style="color:red">*</strong>Title</label> <select  [ngStyle]="{'border': invalid[0]==true ? 'red solid 1px' : ''}" style="width:100px;" [(ngModel)]="title">
+                    <option [value]="'Mr.'">Mr.</option>
+                    <option [value]="'Mrs.'">Mrs.</option>
+                    <option [value]="'Ms.'">Ms.</option>
+                    <option [value]="'Mx.'">Mx.</option>
+                    <option [value]="'Prof.'">Prof.</option>
+                    <option [value]="'Dr.'">Dr.</option>
+                    <option [value]="'Master.'">Master.</option>
+                </select><br>
+            <label><strong style="color:red">*</strong>Last Name</label> <input type="text" [(ngModel)]="lastName" disabled/> <br>
+            <label><strong style="color:red">*</strong>First</label>  <input type="text" [(ngModel)]="firstName" disabled/> <br>
+                <label>Middle</label>  <input type="text" [(ngModel)]="middleName" disabled/><br>
+            
+            <label><strong style="color:red">*</strong>Birthday</label> <input type="date" [ngStyle]="{'border': invalid[1]==true ? 'red solid 1px' : ''}" [(ngModel)]="birthday"/><br>                
+        </div>
+        <div>
+            <h2>Address Info</h2>
+            <label>Address 1</label> <input type="text" [(ngModel)]="address1"/><br>
+            <label>Address 2</label><input type="text" [(ngModel)]="address2"/><br>
+            <label>Postal Code</label><input type="text" [(ngModel)]="postalCode"/><br>
+            <label>City</label><input type="text" [(ngModel)]="city"/><br>
+            <label>Country</label><input type="text" [(ngModel)]="country"/><br>
+        </div>      
+        <div>
+            <h2>Contact Info</h2>
+            <label>Cell Phone</label><input type="text" [(ngModel)]="cellphone"/><br>
+            <label>Home Phone</label><input type="text" [(ngModel)]="homephone"/><br>
+            <label>Work Phone</label><input type="text" [(ngModel)]="workphone"/><br>
+            <label><strong style="color:red">*</strong>Email</label> <input type="email" [ngStyle]="{'border': invalid[2]==true ? 'red solid 1px' : ''}"[(ngModel)]="email"/><br>
+        </div>
+        <div>
+            <h2>Emergency Contact</h2>
+            <label><strong style="color:red">*</strong>Emergency Contact Name</label><input type="text" [ngStyle]="{'border': invalid[3]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContact"/><br>
+            <label><strong style="color:red">*</strong>Emergency Contact Relation</label><input type="text" [ngStyle]="{'border': invalid[4]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactRelation"/><br>
+            <label><strong style="color:red">*</strong>Emergency Contact Phone</label><input type="text" [ngStyle]="{'border': invalid[5]==true ? 'red solid 1px' : ''}" [(ngModel)]="emergencyContactPhone"/><br>
+        </div>  
+    </div>
+</ng-container>
+<div  class="infobox" style="margin-top:10px;border:black solid 1px;height:250px;display:flex">
+    <div >
+        <h2>Other Information</h2>
+        <label style="display:inline">Can Access After Hours</label><input style="width:10px" type="checkbox" [(ngModel)]="accessAfterHours"/><br>
+        <!--<label style="display:inline">Membership Frozen</label><input style="width:10px" type="checkbox" [(ngModel)]="cellphone"/><br>
+        <label style="display:inline">Automatically Email Recurring Invoices</label><input style="width:10px" type="checkbox" [(ngModel)]="cellphone"/><br>-->
+    </div>
+    <!--PAYMENT METHODS-->
+    <ng-container *ngIf="customer;else empty">    
+    <div style="display:flex;">
+        <div>
+        <h2>Payment Methods:</h2>
+        <!--------------------->
+        <select style="width:150px;" [(ngModel)]="cardSelection"  >
+        <ng-container *ngIf="customer.paymentMethods.length==0;else showCards">
+            <option [value]="'nocard'">No Cards Found</option>
+        </ng-container>
+        <option [value]="'card.id'" *ngFor="let card of customer.paymentMethods">
+            Card ****** {{card.last_four}}
+        </option>                                
+        </select>    <br>
+        <ng-container *ngIf="addingNewPaymentMethod==false;else addingNew">
+            <button style="width:150px;height:100px;" (click)="addingNewPaymentMethod=true">Add new payment method</button>
+        </ng-container>
+        <ng-template #addingNew>
+            <button style="width:150px;height:50px;" (click)="addingNewPaymentMethod=false">Cancel</button><br>
+            <button style="width:150px;height:50px;" (click)="addNewPaymentMethod()">Confirm</button>
+        </ng-template>
+        <!------------------->
+        </div>
+        <ng-container *ngIf="addingNewPaymentMethod==true;">
+        <div style="margin-top:10px;">
+        <label>Card Number</label> <input type="text" [(ngModel)]="card_number"/>
+        <label>Card Expiry Month</label><input type="number" [(ngModel)]="card_expiry_month"/><br>
+        <label>Card Expiry Year</label><input type="number" [(ngModel)]="card_expiry_year"/>
+        <label>CVC</label><input type="text" [(ngModel)]="card_cvc"/><br>        
+        </div>
+        </ng-container>
+
+    </div>
+    </ng-container>
+    <!--------------------->
+    <ng-template #empty>
+        Only Available after the customer is created.
+    </ng-template>
+    <!--------------------->
+
+</div>
+</modal>
+    
+    
+    
+     

@@ -1,0 +1,76 @@
+<button class="button2" (click)="openModal('view-family-members-modal')">View Family Members</button>
+
+<modal id="view-family-members-modal" >
+<button style="float:right" (click)="closeModal('view-family-members-modal');">X Cancel</button>
+
+<h1>View Family Members Details For...</h1>
+<ng-container *ngIf="detailUser">
+    
+<h3>
+<strong style="color:#FC5000">First Name</strong> : {{detailUser.firstName}}<br>
+<strong style="color:#FC5000">Middle Name</strong>: {{detailUser.middleName}}<br>
+<strong style="color:#FC5000">Last Name</strong>: {{detailUser.lastName}}<br>
+</h3>
+</ng-container>
+<!--CURRENT MEMBERS BOX-->
+<h2>Current Family Members</h2>
+<div class="table-wrapper">
+        <table id="customers">
+                <tr>
+                    <th class="label">First Name</th>
+                    <th class="label">Middle Name</th>
+                    <th class="label">Last Name</th>
+                    <th class="label">Birthday</th>
+                    <th class="label">Waiver</th>
+                    <th class="label">Concession Passes</th>
+                    <th class="label">Age Group</th>                    
+                    <th class="label">Family</th>                    
+                    <th class="label">Status</th>
+                    <th class="label">Membership Active</th>
+                    <th class="label">Membership Due</th>
+                    <th class="label">Membership Frozen</th>
+                    <th class="label">Can Access After Hours</th>
+                </tr>
+            <tr *ngFor="let user of membersData;" (click)="expandUser(user)">
+                <ng-container *ngIf="user==undefined;else showData">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </ng-container>
+                <ng-template #showData >
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{user.firstName}}</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{ user.middleName ? user.middleName.charAt(0).toUpperCase(): ""}} </th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{user.lastName}}</th>
+                <ng-container *ngIf="isBirthday(user.birthday)==false">
+                    <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{ dateFromISO(user.birthday)}}</th>
+                </ng-container>
+                <ng-container *ngIf="isBirthday(user.birthday)==true">
+                    <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">Today!<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 10a4 4 0 0 1 4 4v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5a4 4 0 0 1 4-4V7h2v3h2V7h2v3h2V7h2v3zM7 12a2 2 0 0 0-2 2v1h14v-1a2 2 0 0 0-2-2H7zm-2 5v2h14v-2H5zM7 4a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4zm4 0a1 1 0 0 0 1-1a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4z" fill="#626262" fill-rule="nonzero"/></svg></th>    
+                </ng-container>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">Absent</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{ user.concession_passes }}</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{getAgeGroup(user)}}</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{user.family.slice(0,6)}}</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{user.status}}</th>
+                <th [ngStyle]="{'color': user.membershipActive ? 'green':'red','background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}"> {{user.membershipActive ? "Active" : "Not Active"}}</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">-</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">No</th>
+                <th [ngStyle]="{'background': isSameUser(user,chosenFamilyMember) ? 'gray': ''}">{{user.access_after_hours ? 'Yes' : 'No'}}</th>
+            </ng-template>
+            </tr>
+            </table>
+    </div>
+</modal>
+
+
+

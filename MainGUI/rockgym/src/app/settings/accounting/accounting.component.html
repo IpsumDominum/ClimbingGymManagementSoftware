@@ -1,0 +1,26 @@
+
+        <!---BODY START--->
+        <body style="background:white;padding:10px 20px 20px 20px;">    
+        
+       <!-- {{filteredData.length}} Sales Match   <button (click)="previousDay()">Previous Day</button> <input type="date" (change)="selectDate($event)" [(value)]="stringDate"> <button (click)="nextDay()">Next Day >></button>
+        <span id="search"><input type="text" placeholder="Trujillo Strong..."
+         (keypress)="handleKeyboardEvent($event)" 
+         [(ngModel)]="searchPrompt">
+         <a id="searchButton" (click)="searchNew()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+          Sales Match Match <button id="next" (click)="previousPage()"><<</button> Showing <input id="currentPage" (input)="onSearchChange($event)" [ngModel]="currentPage"> of {{totalPage>1? totalPage:1}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+     -->
+            <!--FLEX CONTAINER-->            
+            <div style="display:flex">
+            
+            <!--LEFT BOX-->
+            <div class="leftBox">
+                <app-invoices></app-invoices>
+            </div>
+            <!--RIGHT BOX-->
+            <div class="rightBox">
+                  <app-sales></app-sales>
+            <!--FLEX CONTAINER END-->
+            </div>
+        </div>
+        </body>
+    

@@ -1,0 +1,146 @@
+<button class="button-5" (click)="openModal('pos-history-modal')">
+    <img src="assets/icons/history.svg" style="width:30px;height:30px;">
+    POS History</button>
+
+<modal id="pos-history-modal" >
+    <h1>POS History Today - {{today.getDate()}} / {{today.getMonth()+1}} / {{today.getFullYear()}} </h1> 
+        Total Today: ${{getTotal('all')}} NZD | Cash: ${{getTotal('Cash')}} NZD | Eftpos/Credit: ${{getTotal('Eftpos/Credit')}} NZD
+        <br>
+        <br>
+        <div class="table-wrapper">            
+                <table id="customers" style="z-index: 5 !important;position:absolute;">                                        
+                    <thead>
+                        <tr >
+                                <th class="label">Vendor</th>
+                                <th class="label">Product Type</th>
+                                <th class="label">Product Name</th>
+                                <th class="label">Size</th>
+                                <th class="label">Color</th>
+                                <th class="label">Customer Name</th>
+                                <th class="label">Transaction Time</th>
+                                <th class="label">Staff Issued</th>
+                                <th class="label">Qty</th>
+                                <th class="label">Unit Price</th>
+                                <th class="label">Discount %</th>
+                                <th class="label">Discount Amount</th>
+                                <th class="label">Total Expected / Total Paid</th>
+                                <th class="label">Payment Method</th>                                
+                                <th class="label">Notes</th>
+                            </tr>           
+                        </thead>
+                        <tbody>
+                        <tr [ngClass]="{'tr-active': saleSelected(sale)}"  (click)="selectSale(sale)" *ngFor="let sale of salesData" >                        
+                                <ng-container *ngIf="sale==undefined,else showData">
+                                        <th style="color:transparent">1<br></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </ng-container>
+                                    <ng-template  #showData >
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.vendor}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.productType}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.name}}</th>
+                                    <ng-container *ngIf="sale.sub_product;else noSubProduct">
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.sub_product.size}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.sub_product.color}}</th>
+                                </ng-container>
+                                    <ng-template #noSubProduct>
+                                        <th [ngClass]="{'th-active': saleSelected(sale)}">-</th>
+                                        <th [ngClass]="{'th-active': saleSelected(sale)}">-</th>
+                                    </ng-template>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.memberName ? sale.memberName : 'Anonymous'}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{parseDate(sale.created)}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">Admin</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.quantity}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">${{sale.price}}</th>
+                                    <th style="color:coral" [ngClass]="{'th-active': saleSelected(sale)}">{{sale.discount_percentage}}%</th>
+                                    <th style="color:blue" [ngClass]="{'th-active': saleSelected(sale)}">${{sale.discount_amount}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}" [ngStyle]="{'color':sale.expected_amount == sale.paid_amount ? 'green':'orange'}">${{sale.expected_amount}} / ${{sale.paid_amount}}</th>                                    
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">
+                                        {{sale.paid}}</th>
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">
+                                        <p style="word-wrap: break-word;max-width: 200px;">{{sale.notes}}
+                                        </p>
+                                        </th>
+                                </ng-template>
+                        </tr>
+                    </tbody>
+                    </table>                
+        </div>
+    <button style="background:red;color:white" (click)="closeModal('pos-history-modal')">Close</button>
+    <ng-container *ngIf="saleSelection.id=='none' || saleEditing==false;else saveEditButton">
+        <button style="background:blue;color:white" (click)="openEditSale()">Edit Sale</button>
+    </ng-container>
+    <ng-template #saveEditButton>
+        <button style="background:green;color:white" (click)="saveEditSale()">Save Edit Sale</button>
+        <!--PW: <input type="password" [(ngModel)]="password">-->
+    </ng-template>
+
+    <ng-container *ngIf="saleSelection.id!='none' && saleEditing==true">
+        <table id="customers-3">                                        
+            <thead>
+                <tr >
+                        <th class="label">Vendor</th>
+                        <th class="label">Product Name</th>
+                        <th class="label">Customer Name</th>
+                        <th class="label">Transaction Time</th>
+                        <th class="label">Qty</th>
+                        <th class="label">Unit Price</th>
+                        <th class="label">Total Expected / Total Paid</th>
+                        <th class="label">Payment Method</th>                        
+                        <th class="label">Notes</th>
+                    </tr>           
+                </thead>
+                <tbody>
+        <th>{{saleSelection.product.vendor}}</th>
+        <th>{{saleSelection.product.name}}</th>
+        <th>{{saleSelection.memberName ? saleSelection.memberName : 'Anonymous'}}</th>
+        <th>{{parseDate(saleSelection.created)}}</th>
+        <th>{{saleSelection.quantity}}</th>
+        <th>${{saleSelection.price}}</th>
+        <th style="width:130px" [ngStyle]="{'color':saleSelection.expected_amount == saleSelection.paid_amount ? 'green':'orange'}">
+            $<input type="number" style="width:80px;display:inline-block !important;" [(ngModel)]="saleSelection.expected_amount"> / <br>
+            $<input type="number" style="width:80px;display:inline-block !important;" [(ngModel)]="saleSelection.paid_amount"></th>
+        <th>
+            <select [(ngModel)]="saleSelection.paid">
+                <option [ngValue]="'Eftpos/Credit'">
+                    Eftpos/Credit
+                </option>
+                <option [ngValue]="'Cash'">
+                    Cash
+                </option>
+                <option [ngValue]="'Voucher'">
+                    Voucher
+                </option>
+                <!----
+                <option [ngValue]="'Voucher+Cash'">
+                    Voucher + Cash
+                </option>
+                <option [ngValue]="'Voucher+Eftpos'">
+                    Voucher + Eftpos
+                </option>
+            -->
+            </select>
+    </th>
+    <th>
+        <input type="text" [(ngModel)] ="saleSelection.notes">
+    </th>
+        </tbody>
+        </table>
+    </ng-container>
+
+</modal>
+
+
+

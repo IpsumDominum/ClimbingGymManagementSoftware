@@ -1,0 +1,86 @@
+<button class="button3" (click)="openModal('view-all-over-due-rentals')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+
+View All OverDue Rentals
+</button>
+
+<modal id="view-all-over-due-rentals" >
+    <button style="float:right;color:white;background:red;" (click)="closeModal('view-all-over-due-rentals');">X Cancel</button>    
+    <h1>View All Outstanding / Overdue Rentals</h1>    
+        <pre>
+            <strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+            <option [ngValue]="'Common'">Common</option>
+            </select> <span id="search"><input type="text" placeholder="Trujillo Strong..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="searchNew()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+            0 Records Found <button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+            </pre>
+        <button [ngClass]="{'tab-active':filterByKey=='all'}" (click)="filterBy('all')">All</button>
+        <button [ngClass]="{'tab-active':filterByKey=='outstanding'}" (click)="filterBy('outstanding')">Outstanding</button>
+        <button [ngClass]="{'tab-active':filterByKey=='returned'}" (click)="filterBy('returned')">Returned</button>
+        <button [ngClass]="{'tab-active':filterByKey=='lost'}" (click)="filterBy('lost')">Lost</button>
+        <button [ngClass]="{'tab-active':filterByKey=='damaged'}" (click)="filterBy('damaged')">Damaged</button>
+        <button [ngClass]="{'tab-active':filterByKey=='overdue'}" (click)="filterBy('overdue')">Overdue</button>
+        
+        <hr>
+        <div style="width:800px;height:380px;margin-bottom:20px;">
+            <div class="table-wrapper2" style="overflow-x:scroll;">
+                    <table id="customers">
+                        <tr>
+                                <th class="label">Product Type</th>                                
+                                <th class="label">Vendor</th>
+                                <th class="label">Product Name</th>
+                                <th class="label">Size</th>
+                                <th class="label">Color</th>
+                                <th class="label">Price</th>
+                                <th class="label">Rented Quantity</th>
+                                <th class="label">Member FirstName</th>
+                                <th class="label">Member LastName</th>                                
+                                <th class="label">Rental Date</th>
+                                <th class="label">Due Date</th>                                
+                                <th class="label">Returned Date</th>                                
+                                <th class="label">Status</th>
+                        </tr>
+                    <tr  [ngClass]="{'tr-active':selectedRental ? rental ? selectedRental.id==rental.id : false : false}" *ngFor="let rental of rentalsOutstanding;" (click)="selectedRental=rental">
+                        <ng-container *ngIf="rental==undefined,else showData">
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </ng-container>
+                        <ng-template #showData >
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.productType}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.vendor}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.parent_product.name}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.size}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.color}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.sub_product.price}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.note}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.member.firstName}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{rental.member.lastName}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.rental_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.due_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}">{{dateFromISODetailed(rental.returned_date)}}</th>
+                        <th [ngClass]="{'th-active':selectedRental ? selectedRental.id==rental.id : false}" [ngStyle]="{'color':getStatusColor(rental)}">{{getStatus(rental)}}</th>
+
+                        </ng-template>
+                    </tr>
+                    </table>
+            </div>
+    </div>
+        <button style="color:green" (click)="markAllAsReturned()">Mark <strong style="color:blue">All</strong> as Returned</button>
+        <button style="color:green" (click)="markAsReturned()">Mark as Returned</button>
+        <button style="color:black" (click)="markAsLost()">Mark as Lost</button>            
+        <button style="color:purple" (click)="markAsDamaged()">Mark as Damaged</button>       
+    
+</modal>
+
+
+

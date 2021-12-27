@@ -1,0 +1,20 @@
+<button class="button-5" (click)="openModal('discount-amount-modal')">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+    Amount Discount </button>
+
+<modal id="discount-amount-modal" >
+        
+<button style="float:right;background:red;color:white;" (click)="closeModal('discount-amount-modal');">X Cancel</button>
+<h1>Apply Discount By AMOUNT $</h1>
+Discount Amount $ <input type="number" [(ngModel)]="discountAmount"> 
+<br>
+<ng-container *ngIf="error">
+<label style="color:red;">{{error}}</label>
+</ng-container>
+<br>
+<button [ngClass]="{'confirm': discountAmount}" (click)="submit()">Confirm</button>
+
+</modal>
+
+
+

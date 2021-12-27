@@ -1,0 +1,350 @@
+
+
+<!---BODY START--->
+<body style="width:1500px;">
+    
+<div style="display:flex;margin-left:10px;">
+<!---Left Section--->
+<div>
+<div style="width:600px;height:200px;background:white;margin-left:30px;">
+    <button class="button1" (click)="currentCustomer=undefined">Anonymous</button>
+    <choose-customer-modal [openModalEvent]="openChooseCustomer" (choseCustomerEmitter)="setCurrentCustomer($event)" (submitted)="this.load();"></choose-customer-modal>
+    <add-customer-modal [size]="'small'"  [openModalEvent]="openAddCustomerModal" (submitted)="reloadCustomer($event)"></add-customer-modal>
+    <view-all-overdue-rentals-modal></view-all-overdue-rentals-modal>
+    
+
+    <!-----------------CUSTOMER CURRENTLY SELECTED BOX------------->
+    <div class="smooth-borders customer-box">
+        
+            <ng-container *ngIf="!currentCustomer;">
+                    <div class="smooth-borders" style="display:flex;align-items:center;margin:auto;text-align:center;justify-content:center;margin-left:20px;width:150px;height:120px;">
+                            <h2>No Climber Selected</h2>
+                        </div>
+            </ng-container>                    
+
+            <!---MAIN INFO BOX-->
+            <ng-container *ngIf="currentCustomer">
+            <div class="detailmenu">
+            <div class="smooth-borders customer-photo" >
+                <ng-container *ngIf="currentCustomer.profile_photo;else noPhoto">
+                    <img (click)="openEnlargePhoto.emit(currentCustomer.profile_photo);"src="{{currentCustomer.profile_photo}}" style="width:inherit;height:inherit">
+                </ng-container>
+                <ng-template #noPhoto>
+                    <h2>No Photo</h2>
+                </ng-template>
+            </div>
+            <div style="height:50px;margin-top:0px;">                
+                <strong style="margin-right:10px;">{{currentCustomer.firstName}} {{currentCustomer.lastName}}</strong> 
+                <strong style="margin-left:51px;">| Age Goup: </strong> <label >{{getAgeGroup(currentCustomer)}}</label>            
+                <br>
+                <strong >Waiver: </strong> <label [ngStyle]="{'color':currentCustomer.waiver_signed ? 'green': 'red'}">{{currentCustomer.waiver_signed ? 'Present' : 'Absent'}}</label>           
+                <strong style="margin-left:20px;">| Membership: </strong> <label [ngStyle]="{'color':currentCustomer.membershipActive ? 'green': 'red'}">{{getMembershipType(currentCustomer)}}</label>                
+                <div style="margin-top:5px;">
+    
+                    <button class="button1" (click)="openEditModal.emit(currentCustomer)" >Edit</button>
+                    <edit-customer-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openEditModal" ></edit-customer-modal>
+            
+                    <!--<button class="button1" (click)="openInvoicesModal.emit(currentCustomer)" >Invoices</button>
+                    <invoice-payment-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openInvoicesModal" ></invoice-payment-modal>
+                
+                    <button class="button1" (click)="openVisitHistoryModal.emit(currentCustomer)" >Visit History</button>
+                    <visits-history-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openVisitHistoryModal" ></visits-history-modal>-->
+                        
+                    <button class="button1" (click)="openRentalsModal.emit(currentCustomer)" >Rentals</button>
+                    <customer-view-rentals-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openRentalsModal"></customer-view-rentals-modal>
+                
+                    <button class="button1" (click)="openWaiversModal.emit(currentCustomer)" >Waiver</button>
+                    <customer-view-waiver-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openWaiversModal"></customer-view-waiver-modal>
+                
+                    <button class="button1" (click)="openMembershipModal.emit(currentCustomer)" >Membership</button>
+                    <customer-view-membership-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openMembershipModal"></customer-view-membership-modal>
+                
+                    <button class="button1" (click)="openPurchasesModal.emit(currentCustomer)">Purchases</button>
+                    <view-purchase-history-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openPurchasesModal"></view-purchase-history-modal>
+                    
+                    <button class="button1" (click)="openViewFamilyMembersModal.emit(currentCustomer)">Family</button>
+                    <view-family-members-modal (submitted)="reloadCustomer($event)" [openModalEvent]="openViewFamilyMembersModal" ></view-family-members-modal>        
+                </div>
+                </div>
+            
+        </div>
+        <advanced-search-modal [openModalEvent]="openEnlargePhoto"></advanced-search-modal>
+    </ng-container>
+    <!----MAIN INFO BOX END-->
+    </div>
+    
+    <!---------------------------------------->
+</div>
+
+<div style="width:750px;height:650px;position:relative;margin-top:20px;margin-right:30px;">
+     <div class="table-wrapper">            
+            <table class="sales" id="customers" style="z-index: 5 !important;position:absolute;" >                                        
+                <thead>
+                    <tr >                            
+                            <th class="label">Product Type</th>
+                            <th class="label">Vendor</th>
+                            <th class="label">Product Name</th>
+                            <th class="label">Climber Name</th>
+                            <th class="label">Qty</th>
+                            <th class="label">Size</th>
+                            <th class="label">Color</th>
+                            <th class="label">Rental Duration</th>
+                            <th class="label">% Discount</th>
+                            <th class="label">$ Discount</th>
+                            <th class="label">Price</th>
+                            <th class="label">Final Price</th>
+                        </tr>           
+                    </thead>
+                    <tbody >
+                    <tr  [ngClass]="{'tr-active': saleSelected(sale)}"(click)="selectSale(sale)" *ngFor="let sale of saleTray" >                        
+                            <ng-container *ngIf="sale==undefined,else showData">
+                                    <th style="color:transparent">Casualship<br></th>
+                                    <th style="color:transparent">Resistance GYM</th>
+                                    <th style="color:transparent">Climbing Shoe</th>
+                                    <th style="color:transparent">1</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </ng-container>
+                                <ng-template  #showData >
+                                <th [ngClass]="{'th-active': saleSelected(sale)}" [ngStyle]="{'color':sale.productType=='Rental'? 'blue':'green'}">{{sale.productType}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.vendor}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.productName}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.memberName}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.productType=="membership" ? sale.quantity.toString() + ' Month(s)' : sale.quantity}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.size}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{sale.product.color}}</th>
+                                <th [ngClass]="{'th-active': saleSelected(sale)}">{{getRentalDueDate(sale)}}</th>
+                                <th style="color:coral" [ngClass]="{'th-active': saleSelected(sale)}">% {{sale.discount_percentage}}</th>
+                                <th style="color:blue" [ngClass]="{'th-active': saleSelected(sale)}">$ {{roundUp(sale.discount_amount)}}</th>
+                                <ng-container *ngIf="sale.productType=='membership';else normalSale1">
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">${{sale.price}}</th>
+                                </ng-container>
+                                <ng-template #normalSale1>                                    
+                                    <th [ngClass]="{'th-active': saleSelected(sale)}">${{sale.price * sale.quantity}}</th>
+                                </ng-template>
+
+                                <ng-container *ngIf="sale.productType=='membership';else normalSale2">
+                                    <th style="color:green"[ngClass]="{'th-active': saleSelected(sale)}">${{roundUp((sale.price)*(1-sale.discount_percentage/100)- sale.discount_amount)}}</th>
+                                </ng-container>
+                                <ng-template #normalSale2>                                    
+                                    <th style="color:green"[ngClass]="{'th-active': saleSelected(sale)}">${{roundUp((sale.price * sale.quantity)*(1-sale.discount_percentage/100)- sale.discount_amount)}}</th>
+                                </ng-template>
+                            </ng-template>
+                    </tr>
+                </tbody>
+                </table>              
+               
+    </div>
+    <h1><strong>Total:</strong> 
+        <strong style="color:black"> ${{getTotalRaw()}}</strong>  &nbsp;| &nbsp;
+        <strong>$ Discount:</strong> 
+        <strong style="color:blue"> ${{roundUp(getTotalRaw()-getTotal())}} </strong><br>
+        <strong>Final:</strong> 
+        <strong style="color:green;"> ${{ getTotal() }}</strong></h1>
+    <button (click)="increaseQuantity()"> + </button><button (click)="decreaseQuantity()"> - </button>
+    <button (click)="delete_sale()">Delete</button>
+    <edit-qty-modal (submitted)="handleEditQuantity($event)" [saleToEdit]="saleSelection"></edit-qty-modal>
+    <div style="margin-top:-100px;margin-left:350px;width:500px;display:flex;flex-wrap: wrap;">
+        <div>
+    <redeem-coupon-modal (submitted)="handleApplyDiscounts($event)"></redeem-coupon-modal>
+    <button (click)="handleApplyDiscounts(10)">Discount 10%</button>
+    <button (click)="handleApplyDiscounts(50)">Discount 50%</button>    
+</div>
+<div style="margin-top:10px;">
+    <discount-amount-modal (submitted)="handleApplyDiscountsAmount($event)"></discount-amount-modal>
+    <!---<button><strong style="color:rgb(240, 116, 116)">Suspend </strong>transaction</button>-->
+</div>
+    </div>
+    <!---
+    <button class="button1 disabled" >
+        <s>Print To Receipt</s>
+    </button>
+    --->
+    
+    
+</div>
+</div>
+<!---Right Section--->
+<div>
+    <div style="width:700px;height:250px;flex-shrink: 0;">
+
+            <!--<nav>
+                <a  (click)="mode='casual'">
+                            <b>Casual</b>
+                        </a>
+                <a (click)="mode='concession'">
+                            <b>Concession</b>
+                        </a>
+                <a (click)="mode='memberships'">
+                            <b>Memberships</b>
+                        </a>
+            <span [ngClass]="{'active1':mode=='casual',
+                              'active2':mode=='concession',
+                              'active3':mode=='memberships'}"></span>
+            </nav>-->
+                  
+        <button (click)="mode='casual'"> <strong style="margin-right:5px;color:rgba(122, 122, 122, 0.644)">Alt-1</strong>Casual</button>
+        <button (click)="mode='concession'"> <strong style="margin-right:5px;color:rgba(122, 122, 122, 0.644)">Alt-2</strong>Concession Cards</button>
+        <button (click)="mode='memberships'"> <strong style="margin-right:5px;color:rgba(122, 122, 122, 0.644)">Alt-3</strong>Memberships</button>
+    <div style="margin-top:10px;padding-top:10px;">
+    <ng-container *ngIf="mode==='casual'">
+        <button style="color:rgb(33, 151, 247);width:150px;height:180px;font-size:20px;" (click)="issueProduct('casual_pass_child',1,true,'','')" class="button3"><strong style="color:black">Day Pass</strong> Child<br>(5-13yrs)<br><strong style="color:green">${{casual_pass_child_price}}</strong></button>
+        <button style="color:rgb(250, 191, 27);width:150px;height:180px;font-size:20px;" (click)="issueProduct('casual_pass_young_adult',1,true,'','')" class="button3"><strong style="color:black">Day Pass</strong> Student<br> (14-17yrs)<br><strong style="color:green">${{casual_pass_young_adult_price}}</strong></button>        
+        <button style="color:rgb(205, 81, 50);width:150px;height:180px;font-size:20px;" (click)="issueProduct('casual_pass_adult',1,true,'','')" class="button3"><strong style="color:black">Day Pass</strong> Adult <br>(18+ yrs)<br><strong style="color:green">${{casual_pass_adult_price}}</strong></button>
+        <button style="color:rgb(205, 50, 159);width:150px;height:180px;font-size:20px;" (click)="issueProduct('casual_pass_group',1,true,'','')" class="button3"><strong style="color:black">Day Pass</strong> (Group) <br><strong style="opacity:0">a</strong><br><strong style="color:green">${{casual_pass_group_price}}</strong></button>
+    </ng-container>
+    <ng-container *ngIf="mode==='concession'">
+        <button style="color:rgb(33, 151, 247);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_child',5,true,'','')" class="button3" >5 Pass Child <br>(Under 13yrs)<br><strong style="color:green">${{concession_pass_child_price*5}}</strong></button>
+        <button style="color:rgb(250, 191, 27);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_young_adult',5,true,'','')" class="button3" >5 Pass Student<br>(14-17yrs)<br><strong style="color:green">${{concession_pass_young_adult_price*5}}</strong></button>
+        <button style="color:rgb(205, 81, 50);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_adult',5,true,'','')" class="button3" >5 Pass Adult<br>(18+ yrs)<br><strong style="color:green">${{concession_pass_adult_price*5}}</strong></button>
+        <br>
+        <button style="color:rgb(33, 151, 247);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_child',10,true,'','')" class="button3" >10 Pass Child <br>(Under 13yrs)<br><strong style="color:green">${{concession_pass_child_price*10}}</strong></button>
+        <button style="color:rgb(250, 191, 27);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_young_adult',10,true,'','')" class="button3" >10 Pass Student<br>(14-17yrs)<br><strong style="color:green">${{concession_pass_young_adult_price*10}}</strong></button>
+        <button style="color:rgb(205, 81, 50);width:188px;height:100px;font-size:15px;" (click)="issueProduct('concession_pass_adult',10,true,'','')" class="button3" >10 Pass Adult<br>(18+ yrs)<br><strong style="color:green">${{concession_pass_adult_price*10}}</strong></button>
+    </ng-container>
+    <ng-container *ngIf="mode==='memberships'">
+        <button class="button3" (click)="openMembershipPOSChild.emit(currentCustomer)">
+        Membership Child
+        <br><strong style="color:green">${{membership_child_price *4}} / Month</strong>                
+        </button>
+        <button class="button3" (click)="openMembershipPOSYouth.emit(currentCustomer)">
+        Membership Youth
+        <br><strong style="color:green">${{membership_young_adult_price *4 }} / Month</strong>                
+        </button>
+        <button class="button3" (click)="openMembershipPOSAdult.emit(currentCustomer)">
+        Membership Adult
+        <br><strong style="color:green">${{membership_adult_price *4}} / Month</strong>
+        </button>
+        <membership-pos-modal [weeklyPrice]="membership_child_price" [type]="'Child'" [openModalEvent]="openMembershipPOSChild" (submitted)="issueMembershipProduct($event)"></membership-pos-modal>
+        <membership-pos-modal [weeklyPrice]="membership_young_adult_price" [type]="'Young Adult'" [openModalEvent]="openMembershipPOSYouth" (submitted)="issueMembershipProduct($event)"></membership-pos-modal>
+        <membership-pos-modal [weeklyPrice]="membership_adult_price" [type]="'Adult'" [openModalEvent]="openMembershipPOSAdult" (submitted)="issueMembershipProduct($event)"></membership-pos-modal>
+    </ng-container>
+        </div>
+    </div>
+    <br><br>
+    <div
+     style="width:600px;height:380px;padding-top:10px;margin-top:-20px;">
+     <div style="padding:0px 5px 5px 5px;">
+        <h2>Retail / Rental Items</h2>
+
+<div >
+<strong style="margin-right:5px;color:rgba(122, 122, 122, 0.644)">Alt-S</strong> <strong>Lookup</strong>&nbsp; 
+<span id="search"><input #searchProduct type="text" placeholder="Bouldering Mat..." (keypress)="handleKeyboardEvent($event)" [(ngModel)]="searchPrompt"><a id="searchButton" (click)="searchProducts()">Search<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a></span>
+</div>
+     </div>
+     <br>
+
+     <!--
+     <nav>
+            <a  (click)="filterProducts('all')">
+                        <b>All</b>
+                    </a>
+            <a (click)="filterProducts('rentals')">
+                        <b>Rentals</b>
+                    </a>
+            <a (click)="filterProducts('retail')">
+                        <b>Retail</b>
+                    </a>
+        <span [ngClass]="{'active1':productFilterBy=='all',
+                          'active2':productFilterBy=='rentals',
+                          'active3':productFilterBy=='retail'}"></span>
+        </nav>-->
+     <button [ngStyle]="{'color':productFilterBy=='all' ? 'orange' : ''}" (click)="filterProducts('all')">All</button>
+     <button [ngStyle]="{'color':productFilterBy=='rentals' ? 'orange' : ''}" (click)="filterProducts('rentals')">Rentals</button>
+     <button [ngStyle]="{'color':productFilterBy=='retail' ? 'orange' : ''}" (click)="filterProducts('retail')">Retail</button>
+
+    <div class="table-wrapper2">
+                <table id="customers" [ngStyle]="{'opacity':loading ? '0.3':''}">
+                        <thead>
+                <tr >
+                    <th class="label">Product Type</th>
+                    <th class="label">Vendor</th>
+                    <th class="label">Product Name</th>
+                    <th class="label">Notes</th>
+                    <th class="label">Size</th>
+                    <th class="label">Color</th>
+                    <th class="label">Waiver Required</th>
+                    <th class="label">Age Restriction</th>
+                    <th class="label">Anonymous Sales</th>
+                    <th class="label">Stock</th>
+                    <th class="label">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr (dblclick)="doubleClickIssueProduct(product)" (click)="singleClickIssueProduct(product)" *ngFor="let product of displayData">
+                        <ng-container *ngIf="product==undefined,else showData" >
+                                <th style="color:transparent">1</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </ng-container>
+                            <ng-template #showData >                                
+                            <th [ngStyle]="{'color':product.productType=='Rental'? 'blue':'green'}">{{product.productType}}</th>
+                            <th>{{product.vendor}}</th>
+                            <th>{{product.name}}</th>
+                            <th>{{product.notes}}</th>
+                            <th>{{product.size}}</th>
+                            <th>{{product.color}}</th>
+                            <th>{{product.waiver_required ? "Required" : "Not Required"}}</th>                        
+                            <th>{{age_restriction_stringify(product.parent_product.age_restriction)}}</th>
+                            <th>{{product.allow_anonymous_sale}}</th>                        
+                            <th>{{getProductStock(product)}}</th>
+                            <th>$ {{product.price}}</th>
+                        </ng-template>
+                </tr>
+            </tbody>
+            </table>
+            <ng-container *ngIf="loading">
+                    <div class="lds-ring" >                          
+                            <img src="assets/img/logo2.png" >                                          
+                            <!--
+                            <p style="position:absolute;z-index:4;font-size:10px;
+                            left:25px;top:38px;width:100px;
+                                font-family: 'grifter'
+                            ">Fetching and storing waivers... <br>This might take a while...</p>
+                            -->
+                        <div></div>                    
+                </div>
+            </ng-container>  
+    </div>
+    <div style="display:flex;margin-top:20px;">
+    <div style="display:flex;flex-direction: row;flex-wrap: wrap;width:150px;margin-right:30px;margin-left:225px;">
+        <div style="display:flex;width:150px;">
+        <strong style="color:rgba(122, 122, 122, 0.644);margin-top:10px;margin-right:5px;">Alt-R</strong> <button class="button5" (click)="clear()">Clear Tray</button>
+        </div>
+        <div style="display:flex">
+    <!---
+    <strong style="color:rgba(122, 122, 122, 0.644);margin-top:20px;margin-right:5px;">Alt-O</strong> <button class="button5 disabled"><s>Open Drawer</s></button>
+    --->
+    </div>
+    </div>
+    <pos-history-modal></pos-history-modal>
+    <button class="tender" (click)="openEftposMenu()">
+        <!--Eftpos by Made by Made from the Noun Project-->
+        <img src="assets/icons/ftpos.svg" style="width:60px;height:60px">Eftpos
+    </button>
+    <button class="tender" (click)="tender()">
+            <img src="assets/icons/greentick.png" style="width:50px;height:50px">Tender
+        </button>
+    </div>
+</div>
+</div>
+</div>    
+<tender-modal (submitted)="handleTenderModalClose($event)" [openModalEvent]="openTender"></tender-modal>
+<eftpos-menu-modal [openModalEvent]="openEftpos"></eftpos-menu-modal>
+<set-rental-due-date-modal (submitted)="handleSetRentalDate($event)" [openModalEvent]="openSetRentalDate"></set-rental-due-date-modal>
+</body>
+

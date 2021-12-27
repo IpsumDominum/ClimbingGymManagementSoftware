@@ -1,0 +1,22 @@
+<div class="mainbox">
+    <form id="login" action="none">
+        <h1 id="ff-proof" class="ribbon">
+            Chen's Resistance Management
+            (CRM)
+             &nbsp;&nbsp;</h1>
+        <!---
+        <div class="apple">
+            <img src="assets/icons/r1.svg" >
+      </div>-->
+        <fieldset id="inputs" style="margin-left:50px;">
+            <input id="username" placeholder="username" type="text" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
+            <input id="password" placeholder="password" type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+        </fieldset>
+        <fieldset id="actions">
+            <span id="submit" (click)="signin()" >Connect</span>
+           <p class="option">
+               Made by Computer Ninja Inc &copy;<img style="width:25px;margin-top:3px;" src="assets/img/download.png">
+           </p>
+        </fieldset>
+    </form>
+</div>

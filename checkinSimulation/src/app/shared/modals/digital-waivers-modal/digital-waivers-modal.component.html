@@ -1,0 +1,20 @@
+<ng-container *ngIf="mode=='small';else large">
+    <button class="disabled" (click)="openModal('digital-waivers-modal')">
+        
+    <s>Digital Waivers</s></button>
+</ng-container>
+<ng-template #large>
+    <button class="button2 disabled " (click)="openModal('digital-waivers-modal')">
+        <s>Digital Waivers</s>
+    </button>
+</ng-template>
+
+
+<modal id="digital-waivers-modal" >
+<button style="float:right" (click)="closeModal('digital-waivers-modal');">X Cancel</button>
+<h1>COMING SOON...</h1>
+
+</modal>
+
+
+

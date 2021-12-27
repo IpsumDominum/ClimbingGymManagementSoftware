@@ -1,0 +1,44 @@
+<button class="button1" (click)="openModal('invoice-payment-modal')">Invoices</button>
+
+<modal id="invoice-payment-modal" >
+<h1>Customer Invoices</h1>
+    <pre>
+Invoices | Amount Due : $0.0                                    <button (click)="closeModal('invoice-payment-modal')">X Cancel</button>
+
+<hr>
+</pre>
+
+<button><s>Void Invoice</s></button>
+<button><s>Email Remind Invoice Failed</s></button>
+<div style="width:500px;height:300px">
+        <div class="table-wrapper2" style="overflow-x:scroll;">
+                <table id="customers">
+                    <tr>
+                        <th class="label">Date</th>
+                        <th class="label">Action Type</th>
+                        <th class="label">New Start Date</th>
+                        <th class="label">New End Date</th>
+                    </tr>
+                <tr *ngFor="let invoice of displayData;" (click)="expandInvoice(invoice)">
+                    <ng-container *ngIf="invoice==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                    <th>12/12/2020</th>
+                    <th>Adjust End Date</th>
+                    <th>12/12/2020</th>
+                        <th>1/1/2020</th>
+                    </ng-template>
+                </tr>
+                </table>
+        </div>
+</div>
+
+
+</modal>
+
+
+

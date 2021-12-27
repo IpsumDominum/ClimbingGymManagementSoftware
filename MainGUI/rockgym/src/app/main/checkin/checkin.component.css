@@ -1,0 +1,62 @@
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;   
+    background:white; 
+    border: black solid 1px !important;
+    overflow-x: scroll;
+    height:200px;
+    width: 100%;
+  }
+  a{
+    height:50px;
+  }
+
+
+  #customers .label {
+    text-align: left;
+    padding-left:5px;
+    background-color: #5a5a5a;
+    color: rgb(255, 255, 255);
+    padding-top:10px;
+    padding-bottom:10px;
+}  
+.table-wrapper{
+  height:500px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper .label{
+  position:sticky;
+  top:0;
+}
+.table-wrapper2{
+  margin:auto;width:1200px;height:750px;overflow-y:scroll;overflow-x:scroll;position:relative;
+}
+.table-wrapper2 .label{
+  position:sticky;
+  top:0;
+}
+#customers td, #customers th {
+    text-align: left;
+    padding-left:5px;
+    height:5px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    width:30px;
+    z-index:50;
+  }
+  
+  #customers tr:nth-child(odd){background-color: white}
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  .checkIn{
+    display:flex;
+    justify-content: center;
+  }
+  .checkIn input{
+    width:500px;
+    margin-bottom:10px;
+  }
+  .tab-active{
+    color:orange;
+}

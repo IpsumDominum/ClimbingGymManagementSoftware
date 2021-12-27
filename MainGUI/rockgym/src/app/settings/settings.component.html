@@ -1,0 +1,92 @@
+
+<ng-container *ngIf="menuOpen;else notOpen">
+<div class="menu">
+<a (click)="closeMenu()" class="cancel">X</a>
+<br><br>
+<a [routerLink]="['/admin']">Admin </a> 
+<br><br>
+<a style="color:#CC5500;" [routerLink]="['/management']"> Management </a> 
+<br>
+<br>
+<a  [routerLink]="['/main']"> Main Functions </a>
+<br><br>
+<a  [routerLink]="['/auth/signin']"> Log off</a>
+</div>
+</ng-container>
+<ng-template #notOpen>
+<div (click)="openMenu()" class="menuClosed">
+    <button><img src="assets/logo.png"> </button>
+</div>
+
+</ng-template>
+
+
+  <!---HEADER START-->
+  <div class="header">
+        <h1 class= "logo">    
+                <div style="display:flex;margin-right:-80px;">
+                    <a 
+                    [ngClass]="{'active':currentRoute=='/management/customers'}"
+                         [routerLink]="['/management','customers']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>                        
+                            CLIMBERS </a>
+                    <a 
+                    [ngClass]="{'active':currentRoute=='/management/products'}"
+                        [routerLink]="['/management','products']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            PRODUCTS </a>
+                    <a 
+                    [ngClass]="{'active':currentRoute=='/management/membership'}"
+                     [routerLink]="['/management','membership']">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cloud"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                            MEMBERSHIPS </a>
+                    <a  
+                    [ngClass]="{'active':currentRoute=='/management/email-templates'}"
+                    [routerLink]="['/management','email-templates']">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                        
+                    EMAIL TEMPLATES</a>
+                    <a 
+                    [ngClass]="{'active':currentRoute=='/management/sales'}"
+                    [routerLink]="['/management','sales']">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                SALES & INVOICES</a>
+                        <!--<a  [routerLink]="['/management','discounts']">GIFT CARDS</a>-->
+                </div>    
+        <div class="time">
+            Current Time<br>
+            {{today.getHours()}} : {{today.getMinutes()}} : {{today.getSeconds()}}
+        </div>
+        <div class="time">
+            Current Date<br>
+            {{today.getDate()}} / {{today.getMonth()+1}} / {{today.getFullYear()}}
+        </div>
+        </h1>    
+        </div>
+
+<div style="position:absolute;z-index: 50;top:50px;right:50px;">
+<div  *ngFor="let checkin of checkinData" class="smooth-borders checkin-toast" [ngStyle]="{'display': checkin ? checkin.timed == 0 ? 'none' : 'block' : 'none',
+                                                                                                'opacity': checkin ? checkin.timed / 1000 : '0'}">
+        <ng-container *ngIf="checkin">        
+        <div>
+        <label class="smooth-borders" style="height:10px !important;width:10px;padding:5px 5px 5px 5px;" (click)="checkin.timed = 0">Close X</label>&nbsp;
+        check-in <label [ngStyle]="{'color': checkin.checkin_status=='success' ? 'green' : 'red'}">{{checkin.checkin_status}}</label>
+        <div style="display:flex;margin-top:10px;">
+                <div style="margin-right:10px;">
+                <img (click)="openPOSMember(checkin.member.id)" src="{{checkin.member.profile_photo}}" style="width:150px;height:130px;">
+                </div>
+        <div>
+                <label>{{checkin.checkin_type}}</label> <br>
+                <hr>
+                <label>{{checkin.member.firstName}}</label> &nbsp;
+                <label>{{checkin.member.middleName}}</label>&nbsp;
+                <label>{{checkin.member.lastName}}</label>&nbsp; <br>
+                <hr>
+                <label>{{checkin.checkin_message}}</label>        
+                </div>
+        
+        </div>
+        </div>
+        </ng-container>
+</div>
+</div>
+<router-outlet></router-outlet> 

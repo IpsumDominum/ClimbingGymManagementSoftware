@@ -1,0 +1,65 @@
+<button class="button-5" (click)="openModal('view-purchase-history-modal')">
+    Purchases
+</button>
+
+<modal id="view-purchase-history-modal" >
+
+<h1>Customer Purchase History</h1>
+<pre>
+    <button style="float:right" (click)="closeModal('view-purchase-history-modal');">X Cancel</button>
+<strong>For</strong> {{member_ref.firstName}} {{member_ref.middleName}} {{member_ref.lastName}}
+0 Purchases  <buttoN>Last 12 Months</buttoN> <buttoN>Last 3 Months</buttoN>
+<hr>
+</pre>
+
+<div style="width:800px;height:380px;margin-bottom:20px;">
+        <div class="table-wrapper2" style="overflow-x:scroll;">
+                <table id="customers">
+                    <tr>
+                            <th class="label">Product Type</th>
+                        <th class="label">Vendor</th>
+                        <th class="label">Product Name</th>
+                        <th class="label">Size</th>
+                        <th class="label">Color</th>
+                        <th class="label">Staff Issued</th>
+                        <th class="label">Price</th>
+                        <th class="label">Payment Method</th>
+                        <th class="label">Purchase Date</th>
+                        <th class="label">Status</th>
+                        
+                    </tr>
+                <tr *ngFor="let purchase of purchasesDisplay">
+                    <ng-container *ngIf="purchase==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                    <th>{{purchase.product.productType}}</th>
+                    <th>{{purchase.product.vendor}}</th>
+                    <th>{{purchase.product.name}}</th>
+                    <th>{{purchase.sub_product.size}}</th>
+                    <th>{{purchase.sub_product.color}}</th>
+                    <th>Admin</th>
+                    <th>{{purchase.expected_amount}}</th>
+                    <th>{{purchase.paid}}</th>
+                    <th>{{purchase.created}}</th>
+                    <th>{{purchase.notes}}</th>
+                    </ng-template>
+                </tr>
+                </table>
+        </div>
+</div>
+
+
+</modal>
+
+
+

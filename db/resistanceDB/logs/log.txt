@@ -1,0 +1,613 @@
+00:10:39: Main    : before creating thread
+00:10:39: Main    : before running thread
+00:10:39: Main    : wait for the thread to finish
+00:12:07: Main    : before creating thread
+00:12:07: Main    : before running thread
+00:12:07: Main    : wait for the thread to finish
+00:36:18: Main    : before creating thread
+00:36:18: Main    : threads created
+00:36:18: Main    : checkRentalsDue started
+00:36:18: Main    : checkInvoicesDue started
+00:36:18: Main    : checkMembershipsDue started
+00:36:18: Main    : all threads started
+00:36:18: Main    : All Threads Completed
+00:37:02: Main    : before creating thread
+00:37:02: Main    : threads created
+00:37:02: Main    : checkRentalsDue started
+00:37:02: Main    : checkInvoicesDue started
+00:37:02: Main    : checkMembershipsDue started
+00:37:02: Main    : all threads started
+00:37:02: Main    : All Threads Completed
+00:37:38: Main    : before creating thread
+00:37:38: Main    : threads created
+00:37:38: Main    : checkRentalsDue started
+00:37:38: Main    : checkInvoicesDue started
+00:37:38: Main    : checkMembershipsDue started
+00:37:38: Main    : all threads started
+00:37:38: checkInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:37:38: checkRentalsDue     : <bound method Response.json of <Response [200]>>
+00:37:38: checkMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:37:38: Main    : All Threads Completed
+00:38:43: Main    : before creating thread
+00:38:43: Main    : threads created
+00:38:43: Main    : checkRentalsDue started
+00:38:43: Main    : checkInvoicesDue started
+00:38:43: Main    : checkMembershipsDue started
+00:38:43: Main    : all threads started
+00:40:14: Main    : before creating thread
+00:40:14: Main    : threads created
+00:40:14: Main    : checkRentalsDue started
+00:40:14: Main    : checkInvoicesDue started
+00:40:14: Main    : checkMembershipsDue started
+00:40:14: Main    : all threads started
+00:41:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:41:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:41:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:41:52: Main    : before creating thread
+00:41:52: Main    : threads created
+00:41:52: Main    : checkRentalsDue started
+00:41:52: Main    : checkInvoicesDue started
+00:41:52: Main    : checkMembershipsDue started
+00:41:52: Main    : all threads started
+00:42:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:42:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:42:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:42:08: Main    : before creating thread
+00:42:08: Main    : threads created
+00:42:08: Main    : checkRentalsDue started
+00:42:08: Main    : checkInvoicesDue started
+00:42:08: Main    : checkMembershipsDue started
+00:42:08: Main    : all threads started
+00:43:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:43:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:43:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:44:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:44:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:44:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:45:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:45:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:45:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:46:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:46:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:46:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:46:09: Main    : before creating thread
+00:46:09: Main    : threads created
+00:46:09: Main    : checkRentalsDue started
+00:46:09: Main    : checkInvoicesDue started
+00:46:09: Main    : checkMembershipsDue started
+00:46:09: Main    : all threads started
+00:47:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:47:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:47:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:47:32: Main    : before creating thread
+00:47:32: Main    : threads created
+00:47:32: Main    : checkRentalsDue started
+00:47:32: Main    : checkInvoicesDue started
+00:47:32: Main    : checkMembershipsDue started
+00:47:32: Main    : all threads started
+00:48:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:48:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:48:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:49:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:49:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:49:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:50:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:50:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:50:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:50:38: Main    : before creating thread
+00:50:38: Main    : threads created
+00:50:38: Main    : checkRentalsDue started
+00:50:38: Main    : checkInvoicesDue started
+00:50:38: Main    : checkMembershipsDue started
+00:50:38: Main    : all threads started
+00:50:38: Main    : All Threads Completed
+00:51:23: Main    : before creating thread
+00:51:23: Main    : threads created
+00:51:23: Main    : checkRentalsDue started
+00:51:23: Main    : checkInvoicesDue started
+00:51:23: Main    : checkMembershipsDue started
+00:51:23: Main    : all threads started
+00:52:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:52:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:52:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:53:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:53:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:53:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:53:11: Main    : before creating thread
+00:53:11: Main    : threads created
+00:53:11: Main    : checkRentalsDue started
+00:53:11: Main    : checkInvoicesDue started
+00:53:11: Main    : checkMembershipsDue started
+00:53:11: Main    : all threads started
+00:54:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:54:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:54:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:55:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:55:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:55:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:56:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:56:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:56:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:56:36: Main    : before creating processes
+00:56:36: Main    : processes created
+00:56:36: Main    : checkRentalsDue started
+00:56:36: Main    : checkInvoicesDue started
+00:56:36: Main    : checkMembershipsDue started
+00:56:36: Main    : all processes started
+00:57:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:57:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:57:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:58:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:58:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:58:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:59:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:59:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:59:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:00:27: Main    : before creating processes
+01:00:27: Main    : processes created
+01:00:27: Main    : checkRentalsDue started
+01:00:27: Main    : checkInvoicesDue started
+01:00:27: Main    : checkMembershipsDue started
+01:00:27: Main    : all processes started
+23:59:57: Main    : before creating processes
+23:59:57: Main    : processes created
+23:59:57: Main    : checkRentalsDue started
+23:59:57: Main    : checkInvoicesDue started
+23:59:57: Main    : checkMembershipsDue started
+23:59:57: Main    : all processes started
+00:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:02:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:02:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:03:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:03:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:04:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:04:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:05:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:05:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:59:44: Main    : before creating processes
+00:59:44: Main    : processes created
+00:59:44: Main    : checkRentalsDue started
+00:59:44: Main    : checkInvoicesDue started
+00:59:44: Main    : checkMembershipsDue started
+00:59:44: Main    : all processes started
+01:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+01:01:15: Main    : before creating processes
+01:01:15: Main    : processes created
+01:01:15: Main    : checkRentalsDue started
+01:01:15: Main    : checkInvoicesDue started
+01:01:15: Main    : checkMembershipsDue started
+01:01:15: Main    : all processes started
+02:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:00:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:01:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:02:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:02:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:03:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:03:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:04:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:04:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:05:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:05:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:06:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:06:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:07:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:07:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:08:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:08:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:09:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:09:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:10:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:10:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:11:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:11:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:12:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:12:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:13:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+02:13:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+02:14:02: Main    : before creating processes
+02:14:02: Main    : processes created
+02:14:02: Main    : checkRentalsDue started
+02:14:02: Main    : checkInvoicesDue started
+02:14:02: Main    : checkMembershipsDue started
+02:14:02: Main    : all processes started
+02:15:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:00:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+03:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:02:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:03:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:04:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:05:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:06:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:07:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:08:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:08:04: Main    : before creating processes
+03:08:04: Main    : processes created
+03:08:04: Main    : checkRentalsDue started
+03:08:04: Main    : checkInvoicesDue started
+03:08:04: Main    : checkMembershipsDue started
+03:08:04: Main    : all processes started
+03:09:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:10:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:10:11: Main    : before creating processes
+03:10:11: Main    : processes created
+03:10:11: Main    : checkRentalsDue started
+03:10:11: Main    : checkInvoicesDue started
+03:10:11: Main    : checkMembershipsDue started
+03:10:11: Main    : all processes started
+03:10:15: Main    : before creating processes
+03:10:15: Main    : processes created
+03:10:15: Main    : checkRentalsDue started
+03:10:15: Main    : checkInvoicesDue started
+03:10:15: Main    : checkMembershipsDue started
+03:10:15: Main    : all processes started
+03:11:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:12:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:13:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:14:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:15:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:16:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:17:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:18:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:19:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:20:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:21:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:23:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:24:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:25:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:26:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:27:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:28:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+03:29:00: CheckRentalsDue     : <bound method Response.json of <Response [500]>>
+03:30:00: CheckRentalsDue     : <bound method Response.json of <Response [500]>>
+03:31:00: CheckRentalsDue     : <bound method Response.json of <Response [500]>>
+03:32:00: CheckRentalsDue     : <bound method Response.json of <Response [500]>>
+03:33:00: CheckRentalsDue     : <bound method Response.json of <Response [500]>>
+13:36:51: Main    : before creating processes
+13:36:51: Main    : processes created
+13:36:51: Main    : checkRentalsDue started
+13:36:51: Main    : checkInvoicesDue started
+13:36:51: Main    : checkMembershipsDue started
+13:36:51: Main    : checkMembershipsFreeze started
+13:36:51: Main    : checkMembershipsHoliday started
+13:36:51: Main    : all processes started
+13:37:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckInvoicesDue     : <bound method Response.json of <Response [500]>>
+00:00:00: CheckMembershipsDue     : <bound method Response.json of <Response [500]>>
+00:00:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [500]>>
+00:00:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [500]>>
+00:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:00:03: Main    : before creating processes
+00:00:03: Main    : processes created
+00:00:03: Main    : checkRentalsDue started
+00:00:03: Main    : checkInvoicesDue started
+00:00:03: Main    : checkMembershipsDue started
+00:00:03: Main    : checkMembershipsFreeze started
+00:00:03: Main    : checkMembershipsHoliday started
+00:00:03: Main    : all processes started
+23:59:17: Main    : before creating processes
+23:59:17: Main    : processes created
+23:59:17: Main    : checkRentalsDue started
+23:59:17: Main    : checkInvoicesDue started
+23:59:17: Main    : checkMembershipsDue started
+23:59:17: Main    : checkMembershipsFreeze started
+23:59:17: Main    : checkMembershipsHoliday started
+23:59:17: Main    : all processes started
+00:00:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckMembershipsDue     : <bound method Response.json of <Response [200]>>
+00:00:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:01:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:01:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:01:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:01:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:02:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:02:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:02:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:02:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:03:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:03:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:03:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:03:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:04:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:04:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:04:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:04:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:05:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:05:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:05:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:05:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:06:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:06:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:06:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:06:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:07:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:07:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:07:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:07:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:08:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:08:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:08:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:08:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:09:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:09:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:09:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:09:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:10:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:10:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:10:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:10:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:11:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:11:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:11:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:11:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:12:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:12:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:12:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:12:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:13:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:13:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:13:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:13:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:14:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:14:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:14:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:14:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:15:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:15:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:15:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:15:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:16:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:16:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:16:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:16:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:17:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:17:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:17:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:17:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:18:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:18:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:18:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:18:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:19:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:19:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:19:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:19:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:20:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:20:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:20:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:20:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:21:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:21:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:21:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:21:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:22:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:22:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:22:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:22:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:23:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:23:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:23:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:23:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:24:00: CheckInvoicesDue     : <bound method Response.json of <Response [200]>>
+00:24:00: CheckMembershipsHoliday     : <bound method Response.json of <Response [200]>>
+00:24:00: CheckRentalsDue     : <bound method Response.json of <Response [200]>>
+00:24:00: CheckMembershipsFreeze     : <bound method Response.json of <Response [200]>>
+00:25:00: DailyCall     : <bound method Response.json of <Response [404]>>
+00:39:15: DailyCall     : <bound method Response.json of <Response [404]>>
+00:39:47: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:01: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:01: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:16: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:18: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:22: DailyCall     : <bound method Response.json of <Response [200]>>
+00:00:35: DailyCall     : <bound method Response.json of <Response [200]>>
+23:59:43: DailyCall     : <bound method Response.json of <Response [200]>>
+23:59:45: DailyCall     : <bound method Response.json of <Response [200]>>
+23:59:46: DailyCall     : <bound method Response.json of <Response [200]>>
+00:00:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:01:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:02:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:03:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:04:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:04:16: DailyCall     : <bound method Response.json of <Response [200]>>
+00:04:19: DailyCall     : <bound method Response.json of <Response [200]>>
+00:05:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:06:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:07:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:08:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:09:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:09:55: DailyCall     : <bound method Response.json of <Response [200]>>
+00:10:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:11:00: DailyCall     : <bound method Response.json of <Response [500]>>
+00:12:00: DailyCall     : <bound method Response.json of <Response [500]>>
+00:12:57: DailyCall     : <bound method Response.json of <Response [200]>>
+00:13:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:13:25: DailyCall     : <bound method Response.json of <Response [200]>>
+00:14:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:15:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:16:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:17:04: DailyCall     : <bound method Response.json of <Response [200]>>
+00:17:22: Main    : before creating processes
+00:17:22: Main    : processes created
+00:17:22: Main    : checkRentalsDue started
+00:17:22: Main    : checkInvoicesDue started
+00:17:22: Main    : checkMembershipsDue started
+00:17:22: Main    : checkMembershipsFreeze started
+00:17:22: Main    : checkMembershipsHoliday started
+00:17:22: Main    : all processes started
+00:17:25: DailyCall     : <bound method Response.json of <Response [200]>>
+00:18:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:19:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:20:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:21:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:22:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:23:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:24:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:25:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:26:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:27:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:28:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:29:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:30:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:31:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:32:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:33:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:34:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:35:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:36:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:37:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:38:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:39:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:41:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:42:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:43:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:44:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:45:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:46:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:47:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:48:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:49:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:50:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:51:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:52:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:53:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:54:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:55:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:56:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:57:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:58:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:59:00: DailyCall     : <bound method Response.json of <Response [200]>>
+11:45:46: DailyCall     : <bound method Response.json of <Response [500]>>
+11:46:03: DailyCall     : <bound method Response.json of <Response [500]>>
+11:46:23: DailyCall     : <bound method Response.json of <Response [200]>>
+11:46:27: DailyCall     : <bound method Response.json of <Response [200]>>
+11:46:45: DailyCall     : <bound method Response.json of <Response [200]>>
+11:47:13: DailyCall     : <bound method Response.json of <Response [200]>>
+12:42:39: DailyCall     : <bound method Response.json of <Response [500]>>
+12:43:00: DailyCall     : <bound method Response.json of <Response [200]>>
+12:43:29: DailyCall     : <bound method Response.json of <Response [200]>>
+12:43:43: DailyCall     : <bound method Response.json of <Response [200]>>
+12:43:49: DailyCall     : <bound method Response.json of <Response [200]>>
+12:44:00: DailyCall     : <bound method Response.json of <Response [200]>>
+12:44:04: DailyCall     : <bound method Response.json of <Response [200]>>
+12:46:18: DailyCall     : <bound method Response.json of <Response [200]>>
+12:46:21: DailyCall     : <bound method Response.json of <Response [200]>>
+12:46:36: DailyCall     : <bound method Response.json of <Response [200]>>
+12:46:43: DailyCall     : <bound method Response.json of <Response [200]>>
+12:46:49: DailyCall     : <bound method Response.json of <Response [200]>>
+12:47:27: DailyCall     : <bound method Response.json of <Response [200]>>
+12:47:32: DailyCall     : <bound method Response.json of <Response [200]>>
+12:48:13: DailyCall     : <bound method Response.json of <Response [200]>>
+12:48:24: DailyCall     : <bound method Response.json of <Response [200]>>
+12:48:32: DailyCall     : <bound method Response.json of <Response [200]>>
+12:48:41: DailyCall     : <bound method Response.json of <Response [200]>>
+12:49:23: DailyCall     : <bound method Response.json of <Response [200]>>
+12:49:27: DailyCall     : <bound method Response.json of <Response [200]>>
+12:49:36: DailyCall     : <bound method Response.json of <Response [200]>>
+13:04:02: DailyCall     : <bound method Response.json of <Response [200]>>
+13:04:34: DailyCall     : <bound method Response.json of <Response [200]>>
+13:05:10: DailyCall     : <bound method Response.json of <Response [200]>>
+13:05:26: DailyCall     : <bound method Response.json of <Response [200]>>
+13:05:39: DailyCall     : <bound method Response.json of <Response [500]>>
+13:21:58: DailyCall     : <bound method Response.json of <Response [500]>>
+13:23:44: DailyCall     : <bound method Response.json of <Response [200]>>
+13:23:53: DailyCall     : <bound method Response.json of <Response [200]>>
+13:48:53: DailyCall     : <bound method Response.json of <Response [500]>>
+13:49:49: DailyCall     : <bound method Response.json of <Response [500]>>
+13:50:46: DailyCall     : <bound method Response.json of <Response [200]>>
+13:51:31: DailyCall     : <bound method Response.json of <Response [200]>>
+13:51:35: DailyCall     : <bound method Response.json of <Response [200]>>
+13:53:52: DailyCall     : <bound method Response.json of <Response [200]>>
+13:54:18: DailyCall     : <bound method Response.json of <Response [200]>>
+13:54:58: DailyCall     : <bound method Response.json of <Response [200]>>
+13:55:34: DailyCall     : <bound method Response.json of <Response [200]>>
+13:55:50: DailyCall     : <bound method Response.json of <Response [500]>>
+13:56:06: DailyCall     : <bound method Response.json of <Response [500]>>
+14:00:12: DailyCall     : <bound method Response.json of <Response [500]>>
+14:01:20: DailyCall     : <bound method Response.json of <Response [200]>>
+14:01:56: DailyCall     : <bound method Response.json of <Response [200]>>
+14:02:27: DailyCall     : <bound method Response.json of <Response [200]>>
+14:51:29: DailyCall     : <bound method Response.json of <Response [200]>>
+00:00:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:01:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:02:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:03:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:04:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:05:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:06:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:07:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:08:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:09:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:10:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:11:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:12:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:13:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:14:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:15:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:16:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:17:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:18:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:19:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:20:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:21:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:22:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:23:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:24:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:25:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:26:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:27:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:28:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:29:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:30:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:31:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:32:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:33:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:34:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:35:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:36:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:37:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:38:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:39:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:40:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:41:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:42:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:43:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:44:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:45:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:46:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:47:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:48:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:49:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:50:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:51:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:52:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:53:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:54:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:55:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:56:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:57:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:58:00: DailyCall     : <bound method Response.json of <Response [200]>>
+00:59:00: DailyCall     : <bound method Response.json of <Response [200]>>
+20:46:31: Main    : before creating processes
+20:46:31: Main    : processes created
+20:46:31: Main    : checkRentalsDue started
+20:46:31: Main    : checkInvoicesDue started
+20:46:31: Main    : checkMembershipsDue started
+20:46:31: Main    : checkMembershipsFreeze started
+20:46:31: Main    : checkMembershipsHoliday started
+20:46:31: Main    : all processes started
+20:46:44: DailyCall     : <bound method Response.json of <Response [200]>>

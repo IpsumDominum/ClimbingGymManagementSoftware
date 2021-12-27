@@ -1,0 +1,87 @@
+<button class="button2" (click)="openModal('custom-modal-3')">Customer</button>
+
+<modal id="custom-modal-3" >
+    <h1>Search For A Customer</h1>
+    <pre >
+            <strong>Lookup</strong> <input placeholder="search..." (keypress)="handleKeyboardEvent($event)"[(ngModel)]="searchPrompt"><button id="search" (click)="search()">Search</button> <button id="search">Advanced Search</button>            
+                    LAST, FIRST | CARD# | EMAIL
+
+            Showing {{resultData.length}} Matched Customers                 
+        </pre>
+        <div class="table-wrapper">
+                <table id="customers">
+                    <tr>
+                        <th class="label">Name</th>
+                        <th class="label">Birthday</th>
+                        <th class="label">Waiver</th>
+                        <th class="label">Type</th>
+                        <th class="label">SubType</th>
+                        <th class="label">Status</th>
+                        <th class="label">Billing</th>
+                        <th class="label">Start</th>
+                        <th class="label">End</th>
+                        <th class="label">Last Billed</th>
+                        <th class="label">Next Bill</th>
+                        <th class="label">Responsible Party</th>
+                        <th class="label">Dues</th>
+                        <th class="label">Last Visit</th>
+                        <th class="label">First Contact</th>
+                        <th class="label">Warning</th>
+                        <th class="label">Last Edit</th>
+                    </tr>
+                <tr *ngFor="let user of displayData;" [ngStyle]="{'background': resultData.length>0 ? '':'white'}" (click)="chooseCustomer(user)">
+                    <ng-container *ngIf="user==undefined,else showData">
+                        <th style="color:transparent">1</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                        <th>{{user.firstName}},{{ user.middleName? user.middleName: ""}}{{user.lastName}},</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                </ng-template>
+                </tr>
+                </table>
+        </div>
+
+<div style="float:right;">
+    <ng-container *ngIf="chosenCustomer">
+        {{chosenCustomer.firstName}} {{chosenCustomer.middleName}} {{chosenCustomer.lastName}}
+    </ng-container>
+    
+        <button (click)="confirm()">Confirm</button>
+        <button (click)="closeModal('custom-modal-3');">Cancel</button>
+        </div>
+
+</modal>
+
+
+

@@ -1,0 +1,21 @@
+<button class="button2" (click)="openModal('send-email-modal')">Send Email</button>
+
+<modal id="send-email-modal" >
+<button style="float:right" (click)="closeModal('send-email-modal');">X Cancel</button>
+<button style="float:right" >Send Mail</button>
+
+<h1>Send Mail On Behalf of Resistance Climbing Gym 
+    <br>
+<label style="color:rgb(90, 90, 90)">(admin@resistanceclimbing.co.nz)</label>
+</h1>
+<h3>Recipient(s)</h3>
+<ng-container *ngIf="detailUser">
+<button>{{detailUser.email}}</button>
+</ng-container>
+<h3>Content </h3> 
+<angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent"></angular-editor>
+
+</modal>
+
+
+

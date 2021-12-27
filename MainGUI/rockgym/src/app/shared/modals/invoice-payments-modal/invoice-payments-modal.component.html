@@ -1,0 +1,54 @@
+
+<modal id="invoice-payment-modal" >
+    <ng-container *ngIf="customer">
+<button style="float:right"(click)="closeModal('invoice-payment-modal')">X Cancel</button>
+<h1>Customer Invoices</h1>
+
+<pre>
+Invoices | Amount Pending: ${{getAmountPending()}}       
+<hr>
+</pre>
+<button [ngClass]="{'tab-active':filterKey=='all'}" (click)="filterBy('all')">All</button>
+<button [ngClass]="{'tab-active':filterKey=='pending'}" (click)="filterBy('pending')">Pending</button>
+<button [ngClass]="{'tab-active':filterKey=='paid'}" (click)="filterBy('paid')">Paid</button>
+<button [ngClass]="{'tab-active':filterKey=='void'}" (click)="filterBy('void')">Void</button>
+<button [ngClass]="{'tab-active':filterKey=='failed'}" (click)="filterBy('failed')">Failed</button>
+
+<button (click)="voidInvoice()">Void Invoice</button>
+
+<div style="width:500px;height:300px">
+        <div class="table-wrapper3" style="overflow-x:scroll;">
+                <table id="customers">
+                    <tr>
+                        <th class="label">Invoice Date</th>
+                        <th class="label">Paid Amount</th>
+                        <th class="label">Expected Amount</th>
+                        <th class="label">Invoice Label</th>
+                        <th class="label">Status</th>
+                    </tr>
+                <tr [ngClass]="{'tr-active': selectedInvoice ? invoice ? selectedInvoice.id==invoice.id : false : false}" *ngFor="let invoice of displayData" (click)="expandInvoice(invoice)">
+                    <ng-container *ngIf="invoice==undefined,else showData">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </ng-container>
+                    <ng-template #showData >
+                    <th [ngClass]="{'th-active':isSelectedInvoice(invoice)}">{{dateFromISO(invoice.invoice_date)}}</th>
+                    <th [ngClass]="{'th-active':isSelectedInvoice(invoice)}">${{invoice.paid_amount}}</th>
+                    <th [ngClass]="{'th-active':isSelectedInvoice(invoice)}">${{invoice.expected_amount}}</th>
+                    <th [ngClass]="{'th-active':isSelectedInvoice(invoice)}">{{invoice.description}}</th>
+                    <th [ngClass]="{'th-active':isSelectedInvoice(invoice)}"
+                        [ngStyle]="{'color': getColorFromStatus(invoice)}">{{invoice.status}}</th>
+                </ng-template>
+                </tr>
+            </table>
+            </div>
+</div>
+
+</ng-container>
+</modal>
+
+
+

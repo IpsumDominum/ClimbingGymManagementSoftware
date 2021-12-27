@@ -1,0 +1,62 @@
+<h1>Sales </h1>
+<div class="searchBox">
+<strong>Lookup</strong> <select [(ngModel)]="lookUpKey">
+<option [ngValue]="'Common'">Common</option>
+</select>
+<span id="search"><input type="text" placeholder="Bouldering Mat..." (keypress)="handleKeyboardEventSearch($event)" [(ngModel)]="searchPrompt"></span>
+<br><br>
+<button
+    [ngClass]="{'tab-active': queryMode=='onDate'}"
+    (click)="filterByOnDate()"
+    >On</button>
+<button
+[ngClass]="{'tab-active': queryMode=='sinceDate'}"
+(click)="filterBySinceDate()"
+>Since</button> <input 
+(keypress)="handleKeyboardEvent($event)"
+type="date" [(ngModel)]="sinceDate">  &nbsp; 
+<button [ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==12}"
+ (click)="filterBySinceMonth(12)">Last 12 Months</button>
+<button 
+[ngClass]="{'tab-active':queryMode=='sinceMonth' && sinceMonthAgo==3}" 
+(click)="filterBySinceMonth(3)">Last 3 Months</button>
+<hr>
+{{totalAmount}} Records Match<button id="next" (click)="previousPage()"><<</button> Showing <input (input)="onSearchChange($event)"id="currentPage" [ngModel]="currentPage"> of {{totalPage}} {{totalPage>1? 'pages' : 'page'}} <button id="next" (click)="nextPage()">>></button>
+
+</div>
+<!--RIGHT BOX-->
+<div class="table-wrapper">            
+<table id="customers" style="z-index: 5 !important;position:absolute;">                                        
+<thead>
+<tr >
+<th class="label">Product Type</th>
+<th class="label">Product Name</th>
+<th class="label">Customer Name</th>
+<th class="label">Transaction Time</th>
+<th class="label">Paid / Expected Amount</th>
+</tr>           
+</thead>
+<tbody>
+<tr  *ngFor="let sale of salesDisplayData" >                        
+<ng-container *ngIf="sale==undefined,else showData">
+<th style="color:transparent">1<br></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</ng-container>
+<ng-template  #showData >
+<th >{{sale.product.productType}}</th>
+<th>{{sale.product.name}}</th>
+<th>{{sale.memberName ? sale.memberName : 'Anonymous'}}</th>
+<th>{{dateFromISODetailed(sale.created)}}</th>
+<th [ngStyle]="{'color':sale.paid_amount==sale.expected_amount ? 'green' : 'red'}">${{sale.paid_amount}} / ${{sale.expected_amount}}</th>
+</ng-template>
+</tr>
+</tbody>
+</table>                
+</div>
+<br>
+<button class="button2" (click)="export_to_csv()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>    
+Export to CSV</button>

@@ -1,0 +1,140 @@
+
+<modal id="tender-modal" >
+<div style="overflow:scroll">
+<button [ngStyle]="{'background':isAllSuccess() ? 'green' : 'blue'}" style="float:right;color:white;" (click)="closeModal('tender-modal');" >Done</button>
+<h1>{{isAllSuccess() ? "Sale Completed" : "Processing Sale Items..."}}</h1>
+Staff Issuing: Admin
+<h2><strong>Total:</strong> 
+    <strong style="color:black"> ${{getTotalRaw()}}</strong>  &nbsp;| &nbsp;
+    <!---
+    <strong>% Discount:</strong> 
+    <strong style="color:orange"> {{discountApplied}}% </strong> &nbsp;|&nbsp; 
+    -->
+    <strong>$ Discount:</strong> 
+    <strong style="color:blue"> ${{roundUp(getTotalRaw() - getTotal())}} </strong> &nbsp;|&nbsp; 
+
+    <strong>Final:</strong> 
+    <strong style="color:green;"> ${{getTotal()}}</strong></h2>
+<ng-container *ngIf="page==1">
+        <div style="font-size:20px;">
+        <h5>Choose a payment Option</h5>        
+        <input type="radio" [value]="'Cash'" [(ngModel)]="tenderOption"> 
+        <label (click)="tenderOption='Cash'">
+        Cash 
+        </label>
+        <br>
+        <input type="radio" [value]="'Eftpos/Credit'" [(ngModel)]="tenderOption">        
+        <label (click)="tenderOption='Eftpos/Credit'">
+        Eftpos/Credit
+        </label>
+        <img src="assets/img/cards.png" style="width:100px;">
+        <br>
+        <br>
+        <input type="radio" [value]="'Voucher'" [(ngModel)]="tenderOption">
+        <label (click)="tenderOption='Voucher'">
+        Voucher
+        </label>
+        <!----
+        <br>
+        <br>
+        <input type="radio" [value]="'Voucher+Cash'" [(ngModel)]="tenderOption">
+        <label (click)="tenderOption='Voucher+Cash'">
+        Voucher + Cash
+        </label>
+        <br>
+        <input type="radio" [value]="'Voucher+Eftpos'" [(ngModel)]="tenderOption">
+        <label (click)="tenderOption='Voucher+Eftpos'">
+        Voucher + Eftpos
+        </label>
+        <img src="assets/img/cards.png" style="width:100px;">
+        -->
+        <br>
+        <br>
+        <button (click)="createSales()">Proceed</button>
+</div>
+</ng-container>
+
+<ng-container *ngIf="page==2">
+<!------------>
+<div class="waitContainer">
+<ng-container *ngIf="tenderOption=='Cash'">
+<h1>Please confirm cash payment</h1>
+</ng-container>
+<ng-container *ngIf="tenderOption=='Eftpos/Credit'">        
+<h1>Waiting on eftpos...</h1>
+</ng-container>
+<ng-container *ngIf="tenderOption=='Voucher'">        
+<h1>Waiting on eftpos...</h1>
+</ng-container>
+<!------------>
+</div>
+
+</ng-container>
+<ng-container *ngIf="page==3">
+<div class="table-wrapper">            
+        <table class="sales" id="customers" style="z-index: 5 !important;position:absolute;overflow:scroll" >                                        
+            <thead>
+                <tr>                            
+                        <th class="label">Product Type</th>
+                        <th class="label">Vendor</th>
+                        <th class="label">Product Name</th>
+                        <th class="label">Qty</th>
+                        <th class="label">Size</th>
+                        <th class="label">Color</th>
+                        <th class="label">Rental Due Time</th>
+                        <th class="label">Customer</th>
+                        <th class="label">Transaction Time</th>
+                        <th class="label">Price</th>
+                        <th class="label2">Status</th>
+                </tr>           
+                </thead>
+                <tbody >
+                <tr *ngFor="let sale of displayTray" >                        
+                        <ng-container *ngIf="sale==undefined,else showData">
+                                <th style="color:transparent">Casual<br></th>
+                                <th style="color:transparent">Resistance GYM</th>
+                                <th style="color:transparent">Climbing Shoe</th>
+                                <th style="color:transparent">1</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th style="color:transparent;width:300px;text-align: center;">
+                                    
+                                </th>
+                            </ng-container>
+                            <ng-template  #showData >
+                            <th [ngStyle]="{'color':sale.productType=='Rental'? 'blue':'green'}">{{sale.productType}}</th>
+                            <th>{{sale.product.vendor}}</th>
+                            <th>{{sale.productName}}</th>
+                            <th>{{sale.quantity}}</th>
+                            <th>{{sale.product.size}}</th>
+                            <th>{{sale.product.color}}</th>
+                            <th>{{getRentalDueDate(sale)}}</th>
+                            <th>{{sale.memberName}}</th>
+                            <th>{{sale.created}}</th>
+                            <th>${{getSalePrice(sale)}}</th>
+                            <th style='width:300px;text-align: center;'>
+                                <ng-container *ngIf="sale.status=='success'">
+                                        <strong style="color:green;">Success</strong>
+                                </ng-container>
+                                <ng-container *ngIf="sale.status!='success' && sale.status!='pending'">
+                                        <strong style="color:red;">{{sale.status}}</strong>
+                                </ng-container>
+                                <ng-container *ngIf="sale.status=='pending'">
+                                        <div class="lds-facebook"><div></div><div></div><div></div></div>
+                                </ng-container>
+                            </th>
+                        </ng-template>
+                </tr>
+            </tbody>
+            </table>              
+</div>
+</ng-container>
+</div>
+</modal>
+
+
+
