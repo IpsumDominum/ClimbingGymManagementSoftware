@@ -14,13 +14,13 @@ Coming Soon...
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
 </p>
 
-![More Screen Shots](./ScreenShots.md)
+[More Screen Shots](./ScreenShots.md)
 
 
-![Video Demo](https://www.youtube.com/watch?v=DRsP95XWMsk)
+[Video Demo](https://www.youtube.com/watch?v=DRsP95XWMsk)
 
 
-![Online Waiver Station](https://resistance-waiver-station.netlify.app/)
+[Online Waiver Station](https://resistance-waiver-station.netlify.app/)
 
 
 ## Functionalities 
