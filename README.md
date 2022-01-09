@@ -4,8 +4,7 @@
 <img src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png" style="width:60px">
 <img src="https://deavid.files.wordpress.com/2019/10/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" style="width:120px">
 <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/postgresql_plain_wordmark_logo_icon_146390.png" style="width:60px">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/CSS3_and_HTML5_logos_and_wordmarks.svg/1187px-CSS3_and_HTML5_logos_and_wordmarks.svg.png
-" style="width:60px">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/CSS3_and_HTML5_logos_and_wordmarks.svg/1187px-CSS3_and_HTML5_logos_and_wordmarks.svg.png" style="width:60px">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/384px-Electron_Software_Framework_Logo.svg.png" style="width:60px">
 
 </div>
