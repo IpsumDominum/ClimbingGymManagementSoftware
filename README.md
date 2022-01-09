@@ -9,7 +9,7 @@
 
 </div>
 
-Open Gym is free Point of Sales + Customer Relations Management software for climbing/fitness gym :)
+Open Gym is a free Point of Sales + Customer Relations Management software for climbing/fitness gym :)
 Still needing a lot of work and branding is currently Resistance Climbing Gym, which is where it is 
 first funded and developed. https://resistanceclimbing.co.nz/
 
