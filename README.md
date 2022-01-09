@@ -2,7 +2,7 @@
 <div style="display:flex">
 <img src="https://v9.angular.cn/assets/images/logos/angular/angular.svg" style="width:60px">
 <img src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png" style="width:60px">
-<img src="https://deavid.files.wordpress.com/2019/10/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" style="width:60px">
+<img src="https://deavid.files.wordpress.com/2019/10/connect-a-flask-app-to-a-mysql-database-with-sqlalchemy-and-pymysql.jpg" style="width:120px">
 <img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/postgresql_plain_wordmark_logo_icon_146390.png" style="width:60px">
 </div>
 
