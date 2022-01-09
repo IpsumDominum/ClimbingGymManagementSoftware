@@ -10,7 +10,7 @@ Coming Soon...
 ## Screenshots and Demo
 
 <p>
-<img src="./OldScreenShot.PNG" style="width:50%">
+<img src="./profolio1.PNG" style="width:50%">
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
 </p>
 
