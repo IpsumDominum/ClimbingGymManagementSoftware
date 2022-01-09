@@ -1,5 +1,10 @@
 # OpenGym
 
+![Angular 9](https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAngular_(web_framework)&psig=AOvVaw0_xXFhY14GFN1vTTcNttoB&ust=1641823994810000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNCK9pHtpPUCFQAAAAAdAAAAABAZ)
+![Python Icon](https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png)
+![SQL-alchemy Icon](https://hackersandslackers-cdn.storage.googleapis.com/2020/12/sqlalchemy_series_redo.png)
+![Postgress Icon](https://www.google.com/url?sa=i&url=https%3A%2F%2Ficon-icons.com%2Ficon%2Fpostgresql-plain-wordmark-logo%2F146390&psig=AOvVaw0-o-hZsiZcltGMDhdxoAnR&ust=1641824112022000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCND99crtpPUCFQAAAAAdAAAAABA7)
+
 Open Gym is free Point of Sales + Customer Relations Management software for climbing/fitness gym :)
 Still needing a lot of work and branding is currently Resistance Climbing Gym, which is where it is 
 first funded and developed. https://resistanceclimbing.co.nz/
