@@ -3,7 +3,7 @@
 <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAngular_(web_framework)&psig=AOvVaw0_xXFhY14GFN1vTTcNttoB&ust=1641823994810000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNCK9pHtpPUCFQAAAAAdAAAAABAZ" style="width:20px">
 <img src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png" style="width:20px">
 <img src="https://hackersandslackers-cdn.storage.googleapis.com/2020/12/sqlalchemy_series_redo.png" style="width:20px">
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ficon-icons.com%2Ficon%2Fpostgresql-plain-wordmark-logo%2F146390&psig=AOvVaw0-o-hZsiZcltGMDhdxoAnR&ust=1641824112022000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCND99crtpPUCFQAAAAAdAAAAABA7" style="width:20px">
+<img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/postgresql_plain_wordmark_logo_icon_146390.png" style="width:20px">
 
 
 Open Gym is free Point of Sales + Customer Relations Management software for climbing/fitness gym :)
