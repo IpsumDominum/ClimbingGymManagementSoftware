@@ -60,6 +60,6 @@ Coming Soon...
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" style="width:130px">
 <img src="https://media.trustradius.com/product-logos/6G/RU/KNRMPNZOMQJP-180x180.PNG" style="width:80px">
 <img src="https://camo.githubusercontent.com/a074f0beacc94a224c9179d5a453a102375549f458e6872d62e827169776bb7c/68747470733a2f2f7261772e6769746875622e636f6d2f6d61696c67756e2f6d656469612f6d61737465722f4d61696c67756e5f5072696d6172792e706e67" style="width:150px">
-  <img src="https://www.logo.wine/a/logo/Verifone/Verifone-Logo.wine.svg" style="width:120px">
+  <img src="https://www.logo.wine/a/logo/Verifone/Verifone-Logo.wine.svg" style="width:140px">
 
 </div>
