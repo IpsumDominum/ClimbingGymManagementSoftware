@@ -21,6 +21,7 @@ Looking for collaborators on the code. Please let me know if you'd like to help 
 
 ## Screenshots and Demo
 
+
 <p>
 <img src="./profolio1.PNG" style="width:50%">
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
@@ -29,10 +30,10 @@ Looking for collaborators on the code. Please let me know if you'd like to help 
 [More Screen Shots](./ScreenShots.md)
 
 
-[Video Demo](https://www.youtube.com/watch?v=DRsP95XWMsk)
+[Video Demo](https://www.youtube.com/watch?v=HsmKcJCs6X0)
 
 
-[Online Waiver Station](https://resistance-waiver-station.netlify.app/)
+[Online Waiver Station Demo (video)](https://www.youtube.com/watch?v=YUYAR0oHv3A)
 
 
 ## Functionalities 
