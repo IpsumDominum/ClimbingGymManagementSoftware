@@ -1,4 +1,5 @@
-# OpenGym
+# Climbing Gym Management Software
+
 <div style="display:flex">
 <img src="https://v9.angular.cn/assets/images/logos/angular/angular.svg" style="width:60px">
 <img src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png" style="width:60px">
