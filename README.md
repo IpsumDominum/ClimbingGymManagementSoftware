@@ -14,17 +14,11 @@ This is a free Point of Sales + Customer Relations Management software for climb
 Developed for and used at Resistance Climbing Gym, Dunedin, NZ. (2+ year now) https://resistanceclimbing.co.nz/
 
 
-## Installation
-Coming Soon... Please contact me at chenrongL at protonmail.com if you want an introduction to the code, set up, and various things for now.
-The software is capable of being ran in an actual climbing gym, but there are a few bugs which still needs fixing, plus certain important setup procedures to ensure reliability. At this point, please don't use this software for your gym before consulting me first! :)
-
-Looking for collaborators on the code. Please let me know if you'd like to help out.
-
 ## Screenshots and Demo
 
 
 <p>
-<img src="./profolio1.PNG" style="width:50%">
+<img src="./screenshot_1.JPG" style="width:50%">
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
 </p>
 
