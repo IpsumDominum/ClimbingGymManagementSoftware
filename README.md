@@ -19,6 +19,8 @@ Developed for and used at Resistance Climbing Gym, Dunedin, NZ. (2+ year now) ht
 
 <p>
 <img src="./screenshot_1.JPG" style="width:50%">
+  <img src="./screenshot_2.JPG" style="width:50%">
+
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
 </p>
 
