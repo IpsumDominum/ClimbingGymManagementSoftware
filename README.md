@@ -13,6 +13,8 @@
 This is a free Point of Sales + Customer Relations Management software for climbing/fitness gym :)
 Developed for and used at Resistance Climbing Gym, Dunedin, NZ. (2+ year now) https://resistanceclimbing.co.nz/
 
+## Version 2 coming
+The current code base is extremely messy. Major refactors and code clean up will happen in Version 2.
 
 ## Screenshots and Demo
 
