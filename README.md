@@ -26,8 +26,6 @@ The current code base is extremely messy. Major refactors and code clean up will
 <img src="WaiverStationScreenShot.PNG" style="width:45%">
 </p>
 
-[More Screen Shots](./ScreenShots.md)
-
 
 [Video Demo](https://www.youtube.com/watch?v=HsmKcJCs6X0)
 
